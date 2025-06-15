@@ -5,7 +5,7 @@
     
     <!-- Main Page -->
     <url>
-        <loc>https://krarar.github.io/Clashy/</loc>
+        <loc>https://krarar.github.io/Al-Sabri/</loc>
         <lastmod>2025-01-15</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
@@ -19,7 +19,7 @@
     
     <!-- Alhajami Store -->
     <url>
-        <loc>https://krarar.github.io/Clashy/alhajami.html</loc>
+        <loc>https://krarar.github.io/Al-Sabri/alhajami.html</loc>
         <lastmod>2025-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -33,7 +33,7 @@
     
     <!-- Al Ghadeer Office -->
     <url>
-        <loc>https://krarar.github.io/Clashy/Al%20Ghadeer%20Office.html</loc>
+        <loc>https://krarar.github.io/Al-Sabri/Al%20Ghadeer%20Office.html</loc>
         <lastmod>2025-01-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -47,7 +47,7 @@
     
     <!-- PWA Manifest -->
     <url>
-        <loc>https://krarar.github.io/Clashy/manifest.json</loc>
+        <loc>https://krarar.github.io/Al-Sabri/manifest.json</loc>
         <lastmod>2025-01-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
@@ -55,7 +55,7 @@
     
     <!-- Service Worker -->
     <url>
-        <loc>https://krarar.github.io/Clashy/sw.js</loc>
+        <loc>https://krarar.github.io/Al-Sabri/sw.js</loc>
         <lastmod>2025-01-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
