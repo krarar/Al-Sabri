@@ -1141,6 +1141,38 @@
             background: var(--error-solid);
         }
 
+        /* Add Product Button */
+        .add-product-btn {
+            position: absolute;
+            bottom: var(--space-2);
+            left: var(--space-2);
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            border: none;
+            border-radius: var(--radius-full);
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: var(--font-xs);
+            transition: all var(--transition-base);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            opacity: 0;
+            z-index: 3;
+        }
+
+        .store-card:hover .add-product-btn {
+            opacity: 1;
+        }
+
+        .add-product-btn:hover {
+            background: var(--success-solid);
+            transform: scale(1.1);
+        }
+
         /* Confirmation Modal */
         .confirm-modal {
             background: var(--bg-primary);
@@ -2150,6 +2182,68 @@
         </div>
     </div>
 
+    <!-- Add Product Modal -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-plus-circle"></i>
+                    إضافة منتج لمتجر <span id="selectedStoreName"></span>
+                </h3>
+                <button class="close-btn" onclick="closeModal('addProductModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="addProductForm" onsubmit="submitProductForm(event)">
+                <input type="hidden" id="productStoreId">
+                
+                <div class="form-group">
+                    <label class="form-label" for="productName">اسم المنتج *</label>
+                    <input type="text" id="productName" class="form-input" placeholder="أدخل اسم المنتج" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="productDescription">وصف المنتج *</label>
+                    <textarea id="productDescription" class="form-textarea" placeholder="وصف تفصيلي للمنتج" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="productPrice">السعر (دينار عراقي) *</label>
+                    <input type="number" id="productPrice" class="form-input" placeholder="0" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="productCategory">الفئة *</label>
+                    <select id="productCategory" class="form-select" required>
+                        <option value="">اختر الفئة</option>
+                        <option value="textiles">منسوجات</option>
+                        <option value="electronics">إلكترونيات</option>
+                        <option value="phones">هواتف</option>
+                        <option value="accessories">إكسسوارات</option>
+                        <option value="fashion">أزياء</option>
+                        <option value="home">منزل وحديقة</option>
+                        <option value="food">أطعمة</option>
+                        <option value="books">كتب</option>
+                        <option value="cars">سيارات</option>
+                        <option value="gaming">ألعاب</option>
+                        <option value="general">عام</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="productImageUrl">رابط صورة المنتج</label>
+                    <input type="url" id="productImageUrl" class="form-input" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitProductBtn">
+                    <i class="fas fa-save"></i>
+                    حفظ المنتج
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Contact Modal -->
     <div class="modal" id="contactModal">
         <div class="modal-content">
@@ -2319,6 +2413,7 @@
         let allProducts = [];
         let allStores = [];
         let userStores = [];
+        let userProducts = []; // NEW: Array for user's custom products
         let filteredProducts = [];
         let favorites = [];
         let cart = [];
@@ -2359,7 +2454,7 @@
                 setupScrollEffects();
                 
                 hideLoadingOverlay();
-                showNotification('🎉 مرحباً بك في كلاشي - تطبيق PWA محدث!');
+                showNotification('🎉 مرحباً بك في كلاشي - تطبيق PWA محدث مع دعم المنتجات للمتاجر الجديدة!');
                 
             } catch (error) {
                 console.error('❌ خطأ في تهيئة التطبيق:', error);
@@ -2510,6 +2605,7 @@
             favorites = JSON.parse(localStorage.getItem('clashy_favorites') || '[]');
             cart = JSON.parse(localStorage.getItem('clashy_cart') || '[]');
             userStores = JSON.parse(localStorage.getItem('clashy_user_stores') || '[]');
+            userProducts = JSON.parse(localStorage.getItem('clashy_user_products') || '[]'); // NEW: Load user products
             
             // تحميل إعداد الوضع
             const savedTheme = localStorage.getItem('clashy_theme') || 'dark';
@@ -2522,6 +2618,7 @@
             localStorage.setItem('clashy_favorites', JSON.stringify(favorites));
             localStorage.setItem('clashy_cart', JSON.stringify(cart));
             localStorage.setItem('clashy_user_stores', JSON.stringify(userStores));
+            localStorage.setItem('clashy_user_products', JSON.stringify(userProducts)); // NEW: Save user products
         }
 
         // تحميل جميع البيانات
@@ -2602,7 +2699,7 @@
             }
         }
 
-        // تحميل المنتجات من المتاجر المختلفة
+        // NEW: تحميل المنتجات من المتاجر المختلفة مع دعم المتاجر الجديدة
         async function loadProductsFromStores() {
             try {
                 allProducts = [];
@@ -2610,8 +2707,12 @@
                 await Promise.allSettled([
                     loadAlhajamiProducts(),
                     loadGhadeerProducts(),
-                    loadDatabaseProducts()
+                    loadDatabaseProducts(),
+                    loadUserStoreProducts() // NEW: Load products from user stores
                 ]);
+
+                // إضافة المنتجات المحفوظة محلياً
+                allProducts.push(...userProducts);
 
                 filteredProducts = [...allProducts];
                 console.log(`✅ تم تحميل ${allProducts.length} منتج من جميع المتاجر`);
@@ -2689,7 +2790,7 @@
                     .from('clashy_products')
                     .select('*')
                     .order('created_at', { ascending: false })
-                    .limit(20);
+                    .limit(50);
                 
                 if (!error && data) {
                     const dbProducts = data.map(product => ({
@@ -2705,6 +2806,41 @@
                 }
             } catch (error) {
                 console.error('❌ خطأ في تحميل المنتجات العامة:', error);
+            }
+        }
+
+        // NEW: تحميل منتجات من المتاجر التي أنشأها المستخدم
+        async function loadUserStoreProducts() {
+            if (!supabase) return;
+            
+            try {
+                // تحميل منتجات كل متجر أنشأه المستخدم
+                for (const store of allStores) {
+                    if (store.type === 'database' || store.type === 'local') {
+                        // البحث عن منتجات هذا المتجر في قاعدة البيانات
+                        const { data, error } = await supabase
+                            .from('store_products')
+                            .select('*')
+                            .eq('store_id', store.id)
+                            .order('created_at', { ascending: false });
+                        
+                        if (!error && data && data.length > 0) {
+                            const storeProducts = data.map(product => ({
+                                ...product,
+                                store_id: store.id,
+                                store_name: store.name,
+                                store_url: store.url,
+                                category: product.category || store.category || 'general',
+                                images: processProductImages(product),
+                                price: product.price || product.cost || 0
+                            }));
+                            allProducts.push(...storeProducts);
+                            console.log(`📦 تم تحميل ${storeProducts.length} منتج من متجر ${store.name}`);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('❌ خطأ في تحميل منتجات المتاجر المُنشأة:', error);
             }
         }
 
@@ -2907,10 +3043,11 @@
             const colorClass = store.color || store.category || 'primary';
             const canEdit = store.type === 'local' || store.type === 'database';
             const canDelete = store.type === 'local' || store.type === 'database';
+            const canAddProducts = store.type === 'local' || store.type === 'database'; // NEW: Allow adding products to user stores
             
             return `
                 <div class="store-card fade-in-up" onclick="openStore('${store.id}')">
-                    ${canEdit || canDelete ? `
+                    ${canEdit || canDelete || canAddProducts ? `
                         <div class="store-actions">
                             ${canEdit ? `
                                 <button class="store-action-btn edit" onclick="event.stopPropagation(); editStore('${store.id}')" title="تعديل المتجر">
@@ -2924,6 +3061,11 @@
                             ` : ''}
                         </div>
                     ` : ''}
+                    ${canAddProducts ? `
+                        <button class="add-product-btn" onclick="event.stopPropagation(); addProductToStore('${store.id}', '${store.name}')" title="إضافة منتج">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    ` : ''}
                     <div class="store-header ${colorClass}">
                         <i class="${store.icon} store-icon"></i>
                     </div>
@@ -2933,6 +3075,97 @@
                     </div>
                 </div>
             `;
+        }
+
+        // NEW: فتح نافذة إضافة منتج لمتجر معين
+        function addProductToStore(storeId, storeName) {
+            document.getElementById('productStoreId').value = storeId;
+            document.getElementById('selectedStoreName').textContent = storeName;
+            document.getElementById('addProductModal').classList.add('active');
+        }
+
+        // NEW: إرسال نموذج المنتج الجديد
+        async function submitProductForm(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitProductBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            
+            try {
+                const storeId = document.getElementById('productStoreId').value;
+                const store = allStores.find(s => s.id === storeId);
+                
+                if (!store) {
+                    throw new Error('المتجر غير موجود');
+                }
+
+                const productData = {
+                    id: `product_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                    name: document.getElementById('productName').value.trim(),
+                    description: document.getElementById('productDescription').value.trim(),
+                    price: parseFloat(document.getElementById('productPrice').value) || 0,
+                    category: document.getElementById('productCategory').value,
+                    image_url: document.getElementById('productImageUrl').value.trim() || 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png',
+                    store_id: storeId,
+                    store_name: store.name,
+                    store_url: store.url,
+                    created_at: new Date().toISOString()
+                };
+
+                if (!productData.name || !productData.description || !productData.category) {
+                    throw new Error('جميع الحقول المطلوبة يجب ملؤها');
+                }
+
+                // معالجة الصور
+                productData.images = [productData.image_url];
+
+                let saved = false;
+
+                // محاولة الحفظ في قاعدة البيانات
+                if (supabase && store.type === 'database') {
+                    try {
+                        const { data, error } = await supabase
+                            .from('store_products')
+                            .insert([productData]);
+
+                        if (!error) {
+                            saved = true;
+                            showNotification('✅ تم حفظ المنتج في قاعدة البيانات بنجاح!');
+                        }
+                    } catch (dbError) {
+                        console.log('Database save failed, saving locally');
+                    }
+                }
+
+                // الحفظ محلياً إذا فشل حفظ قاعدة البيانات أو كان المتجر محلي
+                if (!saved || store.type === 'local') {
+                    userProducts.push(productData);
+                    saveLocalData();
+                    if (!saved) {
+                        showNotification('✅ تم حفظ المنتج محلياً!');
+                    }
+                }
+
+                // إضافة المنتج للمصفوفة الرئيسية
+                allProducts.push(productData);
+                filteredProducts = [...allProducts];
+
+                document.getElementById('addProductForm').reset();
+                closeModal('addProductModal');
+
+                updateAllDisplays();
+                updateStats();
+
+            } catch (error) {
+                console.error('❌ خطأ في حفظ المنتج:', error);
+                showNotification(`❌ خطأ في الحفظ: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
         }
 
         // عرض المفضلة
@@ -3504,6 +3737,14 @@
                 // تحديث في المصفوفة الرئيسية
                 allStores[storeIndex] = { ...updatedStore, type: originalStore.type };
 
+                // تحديث منتجات هذا المتجر
+                allProducts.forEach(product => {
+                    if (product.store_id === storeId) {
+                        product.store_name = updatedStore.name;
+                        product.store_url = updatedStore.url;
+                    }
+                });
+
                 document.getElementById('editStoreForm').reset();
                 closeModal('editStoreModal');
                 
@@ -3567,6 +3808,13 @@
                 // حذف من قاعدة البيانات إذا كان من النوع database
                 if (store.type === 'database' && supabase) {
                     try {
+                        // حذف منتجات المتجر أولاً
+                        await supabase
+                            .from('store_products')
+                            .delete()
+                            .eq('store_id', storeId);
+
+                        // ثم حذف المتجر نفسه
                         const { error } = await supabase
                             .from('stores')
                             .delete()
@@ -3574,7 +3822,7 @@
 
                         if (!error) {
                             deleted = true;
-                            showNotification('✅ تم حذف المتجر من قاعدة البيانات بنجاح!');
+                            showNotification('✅ تم حذف المتجر ومنتجاته من قاعدة البيانات بنجاح!');
                         }
                     } catch (dbError) {
                         console.log('Database delete failed, deleting locally');
@@ -3587,8 +3835,11 @@
                         const userStoreIndex = userStores.findIndex(s => s.id === storeId);
                         if (userStoreIndex > -1) {
                             userStores.splice(userStoreIndex, 1);
-                            saveLocalData();
                         }
+
+                        // حذف منتجات هذا المتجر من userProducts
+                        userProducts = userProducts.filter(product => product.store_id !== storeId);
+                        saveLocalData();
                     }
                     if (!deleted) {
                         showNotification('✅ تم حذف المتجر محلياً!');
@@ -3597,6 +3848,10 @@
 
                 // حذف من المصفوفة الرئيسية
                 allStores.splice(storeIndex, 1);
+
+                // حذف منتجات هذا المتجر من allProducts
+                allProducts = allProducts.filter(product => product.store_id !== storeId);
+                filteredProducts = [...allProducts];
 
                 closeModal('deleteConfirmModal');
                 storeToDelete = null;
@@ -3711,7 +3966,7 @@
                 return;
             }
             
-            showNotification(`🏪 لديك ${myStores.length} متجر مُنشأ - يمكنك تعديلها أو حذفها`);
+            showNotification(`🏪 لديك ${myStores.length} متجر مُنشأ - يمكنك تعديلها أو حذفها أو إضافة منتجات إليها!`);
             showStoresSection();
         }
 
@@ -3725,11 +3980,11 @@
         }
 
         function showHelp() {
-            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك الآن تعديل وحذف المتاجر!');
+            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك الآن إضافة منتجات للمتاجر!');
         }
 
         function showAbout() {
-            showNotification('ℹ️ كلاشي v3.2 PWA - السوق الإلكتروني الشامل مع إدارة المتاجر');
+            showNotification('ℹ️ كلاشي v4.0 PWA - السوق الإلكتروني الشامل مع إدارة المتاجر والمنتجات');
         }
 
         function openWhatsApp() {
@@ -3892,12 +4147,14 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي PWA محدث v3.2 جاهز للعمل!');
+            console.log('🚀 كلاشي PWA محدث v4.0 جاهز للعمل!');
             console.log('📱 السوق الإلكتروني الشامل - الإصدار المحدث');
             console.log('🛍️ منتجات من متاجر متنوعة');
             console.log('🏪 إدارة متقدمة للمتاجر مع التعديل والحذف');
+            console.log('🆕 إضافة المنتجات للمتاجر الجديدة');
             console.log('✏️ تعديل المتاجر المُنشأة من قبل المستخدم');
             console.log('🗑️ حذف المتاجر مع تأكيد الأمان');
+            console.log('📦 عرض منتجات جميع المتاجر في الواجهة الرئيسية');
             console.log('❤️ نظام المفضلة والسلة المحدث');
             console.log('🌓 تبديل الوضع المظلم/الفاتح');
             console.log('🔍 بحث وفلترة ذكية');
@@ -3908,7 +4165,7 @@
             console.log('🔔 إشعارات التحديثات');
             console.log('🖼️ إصلاح مشاكل عرض الصور');
             console.log('📦 تحسين مربعات الإحصائيات');
-            console.log('🔧 إدارة شاملة للمتاجر');
+            console.log('🔧 إدارة شاملة للمتاجر والمنتجات');
             console.log('📞 للدعم والتواصل: 07813798636');
         });
 
