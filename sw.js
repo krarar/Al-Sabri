@@ -4,8 +4,7 @@
 const CACHE_NAME = 'clashy-v2-1-0';
 const OFFLINE_URL = '/offline.html';
 
-// في ملف sw.js، ابحث عن CORE_CACHE_FILES وعدّلها:
-
+// الملفات الأساسية للتخزين المؤقت
 const CORE_CACHE_FILES = [
   'https://krarar.github.io/Al-Sabri/',
   'https://krarar.github.io/Al-Sabri/index.html',
@@ -15,8 +14,6 @@ const CORE_CACHE_FILES = [
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
   'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'
 ];
-
-// أيضاً تحديث أي روابط أخرى في Service Worker إذا كانت موجودة
 
 // استراتيجية التخزين المؤقت للصور
 const IMAGE_CACHE_NAME = 'clashy-images-v1';
@@ -153,7 +150,7 @@ async function handleNavigationRequest(request) {
     return response;
   } catch (error) {
     const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match('/');
+    const cachedResponse = await cache.match('https://krarar.github.io/Al-Sabri/');
     
     if (cachedResponse) {
       return cachedResponse;
