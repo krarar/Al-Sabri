@@ -1088,6 +1088,125 @@
             color: white;
         }
 
+        /* Store Management - Edit/Delete Buttons */
+        .store-actions {
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            display: flex;
+            gap: var(--space-1);
+            opacity: 0;
+            transition: all var(--transition-base);
+            z-index: 3;
+        }
+
+        .store-card:hover .store-actions {
+            opacity: 1;
+        }
+
+        .store-action-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: var(--radius-full);
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-xs);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-base);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .store-action-btn.edit {
+            background: rgba(6, 182, 212, 0.9);
+            color: white;
+        }
+
+        .store-action-btn.delete {
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+        }
+
+        .store-action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .store-action-btn.edit:hover {
+            background: var(--secondary-solid);
+        }
+
+        .store-action-btn.delete:hover {
+            background: var(--error-solid);
+        }
+
+        /* Confirmation Modal */
+        .confirm-modal {
+            background: var(--bg-primary);
+            border-radius: var(--radius-3xl);
+            padding: var(--space-5);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid var(--glass-border);
+        }
+
+        .confirm-icon {
+            font-size: var(--font-4xl);
+            color: var(--error-solid);
+            margin-bottom: var(--space-4);
+        }
+
+        .confirm-title {
+            font-size: var(--font-lg);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .confirm-message {
+            font-size: var(--font-sm);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-5);
+            line-height: 1.5;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: var(--space-3);
+            justify-content: center;
+        }
+
+        .confirm-btn {
+            padding: var(--space-3) var(--space-5);
+            border: none;
+            border-radius: var(--radius-xl);
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            font-size: var(--font-sm);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            min-width: 100px;
+        }
+
+        .confirm-btn.danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .confirm-btn.secondary {
+            background: var(--glass);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
         /* Create Store Modal */
         .modal {
             position: fixed;
@@ -2063,6 +2182,121 @@
         </div>
     </div>
 
+    <!-- Edit Store Modal -->
+    <div class="modal" id="editStoreModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-edit"></i>
+                    تعديل المتجر
+                </h3>
+                <button class="close-btn" onclick="closeModal('editStoreModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="editStoreForm" onsubmit="submitEditStoreForm(event)">
+                <input type="hidden" id="editStoreId">
+                
+                <div class="form-group">
+                    <label class="form-label" for="editStoreName">اسم المتجر *</label>
+                    <input type="text" id="editStoreName" class="form-input" placeholder="أدخل اسم المتجر" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="editStoreDescription">وصف المتجر *</label>
+                    <textarea id="editStoreDescription" class="form-textarea" placeholder="وصف مختصر للمتجر" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="editStoreUrl">رابط/اسم الملف *</label>
+                    <input type="text" id="editStoreUrl" class="form-input" placeholder="مثل: mystore.html/" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">أيقونة المتجر *</label>
+                    <div class="icon-picker" id="editIconPicker">
+                        <div class="icon-option" data-icon="fas fa-store" onclick="selectEditIcon(this)">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-shopping-bag" onclick="selectEditIcon(this)">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-tshirt" onclick="selectEditIcon(this)">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-mobile-alt" onclick="selectEditIcon(this)">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-laptop" onclick="selectEditIcon(this)">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-home" onclick="selectEditIcon(this)">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-car" onclick="selectEditIcon(this)">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-utensils" onclick="selectEditIcon(this)">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-gamepad" onclick="selectEditIcon(this)">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="icon-option" data-icon="fas fa-book" onclick="selectEditIcon(this)">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">لون المتجر *</label>
+                    <div class="color-picker" id="editColorPicker">
+                        <div class="color-option" data-color="primary" style="background: var(--primary);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="secondary" style="background: var(--secondary);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="accent" style="background: var(--accent);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="success" style="background: var(--success);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="pink" style="background: var(--pink);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="indigo" style="background: var(--indigo);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="emerald" style="background: var(--emerald);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="orange" style="background: var(--orange);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="teal" style="background: var(--teal);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="violet" style="background: var(--violet);" onclick="selectEditColor(this)"></div>
+                        <div class="color-option" data-color="error" style="background: var(--error);" onclick="selectEditColor(this)"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="editSubmitBtn">
+                    <i class="fas fa-save"></i>
+                    حفظ التعديلات
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteConfirmModal">
+        <div class="confirm-modal">
+            <i class="fas fa-exclamation-triangle confirm-icon"></i>
+            <h3 class="confirm-title">تأكيد الحذف</h3>
+            <p class="confirm-message">
+                هل أنت متأكد من حذف هذا المتجر؟<br>
+                <strong id="storeToDeleteName"></strong><br>
+                <span style="color: var(--error-solid); font-size: var(--font-xs);">هذا الإجراء لا يمكن التراجع عنه</span>
+            </p>
+            <div class="confirm-actions">
+                <button class="confirm-btn danger" id="confirmDeleteBtn">
+                    <i class="fas fa-trash"></i>
+                    حذف المتجر
+                </button>
+                <button class="confirm-btn secondary" onclick="closeModal('deleteConfirmModal')">
+                    <i class="fas fa-times"></i>
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
@@ -2668,12 +2902,28 @@
             storesGrid.innerHTML = allStores.map(store => createStoreCard(store)).join('');
         }
 
-        // إنشاء بطاقة متجر
+        // إنشاء بطاقة متجر مع أزرار التحكم
         function createStoreCard(store) {
             const colorClass = store.color || store.category || 'primary';
+            const canEdit = store.type === 'local' || store.type === 'database';
+            const canDelete = store.type === 'local' || store.type === 'database';
             
             return `
                 <div class="store-card fade-in-up" onclick="openStore('${store.id}')">
+                    ${canEdit || canDelete ? `
+                        <div class="store-actions">
+                            ${canEdit ? `
+                                <button class="store-action-btn edit" onclick="event.stopPropagation(); editStore('${store.id}')" title="تعديل المتجر">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            ` : ''}
+                            ${canDelete ? `
+                                <button class="store-action-btn delete" onclick="event.stopPropagation(); confirmDeleteStore('${store.id}')" title="حذف المتجر">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    ` : ''}
                     <div class="store-header ${colorClass}">
                         <i class="${store.icon} store-icon"></i>
                     </div>
@@ -3114,6 +3364,11 @@
             }
         }
 
+        // متغيرات للتعديل
+        let editSelectedIcon = 'fas fa-store';
+        let editSelectedColor = 'primary';
+        let storeToDelete = null;
+
         // إنشاء متجر جديد
         function createNewStore() {
             document.getElementById('createStoreModal').classList.add('active');
@@ -3130,6 +3385,237 @@
             document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             selectedColor = element.dataset.color;
+        }
+
+        // وظائف التعديل
+        function selectEditIcon(element) {
+            document.querySelectorAll('#editIconPicker .icon-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            editSelectedIcon = element.dataset.icon;
+        }
+
+        function selectEditColor(element) {
+            document.querySelectorAll('#editColorPicker .color-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            editSelectedColor = element.dataset.color;
+        }
+
+        // تعديل متجر
+        function editStore(storeId) {
+            const store = allStores.find(s => s.id === storeId);
+            if (!store) {
+                showNotification('⚠️ المتجر غير موجود', 'warning');
+                return;
+            }
+
+            // تعبئة النموذج ببيانات المتجر
+            document.getElementById('editStoreId').value = store.id;
+            document.getElementById('editStoreName').value = store.name;
+            document.getElementById('editStoreDescription').value = store.description;
+            document.getElementById('editStoreUrl').value = store.url;
+
+            // تحديد الأيقونة واللون المحددين
+            editSelectedIcon = store.icon;
+            editSelectedColor = store.color;
+
+            // إزالة التحديد السابق
+            document.querySelectorAll('#editIconPicker .icon-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('#editColorPicker .color-option').forEach(opt => opt.classList.remove('selected'));
+
+            // تحديد الأيقونة الحالية
+            const iconElement = document.querySelector(`#editIconPicker .icon-option[data-icon="${store.icon}"]`);
+            if (iconElement) iconElement.classList.add('selected');
+
+            // تحديد اللون الحالي
+            const colorElement = document.querySelector(`#editColorPicker .color-option[data-color="${store.color}"]`);
+            if (colorElement) colorElement.classList.add('selected');
+
+            // عرض المودال
+            document.getElementById('editStoreModal').classList.add('active');
+        }
+
+        // حفظ تعديلات المتجر
+        async function submitEditStoreForm(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('editSubmitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            
+            try {
+                const storeId = document.getElementById('editStoreId').value;
+                const updatedStore = {
+                    id: storeId,
+                    name: document.getElementById('editStoreName').value.trim(),
+                    description: document.getElementById('editStoreDescription').value.trim(),
+                    url: document.getElementById('editStoreUrl').value.trim(),
+                    icon: editSelectedIcon,
+                    color: editSelectedColor,
+                    category: editSelectedColor,
+                    available: true,
+                    updated_at: new Date().toISOString()
+                };
+
+                if (!updatedStore.name || !updatedStore.description || !updatedStore.url) {
+                    throw new Error('جميع الحقول مطلوبة');
+                }
+
+                const storeIndex = allStores.findIndex(s => s.id === storeId);
+                if (storeIndex === -1) {
+                    throw new Error('المتجر غير موجود');
+                }
+
+                const originalStore = allStores[storeIndex];
+                let saved = false;
+
+                // تحديث في قاعدة البيانات إذا كان المتجر من النوع database
+                if (originalStore.type === 'database' && supabase) {
+                    try {
+                        const { error } = await supabase
+                            .from('stores')
+                            .update(updatedStore)
+                            .eq('id', storeId);
+
+                        if (!error) {
+                            saved = true;
+                            showNotification('✅ تم تحديث المتجر في قاعدة البيانات بنجاح!');
+                        }
+                    } catch (dbError) {
+                        console.log('Database update failed, updating locally');
+                    }
+                }
+
+                // تحديث في التخزين المحلي إذا كان من النوع local أو فشل تحديث قاعدة البيانات
+                if (originalStore.type === 'local' || !saved) {
+                    if (originalStore.type === 'local') {
+                        const userStoreIndex = userStores.findIndex(s => s.id === storeId);
+                        if (userStoreIndex > -1) {
+                            userStores[userStoreIndex] = { ...updatedStore, type: 'local' };
+                            saveLocalData();
+                        }
+                    }
+                    if (!saved) {
+                        showNotification('✅ تم تحديث المتجر محلياً!');
+                    }
+                }
+
+                // تحديث في المصفوفة الرئيسية
+                allStores[storeIndex] = { ...updatedStore, type: originalStore.type };
+
+                document.getElementById('editStoreForm').reset();
+                closeModal('editStoreModal');
+                
+                // إعادة تعيين القيم الافتراضية
+                editSelectedIcon = 'fas fa-store';
+                editSelectedColor = 'primary';
+
+                updateAllDisplays();
+                updateStats();
+
+            } catch (error) {
+                console.error('❌ خطأ في تحديث المتجر:', error);
+                showNotification(`❌ خطأ في التحديث: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        // تأكيد حذف المتجر
+        function confirmDeleteStore(storeId) {
+            const store = allStores.find(s => s.id === storeId);
+            if (!store) {
+                showNotification('⚠️ المتجر غير موجود', 'warning');
+                return;
+            }
+
+            // لا يمكن حذف المتاجر الافتراضية
+            if (store.type === 'default') {
+                showNotification('⚠️ لا يمكن حذف المتاجر الافتراضية', 'warning');
+                return;
+            }
+
+            storeToDelete = store;
+            document.getElementById('storeToDeleteName').textContent = store.name;
+            document.getElementById('deleteConfirmModal').classList.add('active');
+
+            // ربط زر التأكيد
+            document.getElementById('confirmDeleteBtn').onclick = () => deleteStore(storeId);
+        }
+
+        // حذف المتجر
+        async function deleteStore(storeId) {
+            if (!storeToDelete) return;
+
+            const submitBtn = document.getElementById('confirmDeleteBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحذف...';
+
+            try {
+                const storeIndex = allStores.findIndex(s => s.id === storeId);
+                if (storeIndex === -1) {
+                    throw new Error('المتجر غير موجود');
+                }
+
+                const store = allStores[storeIndex];
+                let deleted = false;
+
+                // حذف من قاعدة البيانات إذا كان من النوع database
+                if (store.type === 'database' && supabase) {
+                    try {
+                        const { error } = await supabase
+                            .from('stores')
+                            .delete()
+                            .eq('id', storeId);
+
+                        if (!error) {
+                            deleted = true;
+                            showNotification('✅ تم حذف المتجر من قاعدة البيانات بنجاح!');
+                        }
+                    } catch (dbError) {
+                        console.log('Database delete failed, deleting locally');
+                    }
+                }
+
+                // حذف من التخزين المحلي إذا كان من النوع local أو فشل حذف قاعدة البيانات
+                if (store.type === 'local' || !deleted) {
+                    if (store.type === 'local') {
+                        const userStoreIndex = userStores.findIndex(s => s.id === storeId);
+                        if (userStoreIndex > -1) {
+                            userStores.splice(userStoreIndex, 1);
+                            saveLocalData();
+                        }
+                    }
+                    if (!deleted) {
+                        showNotification('✅ تم حذف المتجر محلياً!');
+                    }
+                }
+
+                // حذف من المصفوفة الرئيسية
+                allStores.splice(storeIndex, 1);
+
+                closeModal('deleteConfirmModal');
+                storeToDelete = null;
+
+                updateAllDisplays();
+                updateStats();
+
+                // إذا كان المستخدم في صفحة المتاجر، إعادة توجيهه للمنتجات إذا لم تعد هناك متاجر
+                if (currentView === 'stores' && allStores.length === 0) {
+                    showProducts();
+                }
+
+            } catch (error) {
+                console.error('❌ خطأ في حذف المتجر:', error);
+                showNotification(`❌ خطأ في الحذف: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
         }
 
         async function submitStoreForm(event) {
@@ -3225,7 +3711,7 @@
                 return;
             }
             
-            showNotification(`🏪 لديك ${myStores.length} متجر مُنشأ`);
+            showNotification(`🏪 لديك ${myStores.length} متجر مُنشأ - يمكنك تعديلها أو حذفها`);
             showStoresSection();
         }
 
@@ -3239,11 +3725,11 @@
         }
 
         function showHelp() {
-            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب');
+            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك الآن تعديل وحذف المتاجر!');
         }
 
         function showAbout() {
-            showNotification('ℹ️ كلاشي v3.1 PWA - السوق الإلكتروني الشامل محدث');
+            showNotification('ℹ️ كلاشي v3.2 PWA - السوق الإلكتروني الشامل مع إدارة المتاجر');
         }
 
         function openWhatsApp() {
@@ -3406,10 +3892,12 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي PWA محدث v3.1 جاهز للعمل!');
+            console.log('🚀 كلاشي PWA محدث v3.2 جاهز للعمل!');
             console.log('📱 السوق الإلكتروني الشامل - الإصدار المحدث');
             console.log('🛍️ منتجات من متاجر متنوعة');
-            console.log('🏪 إدارة متقدمة للمتاجر');
+            console.log('🏪 إدارة متقدمة للمتاجر مع التعديل والحذف');
+            console.log('✏️ تعديل المتاجر المُنشأة من قبل المستخدم');
+            console.log('🗑️ حذف المتاجر مع تأكيد الأمان');
             console.log('❤️ نظام المفضلة والسلة المحدث');
             console.log('🌓 تبديل الوضع المظلم/الفاتح');
             console.log('🔍 بحث وفلترة ذكية');
@@ -3420,6 +3908,7 @@
             console.log('🔔 إشعارات التحديثات');
             console.log('🖼️ إصلاح مشاكل عرض الصور');
             console.log('📦 تحسين مربعات الإحصائيات');
+            console.log('🔧 إدارة شاملة للمتاجر');
             console.log('📞 للدعم والتواصل: 07813798636');
         });
 
