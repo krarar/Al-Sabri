@@ -46,19 +46,6 @@
     <link rel="apple-touch-icon" sizes="152x152" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png">
     <link rel="apple-touch-icon" sizes="120x120" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png">
     
-    <!-- Splash Screens for iOS -->
-    <link rel="apple-touch-startup-image" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
-    <link rel="apple-touch-startup-image" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
-    
-    <!-- Microsoft Tiles -->
-    <meta name="msapplication-TileImage" content="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png">
-    <meta name="msapplication-TileColor" content="#8B5CF6">
-    <meta name="msapplication-config" content="./browserconfig.xml">
-    <meta name="msapplication-navbutton-color" content="#8B5CF6">
-    <meta name="msapplication-starturl" content="https://krarar.github.io/Al-Sabri/">
-    
     <!-- External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,7 +140,7 @@
             --glass-strong: rgba(255, 255, 255, 0.9);
         }
 
-        /* Mobile Optimized Sizes */
+        /* Optimized Mobile Sizes */
         :root {
             --font-xs: 0.6rem;
             --font-sm: 0.7rem;
@@ -599,7 +586,7 @@
 
         /* Compact Search Section */
         .search-section {
-            margin-bottom: var(--space-5);
+            margin-bottom: var(--space-4);
             padding: 0 var(--space-2);
         }
 
@@ -644,6 +631,48 @@
             color: var(--primary-solid);
             font-size: var(--font-base);
             pointer-events: none;
+        }
+
+        /* FIXED: Compact Stats Section */
+        .stats-section {
+            padding: 0 var(--space-2);
+            margin-bottom: var(--space-5);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-2);
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+
+        .stat-card:hover {
+            background: var(--glass-strong);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: var(--font-base);
+            font-weight: 700;
+            background: var(--secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-label {
+            font-size: var(--font-xs);
+            color: var(--text-muted);
+            font-weight: 600;
         }
 
         /* Section Headers */
@@ -967,7 +996,7 @@
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
 
-        /* Cart Item */
+        /* FIXED: Cart Item with Proper Image Display */
         .cart-item {
             background: var(--glass);
             border: 1px solid var(--glass-border);
@@ -991,6 +1020,7 @@
             border-radius: var(--radius-lg);
             object-fit: cover;
             background: var(--bg-secondary);
+            flex-shrink: 0;
         }
 
         .cart-item-info {
@@ -1488,48 +1518,6 @@
             background: var(--secondary-solid);
         }
 
-        /* Additional Components */
-        .stats-section {
-            padding: 0 var(--space-2);
-            margin-bottom: var(--space-6);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: var(--space-3);
-        }
-
-        .stat-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: var(--space-3);
-            text-align: center;
-            transition: all var(--transition-base);
-        }
-
-        .stat-card:hover {
-            background: var(--glass-strong);
-            transform: translateY(-2px);
-        }
-
-        .stat-number {
-            font-size: var(--font-lg);
-            font-weight: 700;
-            background: var(--secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: var(--space-1);
-        }
-
-        .stat-label {
-            font-size: var(--font-xs);
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
         /* Responsive Design for PWA */
         @media (display-mode: standalone) {
             .header {
@@ -1595,6 +1583,22 @@
 
             .products-section, .stores-section {
                 padding: 0 var(--space-1);
+            }
+
+            .stats-grid {
+                gap: var(--space-1);
+            }
+
+            .stat-card {
+                padding: var(--space-1);
+            }
+
+            .stat-number {
+                font-size: var(--font-sm);
+            }
+
+            .stat-label {
+                font-size: 0.5rem;
             }
         }
 
@@ -2121,7 +2125,7 @@
                 setupScrollEffects();
                 
                 hideLoadingOverlay();
-                showNotification('🎉 مرحباً بك في كلاشي - تطبيق PWA كامل!');
+                showNotification('🎉 مرحباً بك في كلاشي - تطبيق PWA محدث!');
                 
             } catch (error) {
                 console.error('❌ خطأ في تهيئة التطبيق:', error);
@@ -2279,7 +2283,7 @@
             updateThemeUI();
         }
 
-        // حفظ البيانات محلياً
+        // FIXED: حفظ البيانات محلياً مع معالجة الصور
         function saveLocalData() {
             localStorage.setItem('clashy_favorites', JSON.stringify(favorites));
             localStorage.setItem('clashy_cart', JSON.stringify(cart));
@@ -2402,7 +2406,7 @@
                         store_name: 'محلات الحجامي',
                         store_url: './alhajami.html',
                         category: product.category || 'textiles',
-                        images: product.images || product.image_url || product.image || ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
+                        images: processProductImages(product),
                         price: product.price || product.cost || 0
                     }));
                     allProducts.push(...alhajamiProducts);
@@ -2431,7 +2435,7 @@
                         store_name: 'مكتب الغدير',
                         store_url: './Al Ghadeer Office.html',
                         category: product.category || 'electronics',
-                        images: product.images || product.image_url || product.image || ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
+                        images: processProductImages(product),
                         price: product.price || product.cost || 0
                     }));
                     allProducts.push(...ghadeerProducts);
@@ -2458,7 +2462,7 @@
                         ...product,
                         store_name: product.store_name || 'متجر كلاشي',
                         category: product.category || 'general',
-                        images: product.images || product.image_url || product.image || ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
+                        images: processProductImages(product),
                         price: product.price || product.cost || 0,
                         store_url: product.store_url || '#'
                     }));
@@ -2468,6 +2472,39 @@
             } catch (error) {
                 console.error('❌ خطأ في تحميل المنتجات العامة:', error);
             }
+        }
+
+        // FIXED: معالجة صور المنتجات بشكل صحيح
+        function processProductImages(product) {
+            let images = [];
+            
+            if (product.images) {
+                if (Array.isArray(product.images)) {
+                    images = product.images;
+                } else if (typeof product.images === 'string') {
+                    try {
+                        images = JSON.parse(product.images);
+                        if (!Array.isArray(images)) {
+                            images = [product.images];
+                        }
+                    } catch {
+                        images = [product.images];
+                    }
+                }
+            } else if (product.image_url) {
+                images = [product.image_url];
+            } else if (product.image) {
+                images = [product.image];
+            }
+
+            // تنظيف الصور وإزالة القيم الفارغة
+            images = images.filter(img => img && img !== 'undefined' && img !== null && img.trim() !== '');
+            
+            if (images.length === 0) {
+                images = ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'];
+            }
+            
+            return images;
         }
 
         // بيانات احتياطية
@@ -2575,34 +2612,10 @@
             productsGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
         }
 
-        // إنشاء بطاقة منتج
+        // FIXED: إنشاء بطاقة منتج مع معالجة صحيحة للصور
         function createProductCard(product) {
-            let images = [];
-            
-            if (product.images) {
-                if (Array.isArray(product.images)) {
-                    images = product.images;
-                } else if (typeof product.images === 'string') {
-                    try {
-                        images = JSON.parse(product.images);
-                        if (!Array.isArray(images)) {
-                            images = [product.images];
-                        }
-                    } catch {
-                        images = [product.images];
-                    }
-                }
-            } else if (product.image_url) {
-                images = [product.image_url];
-            } else if (product.image) {
-                images = [product.image];
-            }
-
-            if (images.length === 0 || !images[0] || images[0] === 'undefined') {
-                images = ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'];
-            }
-            
-            const firstImage = images[0];
+            const images = product.images || ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'];
+            const firstImage = Array.isArray(images) ? images[0] : images;
             const price = parseInt(product.price || product.cost || 0);
             const isFavorited = favorites.includes(product.id);
             const heartIcon = isFavorited ? 'fas fa-heart' : 'far fa-heart';
@@ -2695,7 +2708,7 @@
             favoritesGrid.innerHTML = favoriteProducts.map(product => createProductCard(product)).join('');
         }
 
-        // عرض السلة
+        // FIXED: عرض السلة مع معالجة صحيحة للصور
         function displayCart() {
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
@@ -2723,15 +2736,26 @@
             cartTotal.style.display = 'block';
         }
 
-        // إنشاء عنصر السلة
+        // FIXED: إنشاء عنصر السلة مع معالجة صحيحة للصور
         function createCartItem(item) {
-            const images = Array.isArray(item.images) ? item.images : 
-                          (item.images ? [item.images] : ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png']);
-            const firstImage = images[0];
+            let firstImage = 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png';
+            
+            if (item.images) {
+                if (Array.isArray(item.images) && item.images.length > 0) {
+                    firstImage = item.images[0];
+                } else if (typeof item.images === 'string' && item.images !== '' && item.images !== 'undefined') {
+                    firstImage = item.images;
+                }
+            } else if (item.image_url && item.image_url !== '' && item.image_url !== 'undefined') {
+                firstImage = item.image_url;
+            } else if (item.image && item.image !== '' && item.image !== 'undefined') {
+                firstImage = item.image;
+            }
             
             return `
                 <div class="cart-item">
-                    <img src="${firstImage}" alt="${item.name}" class="cart-item-image">
+                    <img src="${firstImage}" alt="${item.name}" class="cart-item-image" 
+                         onerror="this.src='https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${parseInt(item.price).toLocaleString()} د.ع</div>
@@ -2764,7 +2788,7 @@
             updateStats();
         }
 
-        // إضافة للسلة
+        // FIXED: إضافة للسلة مع معالجة صحيحة للصور
         function addToCart(productId) {
             const product = allProducts.find(p => p.id === productId);
             if (!product) return;
@@ -2774,7 +2798,13 @@
                 existingItem.quantity += 1;
                 showNotification('📦 تم زيادة الكمية في السلة');
             } else {
-                cart.push({...product, quantity: 1});
+                // تأكد من تنظيف الصور قبل الإضافة للسلة
+                const itemToAdd = {
+                    ...product,
+                    quantity: 1,
+                    images: processProductImages(product)
+                };
+                cart.push(itemToAdd);
                 showNotification('🛒 تم إضافة المنتج للسلة');
             }
 
@@ -3213,7 +3243,7 @@
         }
 
         function showAbout() {
-            showNotification('ℹ️ كلاشي v3.0 PWA - السوق الإلكتروني الشامل');
+            showNotification('ℹ️ كلاشي v3.1 PWA - السوق الإلكتروني الشامل محدث');
         }
 
         function openWhatsApp() {
@@ -3376,11 +3406,11 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي PWA جاهز للعمل بشكل كامل!');
-            console.log('📱 السوق الإلكتروني الشامل - الإصدار 3.0');
+            console.log('🚀 كلاشي PWA محدث v3.1 جاهز للعمل!');
+            console.log('📱 السوق الإلكتروني الشامل - الإصدار المحدث');
             console.log('🛍️ منتجات من متاجر متنوعة');
             console.log('🏪 إدارة متقدمة للمتاجر');
-            console.log('❤️ نظام المفضلة والسلة');
+            console.log('❤️ نظام المفضلة والسلة المحدث');
             console.log('🌓 تبديل الوضع المظلم/الفاتح');
             console.log('🔍 بحث وفلترة ذكية');
             console.log('📱 تطبيق PWA قابل للتثبيت');
@@ -3388,6 +3418,8 @@
             console.log('🎨 تصميم عصري ومتجاوب');
             console.log('⚡ دعم كامل للعمل دون اتصال');
             console.log('🔔 إشعارات التحديثات');
+            console.log('🖼️ إصلاح مشاكل عرض الصور');
+            console.log('📦 تحسين مربعات الإحصائيات');
             console.log('📞 للدعم والتواصل: 07813798636');
         });
 
