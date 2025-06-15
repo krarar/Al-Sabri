@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+
+# PWA Files
+Allow: /manifest.json
+Allow: /sw.js
+Allow: /browserconfig.xml
+
+# Main Pages
+Allow: /index.html
+Allow: /alhajami.html
+Allow: /Al Ghadeer Office.html
+
+# Assets
+Allow: /assets/
+Allow: /images/
+Allow: /icons/
+
+# Disallow sensitive files
+Disallow: /admin/
+Disallow: /config/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /.env
+
+# Sitemap
+Sitemap: https://krarar.github.io/Clashy/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 1
+
+# Cache directive
+Cache-Control: public, max-age=86400

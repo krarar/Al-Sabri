@@ -1,0 +1,107 @@
+{
+  "name": "clashy-pwa",
+  "version": "2.1.0",
+  "description": "كلاشي - سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد",
+  "main": "index.html",
+  "homepage": "https://krarar.github.io/Clashy/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krarar/Clashy.git"
+  },
+  "author": {
+    "name": "Clashy Team",
+    "email": "info@clashy.iq",
+    "url": "https://krarar.github.io/Clashy/"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pwa",
+    "shopping",
+    "ecommerce",
+    "marketplace",
+    "arabic",
+    "iraq",
+    "mobile-app",
+    "progressive-web-app",
+    "offline-first",
+    "responsive"
+  ],
+  "scripts": {
+    "start": "npx http-server . -p 3000 -c-1",
+    "dev": "npx live-server --port=3000 --no-browser",
+    "build": "echo 'Building PWA...' && npm run validate",
+    "validate": "echo 'Validating PWA files...' && npm run validate:manifest && npm run validate:sw",
+    "validate:manifest": "echo 'Validating manifest.json...'",
+    "validate:sw": "echo 'Validating service worker...'",
+    "lighthouse": "npx lighthouse https://krarar.github.io/Clashy/ --view",
+    "audit": "npm audit --audit-level moderate",
+    "deploy": "echo 'Deploying to GitHub Pages...'",
+    "test:pwa": "npx pwa-asset-generator https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png ./icons --manifest ./manifest.json",
+    "optimize": "echo 'Optimizing assets...'",
+    "compress": "echo 'Compressing files...'",
+    "clean": "echo 'Cleaning build files...'"
+  },
+  "devDependencies": {
+    "lighthouse": "^11.0.0",
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
+    "pwa-asset-generator": "^6.3.1"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "pwa": {
+    "name": "كلاشي",
+    "short_name": "كلاشي",
+    "theme_color": "#8B5CF6",
+    "background_color": "#0F172A",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/"
+  },
+  "config": {
+    "port": 3000,
+    "host": "localhost"
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "files": [
+    "index.html",
+    "manifest.json",
+    "sw.js",
+    "browserconfig.xml",
+    "robots.txt",
+    "sitemap.xml",
+    ".htaccess",
+    "alhajami.html",
+    "Al Ghadeer Office.html",
+    "assets/",
+    "icons/",
+    "images/"
+  ],
+  "bugs": {
+    "url": "https://github.com/krarar/Clashy/issues",
+    "email": "info@clashy.iq"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://krarar.github.io/Clashy/"
+  },
+  "contributors": [
+    {
+      "name": "Clashy Development Team",
+      "email": "dev@clashy.iq"
+    }
+  ],
+  "manifest": "./manifest.json",
+  "serviceworker": "./sw.js"
+}

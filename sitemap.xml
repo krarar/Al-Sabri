@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    
+    <!-- Main Page -->
+    <url>
+        <loc>https://krarar.github.io/Clashy/</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png</image:loc>
+            <image:title>كلاشي - السوق الإلكتروني الشامل</image:title>
+            <image:caption>سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Alhajami Store -->
+    <url>
+        <loc>https://krarar.github.io/Clashy/alhajami.html</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png</image:loc>
+            <image:title>محلات الحجامي - الشالات والمنسوجات التركية</image:title>
+            <image:caption>أجود أنواع الشالات والطرحات والمنسوجات التركية الأصلية</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Al Ghadeer Office -->
+    <url>
+        <loc>https://krarar.github.io/Clashy/Al%20Ghadeer%20Office.html</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png</image:loc>
+            <image:title>مكتب الغدير - الهواتف والإكسسوارات</image:title>
+            <image:caption>أحدث الهواتف الذكية والإكسسوارات التقنية</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- PWA Manifest -->
+    <url>
+        <loc>https://krarar.github.io/Clashy/manifest.json</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <!-- Service Worker -->
+    <url>
+        <loc>https://krarar.github.io/Clashy/sw.js</loc>
+        <lastmod>2025-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+</urlset>
