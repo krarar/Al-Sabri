@@ -3,15 +3,15 @@
   "version": "2.1.0",
   "description": "كلاشي - سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد",
   "main": "index.html",
-  "homepage": "https://krarar.github.io/Clashy/",
+  "homepage": "https://krarar.github.io/Al-Sabri/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/krarar/Clashy.git"
+    "url": "https://krarar.github.io/Al-Sabri.git"
   },
   "author": {
     "name": "Clashy Team",
     "email": "info@clashy.iq",
-    "url": "https://krarar.github.io/Clashy/"
+    "url": "https://krarar.github.io/Al-Sabri/"
   },
   "license": "MIT",
   "keywords": [
@@ -89,12 +89,12 @@
     "images/"
   ],
   "bugs": {
-    "url": "https://github.com/krarar/Clashy/issues",
+    "url": "https://krarar.github.io/Al-Sabri/issues",
     "email": "info@clashy.iq"
   },
   "funding": {
     "type": "individual",
-    "url": "https://krarar.github.io/Clashy/"
+    "url": "https://krarar.github.io/Al-Sabri/"
   },
   "contributors": [
     {
