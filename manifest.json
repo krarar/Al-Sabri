@@ -2,12 +2,12 @@
   "name": "كلاشي - السوق الإلكتروني الشامل",
   "short_name": "كلاشي",
   "description": "سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد",
-  "start_url": "/",
+  "start_url": "https://krarar.github.io/Al-Sabri/",
   "display": "standalone",
   "background_color": "#0F172A",
   "theme_color": "#8B5CF6",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "https://krarar.github.io/Al-Sabri/",
   "lang": "ar",
   "dir": "rtl",
   "categories": ["shopping", "business", "productivity"],
@@ -82,7 +82,7 @@
       "name": "المنتجات",
       "short_name": "المنتجات",
       "description": "تصفح المنتجات المتاحة",
-      "url": "/#products",
+      "url": "https://krarar.github.io/Al-Sabri/#products",
       "icons": [{ 
         "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png", 
         "sizes": "96x96" 
@@ -92,7 +92,7 @@
       "name": "المتاجر",
       "short_name": "المتاجر",
       "description": "تصفح المتاجر المتاحة",
-      "url": "/#stores",
+      "url": "https://krarar.github.io/Al-Sabri/#stores",
       "icons": [{ 
         "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png", 
         "sizes": "96x96" 
@@ -102,7 +102,7 @@
       "name": "المفضلة",
       "short_name": "المفضلة",
       "description": "عرض المنتجات المفضلة",
-      "url": "/#favorites",
+      "url": "https://krarar.github.io/Al-Sabri/#favorites",
       "icons": [{ 
         "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png", 
         "sizes": "96x96" 
@@ -112,7 +112,7 @@
       "name": "سلة التسوق",
       "short_name": "السلة",
       "description": "عرض سلة التسوق",
-      "url": "/#cart",
+      "url": "https://krarar.github.io/Al-Sabri/#cart",
       "icons": [{ 
         "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png", 
         "sizes": "96x96" 
