@@ -4,16 +4,19 @@
 const CACHE_NAME = 'clashy-v2-1-0';
 const OFFLINE_URL = '/offline.html';
 
-// الملفات الأساسية للتخزين المؤقت
+// في ملف sw.js، ابحث عن CORE_CACHE_FILES وعدّلها:
+
 const CORE_CACHE_FILES = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  'https://krarar.github.io/Al-Sabri/',
+  'https://krarar.github.io/Al-Sabri/index.html',
+  'https://krarar.github.io/Al-Sabri/manifest.json',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap',
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
   'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'
 ];
+
+// أيضاً تحديث أي روابط أخرى في Service Worker إذا كانت موجودة
 
 // استراتيجية التخزين المؤقت للصور
 const IMAGE_CACHE_NAME = 'clashy-images-v1';
