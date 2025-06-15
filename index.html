@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>كلاشي | سوق الكتروني شامل - PWA</title>
-    <meta name="description" content="كلاشي - سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد. محلات الحجامي للمنسوجات التركية ومكتب الغدير للهواتف والإلكترونيات">
-    <meta name="keywords" content="كلاشي، تسوق، متاجر، منتجات، العراق، PWA، سوق الكتروني، محلات الحجامي، مكتب الغدير، منسوجات، هواتف، إلكترونيات">
+    <title>كلاشي | منصة التجارة الإلكترونية المرنة - PWA</title>
+    <meta name="description" content="كلاشي - منصة التجارة الإلكترونية المرنة لإنشاء وإدارة المتاجر الرقمية. قم بإنشاء متجرك الخاص وإدارة منتجاتك بسهولة">
+    <meta name="keywords" content="كلاشي، تسوق، متاجر، منتجات، العراق، PWA، منصة تجارة، إنشاء متجر، تجارة إلكترونية، إدارة المتاجر">
     <meta name="author" content="كلاشي">
     
     <!-- SEO والشبكات الاجتماعية -->
-    <meta property="og:title" content="كلاشي - السوق الإلكتروني الشامل">
-    <meta property="og:description" content="سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد. محلات الحجامي للمنسوجات التركية ومكتب الغدير للهواتف والإلكترونيات">
+    <meta property="og:title" content="كلاشي - منصة التجارة الإلكترونية المرنة">
+    <meta property="og:description" content="منصة مرنة لإنشاء وإدارة المتاجر الإلكترونية. ابدأ متجرك الرقمي اليوم وأدر منتجاتك بسهولة"">>
     <meta property="og:image" content="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png">
     <meta property="og:url" content="https://krarar.github.io/Al-Sabri/">
     <meta property="og:type" content="website">
@@ -18,8 +18,8 @@
     <meta property="og:locale" content="ar_IQ">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="كلاشي - السوق الإلكتروني الشامل">
-    <meta name="twitter:description" content="سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد">
+    <meta name="twitter:title" content="كلاشي - منصة التجارة الإلكترونية المرنة">
+    <meta name="twitter:description" content="منصة مرنة لإنشاء وإدارة المتاجر الإلكترونية بسهولة">
     <meta name="twitter:image" content="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png">
     
     <!-- PWA Meta Tags -->
@@ -64,14 +64,14 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "كلاشي",
-      "description": "سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد",
+      "description": "منصة التجارة الإلكترونية المرنة لإنشاء وإدارة المتاجر الرقمية",
       "url": "https://krarar.github.io/Al-Sabri/",
       "image": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png",
-      "applicationCategory": "Shopping",
+      "applicationCategory": "BusinessApplication",
       "operatingSystem": "All",
       "offers": {
         "@type": "Offer",
-        "category": "Shopping"
+        "category": "E-commerce Platform"
       },
       "author": {
         "@type": "Organization",
@@ -1864,15 +1864,15 @@
                 </div>
                 <div class="nav-option" onclick="viewMyStores(); closeSidebar();">
                     <i class="fas fa-cog"></i>
-                    <span>متاجري</span>
+                    <span>إدارة متاجري</span>
                 </div>
-                <div class="nav-option" onclick="redirectToAlhajami(); closeSidebar();">
-                    <i class="fas fa-user-tie"></i>
-                    <span>محلات الحجامي</span>
+                <div class="nav-option" onclick="importStoreData(); closeSidebar();">
+                    <i class="fas fa-upload"></i>
+                    <span>استيراد بيانات</span>
                 </div>
-                <div class="nav-option" onclick="redirectToGhadeer(); closeSidebar();">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span>مكتب الغدير</span>
+                <div class="nav-option" onclick="exportStoreData(); closeSidebar();">
+                    <i class="fas fa-download"></i>
+                    <span>تصدير البيانات</span>
                 </div>
             </div>
 
@@ -1970,8 +1970,8 @@
         <section class="products-section" id="productsSection">
             <div class="section-header">
                 <div>
-                    <h2 class="section-title">🌟 المنتجات المميزة</h2>
-                    <p class="section-subtitle">اكتشف أحدث وأفضل المنتجات من متاجرنا المختارة</p>
+                    <h2 class="section-title">🌟 المنتجات المتاحة</h2>
+                    <p class="section-subtitle">اكتشف المنتجات من المتاجر المسجلة في منصتنا</p>
                 </div>
                 <button class="view-all-btn" onclick="showAllProducts()">عرض الكل</button>
             </div>
@@ -1985,8 +1985,8 @@
         <section class="stores-section" id="storesSection" style="display: none;">
             <div class="section-header">
                 <div>
-                    <h2 class="section-title">🏪 متاجرنا المميزة</h2>
-                    <p class="section-subtitle">تصفح مجموعة متنوعة من المتاجر المحلية والعالمية</p>
+                    <h2 class="section-title">🏪 المتاجر المسجلة</h2>
+                    <p class="section-subtitle">تصفح المتاجر التي أنشأها المستخدمون على منصتنا</p>
                 </div>
                 <button class="view-all-btn" onclick="showProducts()">المنتجات</button>
             </div>
@@ -2359,7 +2359,7 @@
                 setupScrollEffects();
                 
                 hideLoadingOverlay();
-                showNotification('🎉 مرحباً بك في كلاشي - تطبيق PWA محدث!');
+                showNotification('🎉 مرحباً بك في كلاشي - منصة التجارة الإلكترونية المرنة!');
                 
             } catch (error) {
                 console.error('❌ خطأ في تهيئة التطبيق:', error);
@@ -2546,35 +2546,7 @@
             try {
                 allStores = [];
 
-                // إضافة المتاجر الافتراضية
-                const defaultStores = [
-                    {
-                        id: 'alhajami',
-                        name: 'محلات الحجامي',
-                        description: 'أجود أنواع الشالات والطرحات والمنسوجات التركية الأصلية',
-                        url: './alhajami.html',
-                        icon: 'fas fa-user-tie',
-                        color: 'textiles',
-                        category: 'textiles',
-                        available: true,
-                        type: 'default'
-                    },
-                    {
-                        id: 'ghadeer',
-                        name: 'مكتب الغدير',
-                        description: 'الهواتف والإكسسوارات والصيرفة - أحدث الهواتف الذكية',
-                        url: './Al Ghadeer Office.html',
-                        icon: 'fas fa-mobile-alt',
-                        color: 'electronics',
-                        category: 'electronics',
-                        available: true,
-                        type: 'default'
-                    }
-                ];
-
-                allStores.push(...defaultStores);
-
-                // إضافة المتاجر المُنشأة من قبل المستخدم
+                // إضافة المتاجر المُنشأة من قبل المستخدم في قاعدة البيانات
                 if (supabase) {
                     const { data, error } = await supabase
                         .from('stores')
@@ -2589,13 +2561,13 @@
                     }
                 }
 
-                // إضافة المتاجر المحلية
+                // إضافة المتاجر المحلية المُنشأة من قبل المستخدم
                 allStores.push(...userStores.map(store => ({
                     ...store,
                     type: 'local'
                 })));
 
-                console.log(`✅ تم تحميل ${allStores.length} متجر`);
+                console.log(`✅ تم تحميل ${allStores.length} متجر مُنشأ من قبل المستخدم`);
                 
             } catch (error) {
                 console.error('❌ خطأ في تحميل المتاجر:', error);
@@ -2608,9 +2580,8 @@
                 allProducts = [];
                 
                 await Promise.allSettled([
-                    loadAlhajamiProducts(),
-                    loadGhadeerProducts(),
-                    loadDatabaseProducts()
+                    loadDatabaseProducts(),
+                    loadGeneralProducts()
                 ]);
 
                 filteredProducts = [...allProducts];
@@ -2619,64 +2590,6 @@
             } catch (error) {
                 console.error('❌ خطأ في تحميل المنتجات:', error);
                 loadFallbackProducts();
-            }
-        }
-
-        // تحميل منتجات الحجامي
-        async function loadAlhajamiProducts() {
-            if (!supabase) return;
-            
-            try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(20);
-                
-                if (!error && data) {
-                    const alhajamiProducts = data.map(product => ({
-                        ...product,
-                        store_id: 'alhajami',
-                        store_name: 'محلات الحجامي',
-                        store_url: './alhajami.html',
-                        category: product.category || 'textiles',
-                        images: processProductImages(product),
-                        price: product.price || product.cost || 0
-                    }));
-                    allProducts.push(...alhajamiProducts);
-                    console.log(`📦 تم تحميل ${alhajamiProducts.length} منتج من الحجامي`);
-                }
-            } catch (error) {
-                console.error('❌ خطأ في تحميل منتجات الحجامي:', error);
-            }
-        }
-
-        // تحميل منتجات الغدير
-        async function loadGhadeerProducts() {
-            if (!supabase) return;
-            
-            try {
-                const { data, error } = await supabase
-                    .from('ghadeer_products')
-                    .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(20);
-                
-                if (!error && data) {
-                    const ghadeerProducts = data.map(product => ({
-                        ...product,
-                        store_id: 'ghadeer',
-                        store_name: 'مكتب الغدير',
-                        store_url: './Al Ghadeer Office.html',
-                        category: product.category || 'electronics',
-                        images: processProductImages(product),
-                        price: product.price || product.cost || 0
-                    }));
-                    allProducts.push(...ghadeerProducts);
-                    console.log(`📦 تم تحميل ${ghadeerProducts.length} منتج من الغدير`);
-                }
-            } catch (error) {
-                console.error('❌ خطأ في تحميل منتجات الغدير:', error);
             }
         }
 
@@ -2689,7 +2602,7 @@
                     .from('clashy_products')
                     .select('*')
                     .order('created_at', { ascending: false })
-                    .limit(20);
+                    .limit(50);
                 
                 if (!error && data) {
                     const dbProducts = data.map(product => ({
@@ -2702,6 +2615,35 @@
                     }));
                     allProducts.push(...dbProducts);
                     console.log(`📦 تم تحميل ${dbProducts.length} منتج من قاعدة البيانات العامة`);
+                }
+            } catch (error) {
+                console.error('❌ خطأ في تحميل المنتجات العامة:', error);
+            }
+        }
+
+        // تحميل منتجات عامة إضافية
+        async function loadGeneralProducts() {
+            if (!supabase) return;
+            
+            try {
+                // يمكن إضافة استعلامات أخرى هنا لجداول منتجات أخرى
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(30);
+                
+                if (!error && data) {
+                    const generalProducts = data.map(product => ({
+                        ...product,
+                        store_name: product.store_name || 'متجر عام',
+                        category: product.category || 'general',
+                        images: processProductImages(product),
+                        price: product.price || product.cost || 0,
+                        store_url: product.store_url || '#'
+                    }));
+                    allProducts.push(...generalProducts);
+                    console.log(`📦 تم تحميل ${generalProducts.length} منتج عام`);
                 }
             } catch (error) {
                 console.error('❌ خطأ في تحميل المنتجات العامة:', error);
@@ -2752,69 +2694,69 @@
             allProducts = [
                 {
                     id: 'sample1',
-                    name: 'شال تركي فاخر',
-                    description: 'شال تركي أصلي بتصميم عصري وجودة عالية',
+                    name: 'منتج تجريبي 1',
+                    description: 'منتج تجريبي لعرض إمكانيات التطبيق',
                     price: 45000,
                     images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'alhajami',
-                    store_name: 'محلات الحجامي',
-                    store_url: './alhajami.html',
-                    category: 'textiles'
+                    store_id: 'sample_store_1',
+                    store_name: 'متجر تجريبي',
+                    store_url: '#',
+                    category: 'general'
                 },
                 {
                     id: 'sample2',
-                    name: 'هاتف ذكي حديث',
-                    description: 'أحدث الهواتف الذكية بمواصفات متقدمة',
-                    price: 750000,
+                    name: 'منتج تجريبي 2',
+                    description: 'منتج تجريبي آخر لعرض التطبيق',
+                    price: 75000,
                     images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'ghadeer',
-                    store_name: 'مكتب الغدير',
-                    store_url: './Al Ghadeer Office.html',
-                    category: 'phones'
+                    store_id: 'sample_store_2',
+                    store_name: 'متجر آخر',
+                    store_url: '#',
+                    category: 'electronics'
                 },
                 {
                     id: 'sample3',
-                    name: 'طرحة حريرية',
-                    description: 'طرحة حريرية فاخرة بألوان متنوعة',
+                    name: 'منتج تجريبي 3',
+                    description: 'منتج تجريبي ثالث للعرض',
                     price: 35000,
                     images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'alhajami',
-                    store_name: 'محلات الحجامي',
-                    store_url: './alhajami.html',
+                    store_id: 'sample_store_1',
+                    store_name: 'متجر تجريبي',
+                    store_url: '#',
                     category: 'textiles'
                 },
                 {
                     id: 'sample4',
-                    name: 'سماعات لاسلكية',
-                    description: 'سماعات لاسلكية عالية الجودة',
+                    name: 'منتج تجريبي 4',
+                    description: 'منتج تجريبي رابع عالي الجودة',
                     price: 125000,
                     images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'ghadeer',
-                    store_name: 'مكتب الغدير',
-                    store_url: './Al Ghadeer Office.html',
+                    store_id: 'sample_store_3',
+                    store_name: 'متجر الجودة',
+                    store_url: '#',
                     category: 'accessories'
                 },
                 {
                     id: 'sample5',
-                    name: 'كوفية أصلية',
-                    description: 'كوفية عراقية أصلية بجودة عالية',
+                    name: 'منتج تجريبي 5',
+                    description: 'منتج تجريبي خامس متميز',
                     price: 25000,
                     images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'alhajami',
-                    store_name: 'محلات الحجامي',
-                    store_url: './alhajami.html',
-                    category: 'textiles'
+                    store_id: 'sample_store_2',
+                    store_name: 'متجر آخر',
+                    store_url: '#',
+                    category: 'fashion'
                 },
                 {
                     id: 'sample6',
-                    name: 'ساعة ذكية',
-                    description: 'ساعة ذكية بمميزات متطورة',
+                    name: 'منتج تجريبي 6',
+                    description: 'منتج تجريبي سادس بمميزات فريدة',
                     price: 200000,
                     images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'ghadeer',
-                    store_name: 'مكتب الغدير',
-                    store_url: './Al Ghadeer Office.html',
-                    category: 'accessories'
+                    store_id: 'sample_store_3',
+                    store_name: 'متجر الجودة',
+                    store_url: '#',
+                    category: 'home'
                 }
             ];
             filteredProducts = [...allProducts];
@@ -2837,7 +2779,11 @@
                     <div style="grid-column: 1/-1; text-align: center; padding: var(--space-8);">
                         <i class="fas fa-box-open" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
                         <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد منتجات</h3>
-                        <p style="color: var(--text-muted); font-size: var(--font-sm);">لم يتم العثور على منتجات تطابق المعايير المحددة</p>
+                        <p style="color: var(--text-muted); font-size: var(--font-sm); margin-bottom: var(--space-4);">ابدأ بإنشاء متجرك وإضافة منتجاتك لتظهر هنا</p>
+                        <button class="empty-state-btn" onclick="createNewStore()">
+                            <i class="fas fa-store"></i>
+                            إنشاء متجر جديد
+                        </button>
                     </div>
                 `;
                 return;
@@ -2891,9 +2837,13 @@
             if (allStores.length === 0) {
                 storesGrid.innerHTML = `
                     <div style="grid-column: 1/-1; text-align: center; padding: var(--space-8);">
-                        <i class="fas fa-store" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
-                        <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد متاجر</h3>
-                        <p style="color: var(--text-muted); font-size: var(--font-sm);">لم يتم العثور على متاجر</p>
+                        <i class="fas fa-store-alt" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
+                        <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد متاجر بعد</h3>
+                        <p style="color: var(--text-muted); font-size: var(--font-sm); margin-bottom: var(--space-4);">ابدأ رحلتك في التجارة الإلكترونية بإنشاء متجرك الأول</p>
+                        <button class="empty-state-btn" onclick="createNewStore()">
+                            <i class="fas fa-plus-circle"></i>
+                            إنشاء متجر جديد
+                        </button>
                     </div>
                 `;
                 return;
@@ -2905,25 +2855,17 @@
         // إنشاء بطاقة متجر مع أزرار التحكم
         function createStoreCard(store) {
             const colorClass = store.color || store.category || 'primary';
-            const canEdit = store.type === 'local' || store.type === 'database';
-            const canDelete = store.type === 'local' || store.type === 'database';
             
             return `
                 <div class="store-card fade-in-up" onclick="openStore('${store.id}')">
-                    ${canEdit || canDelete ? `
-                        <div class="store-actions">
-                            ${canEdit ? `
-                                <button class="store-action-btn edit" onclick="event.stopPropagation(); editStore('${store.id}')" title="تعديل المتجر">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            ` : ''}
-                            ${canDelete ? `
-                                <button class="store-action-btn delete" onclick="event.stopPropagation(); confirmDeleteStore('${store.id}')" title="حذف المتجر">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            ` : ''}
-                        </div>
-                    ` : ''}
+                    <div class="store-actions">
+                        <button class="store-action-btn edit" onclick="event.stopPropagation(); editStore('${store.id}')" title="تعديل المتجر">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="store-action-btn delete" onclick="event.stopPropagation(); confirmDeleteStore('${store.id}')" title="حذف المتجر">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
                     <div class="store-header ${colorClass}">
                         <i class="${store.icon} store-icon"></i>
                     </div>
@@ -3531,12 +3473,6 @@
                 return;
             }
 
-            // لا يمكن حذف المتاجر الافتراضية
-            if (store.type === 'default') {
-                showNotification('⚠️ لا يمكن حذف المتاجر الافتراضية', 'warning');
-                return;
-            }
-
             storeToDelete = store;
             document.getElementById('storeToDeleteName').textContent = store.name;
             document.getElementById('deleteConfirmModal').classList.add('active');
@@ -3689,25 +3625,85 @@
             }
         }
 
-        // إجراءات سريعة
-        function redirectToAlhajami() {
-            showLoadingOverlay();
-            setTimeout(() => {
-                window.location.href = './alhajami.html';
-            }, 800);
+        // إجراءات إدارة البيانات
+        function importStoreData() {
+            // إنشاء عنصر input لاختيار الملف
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        
+                        if (importedData.stores && Array.isArray(importedData.stores)) {
+                            // إضافة المتاجر المستوردة
+                            importedData.stores.forEach(store => {
+                                if (!allStores.find(s => s.id === store.id)) {
+                                    const newStore = {
+                                        ...store,
+                                        id: Date.now() + Math.random(), // معرف جديد لتجنب التكرار
+                                        type: 'local',
+                                        imported: true
+                                    };
+                                    userStores.push(newStore);
+                                    allStores.push(newStore);
+                                }
+                            });
+                            
+                            saveLocalData();
+                            updateAllDisplays();
+                            updateStats();
+                            
+                            showNotification(`✅ تم استيراد ${importedData.stores.length} متجر بنجاح`);
+                        } else {
+                            throw new Error('تنسيق ملف غير صحيح');
+                        }
+                    } catch (error) {
+                        showNotification('❌ خطأ في قراءة الملف - تأكد من صحة تنسيق البيانات', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
         }
 
-        function redirectToGhadeer() {
-            showLoadingOverlay();
-            setTimeout(() => {
-                window.location.href = './Al Ghadeer Office.html';
-            }, 800);
+        function exportStoreData() {
+            if (userStores.length === 0 && allStores.length === 0) {
+                showNotification('⚠️ لا توجد متاجر لتصديرها', 'warning');
+                return;
+            }
+
+            const dataToExport = {
+                stores: allStores,
+                userStores: userStores,
+                exportDate: new Date().toISOString(),
+                version: '3.3',
+                appName: 'كلاشي - منصة التجارة الإلكترونية'
+            };
+
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `clashy_stores_${new Date().toLocaleDateString('ar-EG').replace(/\//g, '-')}.json`;
+            link.click();
+            
+            showNotification('📦 تم تصدير بيانات المتاجر بنجاح');
         }
 
         function viewMyStores() {
             const myStores = allStores.filter(store => store.type === 'local' || store.type === 'database');
             if (myStores.length === 0) {
-                showNotification('📝 لم تقم بإنشاء أي متاجر بعد', 'warning');
+                showNotification('📝 لم تقم بإنشاء أي متاجر بعد - ابدأ بإنشاء متجرك الأول!', 'warning');
+                createNewStore();
                 return;
             }
             
@@ -3725,11 +3721,11 @@
         }
 
         function showHelp() {
-            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك الآن تعديل وحذف المتاجر!');
+            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك إنشاء وإدارة متاجرك بسهولة!');
         }
 
         function showAbout() {
-            showNotification('ℹ️ كلاشي v3.2 PWA - السوق الإلكتروني الشامل مع إدارة المتاجر');
+            showNotification('ℹ️ كلاشي v3.3 PWA - منصة التجارة الإلكترونية المرنة لإنشاء المتاجر');
         }
 
         function openWhatsApp() {
@@ -3892,12 +3888,13 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي PWA محدث v3.2 جاهز للعمل!');
-            console.log('📱 السوق الإلكتروني الشامل - الإصدار المحدث');
-            console.log('🛍️ منتجات من متاجر متنوعة');
-            console.log('🏪 إدارة متقدمة للمتاجر مع التعديل والحذف');
-            console.log('✏️ تعديل المتاجر المُنشأة من قبل المستخدم');
+            console.log('🚀 كلاشي PWA منصة التجارة الإلكترونية v3.3 جاهز!');
+            console.log('📱 منصة مرنة لإنشاء وإدارة المتاجر الإلكترونية');
+            console.log('🛍️ منتجات من متاجر منشأة من قبل المستخدمين');
+            console.log('🏪 إدارة كاملة للمتاجر مع التعديل والحذف');
+            console.log('✏️ تعديل المتاجر المُنشأة');
             console.log('🗑️ حذف المتاجر مع تأكيد الأمان');
+            console.log('🆕 نظام مخصص بالكامل للمستخدمين');
             console.log('❤️ نظام المفضلة والسلة المحدث');
             console.log('🌓 تبديل الوضع المظلم/الفاتح');
             console.log('🔍 بحث وفلترة ذكية');
@@ -3906,9 +3903,9 @@
             console.log('🎨 تصميم عصري ومتجاوب');
             console.log('⚡ دعم كامل للعمل دون اتصال');
             console.log('🔔 إشعارات التحديثات');
-            console.log('🖼️ إصلاح مشاكل عرض الصور');
-            console.log('📦 تحسين مربعات الإحصائيات');
-            console.log('🔧 إدارة شاملة للمتاجر');
+            console.log('🖼️ معالجة متقدمة للصور');
+            console.log('📦 مربعات إحصائيات مدمجة');
+            console.log('🔧 إدارة شاملة للمتاجر المخصصة');
             console.log('📞 للدعم والتواصل: 07813798636');
         });
 
