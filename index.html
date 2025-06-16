@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>كلاشي | سوق الكتروني شامل - PWA v5.1</title>
+    <title>كلاشي | سوق الكتروني شامل - PWA</title>
     <meta name="description" content="كلاشي - سوق الكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد. محلات الحجامي للمنسوجات التركية ومكتب الغدير للهواتف والإلكترونيات">
     <meta name="keywords" content="كلاشي، تسوق، متاجر، منتجات، العراق، PWA، سوق الكتروني، محلات الحجامي، مكتب الغدير، منسوجات، هواتف، إلكترونيات">
     <meta name="author" content="كلاشي">
@@ -1794,7 +1794,7 @@
             <div class="logo" onclick="goToHome()">
                 <div class="logo-icon"></div>
                 <div class="logo-text">
-                    <h1>كلاشي v5.1</h1>
+                    <h1>كلاشي</h1>
                 </div>
             </div>
             
@@ -1864,9 +1864,9 @@
                     <span>سلة التسوق</span>
                     <span class="badge" id="cartCount">0</span>
                 </div>
-                <div class="nav-option" onclick="forceRefreshAllData(); closeSidebar();" style="border: 1px solid var(--success-solid);">
+                <div class="nav-option" onclick="refreshData(); closeSidebar();" style="border: 1px solid var(--success-solid);">
                     <i class="fas fa-sync-alt"></i>
-                    <span>تحديث شامل للبيانات</span>
+                    <span>تحديث البيانات</span>
                 </div>
             </div>
 
@@ -1994,7 +1994,7 @@
             <div class="section-header">
                 <div>
                     <h2 class="section-title">🌟 المنتجات المميزة</h2>
-                    <p class="section-subtitle">اكتشف أحدث وأفضل المنتجات من جميع متاجرنا - يتم تحديثها تلقائياً</p>
+                    <p class="section-subtitle">اكتشف أحدث وأفضل المنتجات من جميع متاجرنا</p>
                 </div>
                 <button class="view-all-btn" onclick="showAllProducts()">عرض الكل</button>
             </div>
@@ -2112,7 +2112,7 @@
                     <input type="text" id="storeUrl" class="form-input" placeholder="مثل: mystore.html/" required>
                 </div>
 
-                <!-- Store Table Name -->
+                <!-- NEW: Store Table Name -->
                 <div class="form-group">
                     <label class="form-label" for="storeTableName">اسم جدول المنتجات (اختياري)</label>
                     <input type="text" id="storeTableName" class="form-input" placeholder="مثل: my_store_products (سيتم إنشاؤه تلقائياً إذا تُرك فارغاً)">
@@ -2442,10 +2442,6 @@
         };
         let currentView = 'products';
 
-        // FIXED: إضافة نظام تتبع آخر تحديث للمتاجر
-        let lastStoreUpdate = {};
-        let globalProductRefreshInterval = null;
-
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', function() {
             showLoadingOverlay();
@@ -2468,18 +2464,15 @@
                 // تحميل البيانات المحفوظة محلياً
                 loadLocalData();
 
-                // FIXED: تحميل البيانات مع نظام التحديث الذكي
-                await loadAllDataWithSmartRefresh();
+                // تحميل البيانات من قاعدة البيانات
+                await loadAllData();
 
                 // تهيئة الواجهة
                 setupEventListeners();
                 setupScrollEffects();
                 
-                // FIXED: بدء نظام التحديث التلقائي للمنتجات
-                startAutoProductRefresh();
-                
                 hideLoadingOverlay();
-                showNotification('🎉 مرحباً بك في كلاشي v5.1! جميع منتجات المتاجر الجديدة ستظهر تلقائياً!');
+                showNotification('🎉 مرحباً بك في كلاشي! أنشئ متجرك وستظهر منتجاته فوراً في الصفحة الرئيسية!');
                 
             } catch (error) {
                 console.error('❌ خطأ في تهيئة التطبيق:', error);
@@ -2540,7 +2533,7 @@
             // Network status
             window.addEventListener('online', () => {
                 showNotification('🌐 تم استعادة الاتصال بالإنترنت');
-                forceRefreshAllData();
+                refreshData();
             });
 
             window.addEventListener('offline', () => {
@@ -2630,7 +2623,6 @@
             favorites = JSON.parse(localStorage.getItem('clashy_favorites') || '[]');
             cart = JSON.parse(localStorage.getItem('clashy_cart') || '[]');
             userStores = JSON.parse(localStorage.getItem('clashy_user_stores') || '[]');
-            lastStoreUpdate = JSON.parse(localStorage.getItem('clashy_last_store_update') || '{}');
             
             // تحميل إعداد الوضع
             const savedTheme = localStorage.getItem('clashy_theme') || 'dark';
@@ -2643,22 +2635,19 @@
             localStorage.setItem('clashy_favorites', JSON.stringify(favorites));
             localStorage.setItem('clashy_cart', JSON.stringify(cart));
             localStorage.setItem('clashy_user_stores', JSON.stringify(userStores));
-            localStorage.setItem('clashy_last_store_update', JSON.stringify(lastStoreUpdate));
         }
 
-        // FIXED: تحميل جميع البيانات مع نظام التحديث الذكي
-        async function loadAllDataWithSmartRefresh() {
+        // FIXED: تحميل جميع البيانات مع دعم المتاجر الجديدة
+        async function loadAllData() {
             try {
-                console.log('🔄 بدء تحميل البيانات مع النظام الذكي...');
-                
                 await Promise.allSettled([
-                    loadStoresDataOptimized(),
-                    loadProductsFromAllStoresOptimized()
+                    loadStoresData(),
+                    loadProductsFromAllStores() // NEW: تحميل من جميع المتاجر
                 ]);
                 
                 updateAllDisplays();
                 updateStats();
-                console.log(`✅ تم تحميل ${allProducts.length} منتج من ${allStores.length} متجر بنجاح`);
+                console.log(`✅ تم تحميل ${allProducts.length} منتج من ${allStores.length} متجر`);
                 
             } catch (error) {
                 console.error('❌ خطأ في تحميل البيانات:', error);
@@ -2666,8 +2655,8 @@
             }
         }
 
-        // FIXED: تحميل بيانات المتاجر محسن
-        async function loadStoresDataOptimized() {
+        // تحميل بيانات المتاجر
+        async function loadStoresData() {
             try {
                 allStores = [];
 
@@ -2683,7 +2672,7 @@
                         category: 'textiles',
                         available: true,
                         type: 'default',
-                        products_table: 'products'
+                        products_table: 'products' // الجدول الافتراضي للحجامي
                     },
                     {
                         id: 'ghadeer',
@@ -2695,7 +2684,7 @@
                         category: 'electronics',
                         available: true,
                         type: 'default',
-                        products_table: 'ghadeer_products'
+                        products_table: 'ghadeer_products' // الجدول المخصص للغدير
                     }
                 ];
 
@@ -2715,7 +2704,6 @@
                             products_table: store.products_table || generateTableName(store.name)
                         }));
                         allStores.push(...dbStores);
-                        console.log(`✅ تم تحميل ${dbStores.length} متجر من قاعدة البيانات`);
                     }
                 }
 
@@ -2727,87 +2715,48 @@
                 }));
                 allStores.push(...localStores);
 
-                console.log(`✅ إجمالي المتاجر المحملة: ${allStores.length}`);
+                console.log(`✅ تم تحميل ${allStores.length} متجر`);
                 
             } catch (error) {
                 console.error('❌ خطأ في تحميل المتاجر:', error);
             }
         }
 
-        // FIXED: تحميل المنتجات من جميع المتاجر مع تحسينات
-        async function loadProductsFromAllStoresOptimized() {
+        // NEW: تحميل المنتجات من جميع المتاجر مع إنشاء منتجات تجريبية
+        async function loadProductsFromAllStores() {
             try {
                 allProducts = [];
-                let totalLoadedProducts = 0;
                 
-                console.log(`🔄 تحميل منتجات من ${allStores.length} متجر...`);
-                
-                // معالجة المتاجر بشكل متوازي لتحسين الأداء
-                const storePromises = allStores.map(async (store) => {
+                // تحميل منتجات كل متجر بشكل منفصل
+                for (const store of allStores) {
                     try {
-                        console.log(`📦 معالجة متجر: ${store.name}`);
-                        let storeProducts = await loadStoreProductsAdvanced(store);
+                        console.log(`🔄 تحميل منتجات ${store.name}...`);
+                        let storeProducts = await loadStoreProducts(store);
                         
-                        // FIXED: إنشاء منتجات تجريبية للمتاجر الجديدة فقط
-                        if (storeProducts.length === 0 && shouldCreateSampleProducts(store)) {
-                            console.log(`🎯 إنشاء منتجات تجريبية للمتجر الجديد: ${store.name}`);
-                            storeProducts = await createSampleProductsForStoreAdvanced(store);
+                        // إذا كان المتجر جديد وفارغ، أنشئ منتجات تجريبية
+                        if (storeProducts.length === 0 && (store.type === 'database' || store.type === 'local')) {
+                            console.log(`📦 إنشاء منتجات تجريبية للمتجر ${store.name}...`);
+                            storeProducts = await createSampleProductsForStore(store);
                         }
                         
                         if (storeProducts.length > 0) {
-                            // FIXED: تحديث طابع زمني لآخر تحديث للمتجر
-                            lastStoreUpdate[store.id] = new Date().toISOString();
-                            saveLocalData();
-                            
-                            totalLoadedProducts += storeProducts.length;
+                            allProducts.push(...storeProducts);
                             console.log(`✅ تم تحميل ${storeProducts.length} منتج من ${store.name}`);
-                            return storeProducts;
                         } else {
                             console.log(`ℹ️ لا توجد منتجات في ${store.name}`);
-                            return [];
                         }
                     } catch (error) {
                         console.warn(`⚠️ فشل تحميل منتجات ${store.name}:`, error);
-                        
-                        // FIXED: إنشاء منتجات محلية احتياطية للمتاجر الجديدة
-                        if (shouldCreateSampleProducts(store)) {
-                            const fallbackProducts = createLocalSampleProductsAdvanced(store);
-                            if (fallbackProducts.length > 0) {
-                                totalLoadedProducts += fallbackProducts.length;
-                                console.log(`💾 تم إنشاء ${fallbackProducts.length} منتج احتياطي محلي لـ ${store.name}`);
-                                return fallbackProducts;
-                            }
-                        }
-                        return [];
-                    }
-                });
-
-                // انتظار تحميل منتجات جميع المتاجر
-                const allStoreProducts = await Promise.all(storePromises);
-                
-                // FIXED: دمج جميع المنتجات مع إزالة التكرارات
-                for (const storeProducts of allStoreProducts) {
-                    if (Array.isArray(storeProducts) && storeProducts.length > 0) {
-                        // إضافة المنتجات مع التحقق من عدم التكرار
-                        for (const product of storeProducts) {
-                            const existingProduct = allProducts.find(p => p.id === product.id);
-                            if (!existingProduct) {
-                                allProducts.push(product);
-                            } else {
-                                // تحديث المنتج الموجود إذا كان المنتج الجديد أحدث
-                                const existingDate = new Date(existingProduct.created_at || '2020-01-01').getTime();
-                                const newDate = new Date(product.created_at || '2020-01-01').getTime();
-                                if (newDate > existingDate) {
-                                    const index = allProducts.findIndex(p => p.id === product.id);
-                                    allProducts[index] = product;
-                                }
-                            }
+                        // في حالة الفشل، أنشئ منتجات محلية تجريبية
+                        if (store.type !== 'default') {
+                            const fallbackProducts = createLocalSampleProducts(store);
+                            allProducts.push(...fallbackProducts);
                         }
                     }
                 }
 
                 filteredProducts = [...allProducts];
-                console.log(`✅ إجمالي المنتجات المحملة والمدمجة: ${allProducts.length}`);
+                console.log(`✅ إجمالي المنتجات المحملة: ${allProducts.length}`);
                 
             } catch (error) {
                 console.error('❌ خطأ في تحميل المنتجات:', error);
@@ -2815,18 +2764,18 @@
             }
         }
 
-        // FIXED: تحميل منتجات متجر واحد مع تحسينات
-        async function loadStoreProductsAdvanced(store) {
+        // NEW: تحميل منتجات متجر واحد مع دعم التخزين المحلي
+        async function loadStoreProducts(store) {
             let products = [];
 
-            // أولاً: محاولة التحميل من قاعدة البيانات مع retry
-            if (supabase && store.products_table && (store.type === 'database' || store.type === 'default')) {
+            // أولاً: محاولة التحميل من قاعدة البيانات
+            if (supabase && store.products_table && store.type === 'database') {
                 try {
                     const { data, error } = await supabase
                         .from(store.products_table)
                         .select('*')
                         .order('created_at', { ascending: false })
-                        .limit(100); // زيادة الحد الأقصى
+                        .limit(50);
                     
                     if (!error && data && data.length > 0) {
                         products = data.map(product => ({
@@ -2837,26 +2786,22 @@
                             category: product.category || store.category || 'general',
                             images: processProductImages(product),
                             price: product.price || product.cost || 0,
-                            source_table: store.products_table,
-                            last_updated: new Date().toISOString()
+                            source_table: store.products_table
                         }));
-                        
-                        // FIXED: حفظ نسخة محلية احتياطية
-                        const localProductsKey = `clashy_products_${store.id}`;
-                        localStorage.setItem(localProductsKey, JSON.stringify(products));
-                        
                         console.log(`🗄️ تم تحميل ${products.length} منتج من قاعدة البيانات للمتجر ${store.name}`);
                         return products;
+                    } else if (error && !error.message.includes('does not exist')) {
+                        console.warn(`⚠️ خطأ في تحميل من قاعدة البيانات للمتجر ${store.name}:`, error);
                     }
                 } catch (error) {
                     console.warn(`⚠️ فشل الاتصال بقاعدة البيانات للمتجر ${store.name}:`, error);
                 }
             }
 
-            // ثانياً: محاولة التحميل من التخزين المحلي
-            if (products.length === 0) {
-                const localProductsKey = `clashy_products_${store.id}`;
-                const localData = localStorage.getItem(localProductsKey);
+            // ثانياً: محاولة التحميل من التخزين المحلي للمتاجر الجديدة
+            if (products.length === 0 && (store.type === 'database' || store.type === 'local')) {
+                const localProducts = `clashy_products_${store.id}`;
+                const localData = localStorage.getItem(localProducts);
                 
                 if (localData) {
                     try {
@@ -2877,187 +2822,61 @@
                 }
             }
 
-            return products;
-        }
-
-        // FIXED: فحص ما إذا كان يجب إنشاء منتجات تجريبية
-        function shouldCreateSampleProducts(store) {
-            // إنشاء منتجات تجريبية فقط للمتاجر الجديدة أو المتاجر التي لم يتم تحديثها مؤخراً
-            if (store.type === 'default') {
-                return false; // لا ننشئ منتجات تجريبية للمتاجر الافتراضية
-            }
-            
-            const lastUpdate = lastStoreUpdate[store.id];
-            if (!lastUpdate) {
-                return true; // متجر جديد
-            }
-            
-            // فحص إذا كان آخر تحديث أكثر من يوم واحد
-            const daysSinceUpdate = (new Date() - new Date(lastUpdate)) / (1000 * 60 * 60 * 24);
-            return daysSinceUpdate > 1;
-        }
-
-        // FIXED: إنشاء منتجات تجريبية متقدمة
-        async function createSampleProductsForStoreAdvanced(store) {
-            const sampleProducts = generateSampleProductsForStoreAdvanced(store);
-            
-            // محاولة حفظ المنتجات في قاعدة البيانات
-            if (supabase && store.products_table && store.type === 'database') {
-                try {
-                    console.log(`💾 حفظ ${sampleProducts.length} منتج تجريبي في جدول ${store.products_table}...`);
-                    
-                    const { data, error } = await supabase
-                        .from(store.products_table)
-                        .insert(sampleProducts.map(product => ({
-                            id: product.id,
-                            name: product.name,
-                            description: product.description,
-                            price: product.price,
-                            category: product.category,
-                            images: JSON.stringify(product.images),
-                            created_at: product.created_at
-                        })));
-                    
-                    if (!error) {
-                        console.log(`✅ تم حفظ ${sampleProducts.length} منتج تجريبي للمتجر ${store.name} في قاعدة البيانات`);
-                        showNotification(`🎉 تم إنشاء ${sampleProducts.length} منتج تجريبي للمتجر ${store.name}!`);
-                        return sampleProducts;
-                    } else {
-                        throw error;
-                    }
-                } catch (error) {
-                    console.warn(`⚠️ فشل حفظ المنتجات في قاعدة البيانات للمتجر ${store.name}:`, error);
-                }
-            }
-            
-            // في حالة فشل قاعدة البيانات أو المتاجر المحلية، احفظ محلياً
-            const localProductsKey = `clashy_products_${store.id}`;
-            localStorage.setItem(localProductsKey, JSON.stringify(sampleProducts));
-            console.log(`💾 تم حفظ ${sampleProducts.length} منتج تجريبي للمتجر ${store.name} محلياً`);
-            
-            return sampleProducts;
-        }
-
-        // FIXED: إنشاء منتجات تجريبية محلية متقدمة
-        function createLocalSampleProductsAdvanced(store) {
-            const localProductsKey = `clashy_products_${store.id}`;
-            let products = JSON.parse(localStorage.getItem(localProductsKey) || '[]');
-            
-            if (products.length === 0 || shouldCreateSampleProducts(store)) {
-                products = generateSampleProductsForStoreAdvanced(store);
-                localStorage.setItem(localProductsKey, JSON.stringify(products));
-                console.log(`💾 تم إنشاء وحفظ ${products.length} منتج تجريبي محلي للمتجر ${store.name}`);
-            }
-            
-            return products;
-        }
-
-        // FIXED: توليد منتجات تجريبية متقدمة
-        function generateSampleProductsForStoreAdvanced(store) {
-            const storeCategory = store.category || store.color || 'general';
-            const productTemplates = getProductTemplatesByCategory(storeCategory);
-            
-            return productTemplates.map((template, index) => ({
-                id: `${store.id}_product_${Date.now()}_${index}`,
-                name: template.name,
-                description: `${template.description} - حصرياً من ${store.name}`,
-                price: template.price,
-                category: template.category,
-                images: [template.image || 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                store_id: store.id,
-                store_name: store.name,
-                store_url: store.url,
-                source_table: store.products_table,
-                created_at: new Date(Date.now() + (index * 1000)).toISOString(), // تباعد زمني صغير
-                last_updated: new Date().toISOString(),
-                is_sample: true
-            }));
-        }
-
-        // FIXED: قوالب المنتجات حسب الفئة
-        function getProductTemplatesByCategory(category) {
-            const templates = {
-                textiles: [
-                    { name: 'شال صوفي فاخر', description: 'شال صوفي عالي الجودة مناسب للشتاء', price: 45000, category: 'textiles' },
-                    { name: 'طرحة حريرية أنيقة', description: 'طرحة حريرية ناعمة بألوان جذابة', price: 35000, category: 'textiles' },
-                    { name: 'كوفية تراثية', description: 'كوفية عراقية أصيلة بجودة عالية', price: 25000, category: 'textiles' },
-                    { name: 'غطاء رأس مطرز', description: 'غطاء رأس مطرز بأشكال جميلة', price: 40000, category: 'textiles' },
-                    { name: 'شال تركي مميز', description: 'شال تركي بتصميم عصري وألوان متنوعة', price: 50000, category: 'textiles' }
-                ],
-                electronics: [
-                    { name: 'سماعات لاسلكية', description: 'سماعات بلوتوث عالية الجودة', price: 85000, category: 'electronics' },
-                    { name: 'شاحن سريع', description: 'شاحن سريع متوافق مع جميع الأجهزة', price: 15000, category: 'electronics' },
-                    { name: 'كيبل USB متين', description: 'كيبل شحن مقوى ضد التلف', price: 8000, category: 'electronics' },
-                    { name: 'حامل الهاتف', description: 'حامل هاتف قابل للتعديل', price: 12000, category: 'electronics' },
-                    { name: 'بطارية محمولة', description: 'بطارية محمولة بسعة كبيرة', price: 35000, category: 'electronics' }
-                ],
-                phones: [
-                    { name: 'هاتف ذكي متقدم', description: 'هاتف ذكي بمواصفات عالية', price: 750000, category: 'phones' },
-                    { name: 'كفر حماية مقاوم', description: 'كفر حماية ضد الصدمات', price: 18000, category: 'phones' },
-                    { name: 'واقي شاشة زجاجي', description: 'واقي شاشة مقاوم للخدش', price: 8000, category: 'phones' },
-                    { name: 'سماعة أذن مع ميكروفون', description: 'سماعة أذن للمكالمات', price: 25000, category: 'phones' }
-                ],
-                general: [
-                    { name: 'منتج مميز 1', description: 'منتج عالي الجودة من المتجر', price: 30000, category: 'general' },
-                    { name: 'منتج مميز 2', description: 'منتج رائع بسعر مناسب', price: 50000, category: 'general' },
-                    { name: 'منتج مميز 3', description: 'أحدث المنتجات المتوفرة', price: 40000, category: 'general' },
-                    { name: 'منتج حصري', description: 'منتج حصري متوفر لفترة محدودة', price: 60000, category: 'general' }
-                ]
-            };
-
-            return templates[category] || templates.general;
-        }
-
-        // FIXED: بدء نظام التحديث التلقائي للمنتجات
-        function startAutoProductRefresh() {
-            // تحديث كل 5 دقائق للحصول على منتجات جديدة
-            if (globalProductRefreshInterval) {
-                clearInterval(globalProductRefreshInterval);
-            }
-            
-            globalProductRefreshInterval = setInterval(async () => {
-                if (navigator.onLine) {
+            // ثالثاً: للمتاجر الافتراضية، استخدم الجداول المحددة
+            if (products.length === 0 && store.type === 'default') {
+                if (store.id === 'alhajami' && supabase) {
                     try {
-                        console.log('🔄 تحديث تلقائي للمنتجات...');
-                        await loadProductsFromAllStoresOptimized();
-                        updateAllDisplays();
-                        updateStats();
-                        console.log('✅ تم التحديث التلقائي للمنتجات');
+                        const { data, error } = await supabase
+                            .from('products')
+                            .select('*')
+                            .order('created_at', { ascending: false })
+                            .limit(20);
+                        
+                        if (!error && data) {
+                            products = data.map(product => ({
+                                ...product,
+                                store_id: store.id,
+                                store_name: store.name,
+                                store_url: store.url,
+                                category: product.category || 'textiles',
+                                images: processProductImages(product),
+                                price: product.price || product.cost || 0,
+                                source_table: 'products'
+                            }));
+                        }
                     } catch (error) {
-                        console.error('❌ خطأ في التحديث التلقائي:', error);
+                        console.warn('⚠️ خطأ في تحميل منتجات الحجامي:', error);
+                    }
+                } else if (store.id === 'ghadeer' && supabase) {
+                    try {
+                        const { data, error } = await supabase
+                            .from('ghadeer_products')
+                            .select('*')
+                            .order('created_at', { ascending: false })
+                            .limit(20);
+                        
+                        if (!error && data) {
+                            products = data.map(product => ({
+                                ...product,
+                                store_id: store.id,
+                                store_name: store.name,
+                                store_url: store.url,
+                                category: product.category || 'electronics',
+                                images: processProductImages(product),
+                                price: product.price || product.cost || 0,
+                                source_table: 'ghadeer_products'
+                            }));
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ خطأ في تحميل منتجات الغدير:', error);
                     }
                 }
-            }, 300000); // 5 دقائق
-        }
-
-        // FIXED: إجبار تحديث شامل لجميع البيانات
-        async function forceRefreshAllData() {
-            showLoadingOverlay();
-            try {
-                console.log('🔄 بدء التحديث الشامل الإجباري...');
-                
-                // مسح البيانات المحلية المؤقتة
-                allProducts = [];
-                allStores = [];
-                
-                // إعادة تحميل كامل
-                await loadAllDataWithSmartRefresh();
-                
-                updateAllDisplays();
-                updateStats();
-                
-                showNotification('🎉 تم التحديث الشامل بنجاح! جميع المنتجات الجديدة محدثة الآن.');
-                console.log('✅ تم إكمال التحديث الشامل الإجباري');
-                
-            } catch (error) {
-                console.error('❌ خطأ في التحديث الشامل:', error);
-                showNotification('❌ فشل في التحديث الشامل', 'error');
-            } finally {
-                hideLoadingOverlay();
             }
+
+            return products;
         }
 
-        // إنشاء اسم جدول من اسم المتجر
+        // NEW: إنشاء اسم جدول من اسم المتجر
         function generateTableName(storeName) {
             return storeName
                 .toLowerCase()
@@ -3075,6 +2894,98 @@
                 + '_products';
         }
 
+        // NEW: إنشاء منتجات تجريبية للمتاجر الجديدة
+        async function createSampleProductsForStore(store) {
+            const sampleProducts = generateSampleProductsForStore(store);
+            
+            // محاولة حفظ المنتجات في قاعدة البيانات
+            if (supabase && store.products_table && store.type === 'database') {
+                try {
+                    console.log(`💾 حفظ منتجات تجريبية في جدول ${store.products_table}...`);
+                    
+                    const { data, error } = await supabase
+                        .from(store.products_table)
+                        .insert(sampleProducts.map(product => ({
+                            id: product.id,
+                            name: product.name,
+                            description: product.description,
+                            price: product.price,
+                            category: product.category,
+                            images: JSON.stringify(product.images),
+                            created_at: new Date().toISOString()
+                        })));
+                    
+                    if (!error) {
+                        console.log(`✅ تم حفظ ${sampleProducts.length} منتج تجريبي للمتجر ${store.name}`);
+                        showNotification(`🎉 تم إنشاء منتجات تجريبية للمتجر ${store.name}!`);
+                        return sampleProducts;
+                    } else {
+                        throw error;
+                    }
+                } catch (error) {
+                    console.warn(`⚠️ فشل حفظ المنتجات في قاعدة البيانات:`, error);
+                }
+            }
+            
+            // في حالة فشل قاعدة البيانات أو المتاجر المحلية، احفظ محلياً
+            const localProducts = `clashy_products_${store.id}`;
+            localStorage.setItem(localProducts, JSON.stringify(sampleProducts));
+            console.log(`💾 تم حفظ منتجات ${store.name} محلياً`);
+            
+            return sampleProducts;
+        }
+
+        // NEW: إنشاء منتجات تجريبية محلية
+        function createLocalSampleProducts(store) {
+            const localProducts = `clashy_products_${store.id}`;
+            let products = JSON.parse(localStorage.getItem(localProducts) || '[]');
+            
+            if (products.length === 0) {
+                products = generateSampleProductsForStore(store);
+                localStorage.setItem(localProducts, JSON.stringify(products));
+                console.log(`💾 تم إنشاء وحفظ منتجات تجريبية محلية للمتجر ${store.name}`);
+            }
+            
+            return products;
+        }
+
+        // NEW: توليد منتجات تجريبية حسب نوع المتجر
+        function generateSampleProductsForStore(store) {
+            const baseProducts = {
+                textiles: [
+                    { name: 'شال صوفي فاخر', description: 'شال صوفي عالي الجودة مناسب للشتاء', price: 45000, category: 'textiles' },
+                    { name: 'طرحة حريرية أنيقة', description: 'طرحة حريرية ناعمة بألوان جذابة', price: 35000, category: 'textiles' },
+                    { name: 'كوفية تراثية', description: 'كوفية عراقية أصيلة بجودة عالية', price: 25000, category: 'textiles' }
+                ],
+                electronics: [
+                    { name: 'سماعات لاسلكية', description: 'سماعات بلوتوث عالية الجودة', price: 85000, category: 'electronics' },
+                    { name: 'شاحن سريع', description: 'شاحن سريع متوافق مع جميع الأجهزة', price: 15000, category: 'electronics' },
+                    { name: 'كيبل USB متين', description: 'كيبل شحن مقوى ضد التلف', price: 8000, category: 'electronics' }
+                ],
+                general: [
+                    { name: 'منتج مميز 1', description: 'منتج عالي الجودة من المتجر', price: 30000, category: 'general' },
+                    { name: 'منتج مميز 2', description: 'منتج رائع بسعر مناسب', price: 50000, category: 'general' },
+                    { name: 'منتج مميز 3', description: 'أحدث المنتجات المتوفرة', price: 40000, category: 'general' }
+                ]
+            };
+
+            const storeCategory = store.category || store.color || 'general';
+            const templates = baseProducts[storeCategory] || baseProducts.general;
+            
+            return templates.map((template, index) => ({
+                id: `${store.id}_product_${index + 1}`,
+                name: template.name,
+                description: `${template.description} - من ${store.name}`,
+                price: template.price,
+                category: template.category,
+                images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
+                store_id: store.id,
+                store_name: store.name,
+                store_url: store.url,
+                source_table: store.products_table,
+                created_at: new Date().toISOString()
+            }));
+        }
         function processProductImages(product) {
             let images = [];
             
@@ -3181,10 +3092,10 @@
                     <div style="grid-column: 1/-1; text-align: center; padding: var(--space-8);">
                         <i class="fas fa-box-open" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
                         <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد منتجات</h3>
-                        <p style="color: var(--text-muted); font-size: var(--font-sm);">إنشئ متجراً جديداً أو انتظر تحديث المنتجات تلقائياً</p>
-                        <button class="view-all-btn" onclick="createNewStore()" style="margin-top: var(--space-3);">
-                            <i class="fas fa-plus"></i>
-                            إنشاء متجر جديد
+                        <p style="color: var(--text-muted); font-size: var(--font-sm);">لم يتم العثور على منتجات تطابق المعايير المحددة</p>
+                        <button class="view-all-btn" onclick="refreshData()" style="margin-top: var(--space-3);">
+                            <i class="fas fa-sync-alt"></i>
+                            تحديث البيانات
                         </button>
                     </div>
                 `;
@@ -3203,9 +3114,6 @@
             const heartIcon = isFavorited ? 'fas fa-heart' : 'far fa-heart';
             const heartColor = isFavorited ? 'color: var(--error-solid);' : '';
             
-            // إضافة علامة للمنتجات الجديدة
-            const isNew = product.is_sample || (new Date() - new Date(product.created_at)) < (7 * 24 * 60 * 60 * 1000); // جديد إذا كان عمره أقل من أسبوع
-            
             return `
                 <div class="product-card fade-in-up" onclick="openProduct('${product.id}', '${product.store_url || '#'}')">
                     <div class="product-image-container">
@@ -3213,7 +3121,6 @@
                              onerror="this.src='https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'">
                         <div class="product-store-badge">${product.store_name || 'متجر'}</div>
                         <div class="product-price-badge">${price.toLocaleString()} د.ع</div>
-                        ${isNew ? `<div style="position: absolute; bottom: var(--space-2); left: var(--space-2); background: var(--success); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: var(--font-xs); font-weight: 600; z-index: 2;">جديد</div>` : ''}
                         <div style="position: absolute; top: var(--space-2); right: 30px; background: rgba(255,255,255,0.9); border-radius: var(--radius-full); width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3;" onclick="event.stopPropagation(); toggleFavorite('${product.id}')">
                             <i class="${heartIcon}" style="font-size: var(--font-xs); ${heartColor}"></i>
                         </div>
@@ -3245,7 +3152,7 @@
                     <div style="grid-column: 1/-1; text-align: center; padding: var(--space-8);">
                         <i class="fas fa-store" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
                         <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد متاجر</h3>
-                        <p style="color: var(--text-muted); font-size: var(--font-sm);">ابدأ بإنشاء متجرك الأول</p>
+                        <p style="color: var(--text-muted); font-size: var(--font-sm);">لم يتم العثور على متاجر</p>
                         <button class="view-all-btn" onclick="createNewStore()" style="margin-top: var(--space-3);">
                             <i class="fas fa-plus"></i>
                             إضافة متجر جديد
@@ -3393,7 +3300,7 @@
             `;
         }
 
-        // إنشاء جدول منتجات جديد للمتجر
+        // NEW: إنشاء جدول منتجات جديد للمتجر
         async function createStoreProductsTable(tableName) {
             if (!supabase) {
                 throw new Error('Supabase غير متاح');
@@ -3414,6 +3321,7 @@
                 
             } catch (error) {
                 console.warn(`⚠️ لا يمكن إنشاء جدول ${tableName} تلقائياً:`, error);
+                // سنتجاهل الخطأ ونتركه لـ Supabase ليتعامل معه
                 return false;
             }
         }
@@ -3763,7 +3671,7 @@
             }
         }
 
-        // إضافة منتج جديد لمتجر
+        // NEW: إضافة منتج جديد لمتجر
         function addProductToStore() {
             // تحديث قائمة المتاجر في المودال
             const storeSelect = document.getElementById('productStore');
@@ -3785,7 +3693,7 @@
             document.getElementById('addProductModal').classList.add('active');
         }
 
-        // إرسال نموذج إضافة المنتج
+        // NEW: إرسال نموذج إضافة المنتج
         async function submitProductForm(event) {
             event.preventDefault();
             
@@ -3824,9 +3732,7 @@
                     store_name: store.name,
                     store_url: store.url,
                     source_table: store.products_table,
-                    created_at: new Date().toISOString(),
-                    last_updated: new Date().toISOString(),
-                    is_sample: false
+                    created_at: new Date().toISOString()
                 };
 
                 let saved = false;
@@ -3867,27 +3773,22 @@
                     }
                 }
 
-                // FIXED: إضافة المنتج للمصفوفة الرئيسية فوراً وإعادة تحميل كامل
+                // إضافة المنتج للمصفوفة الرئيسية فوراً
                 allProducts.push(newProduct);
                 filteredProducts = [...allProducts];
-
-                // تحديث طابع آخر تحديث للمتجر
-                lastStoreUpdate[store.id] = new Date().toISOString();
-                saveLocalData();
 
                 // إعادة تعيين النموذج
                 document.getElementById('addProductForm').reset();
                 closeModal('addProductModal');
 
-                // تحديث العروض فوراً
+                // تحديث العروض
                 updateAllDisplays();
                 updateStats();
 
-                // إعادة تحميل كامل للتأكد من ظهور المنتج
-                setTimeout(async () => {
-                    await forceRefreshAllData();
+                // الانتقال للصفحة الرئيسية لرؤية المنتج الجديد
+                setTimeout(() => {
                     showProducts();
-                    showNotification(`🎉 تم إضافة "${productName}" بنجاح! المنتج متاح الآن في الصفحة الرئيسية.`);
+                    showNotification(`🎉 تم إضافة "${productName}" بنجاح! يمكنك رؤيته في الصفحة الرئيسية.`);
                 }, 1000);
 
             } catch (error) {
@@ -3898,7 +3799,6 @@
                 submitBtn.innerHTML = originalText;
             }
         }
-
         function createNewStore() {
             document.getElementById('createStoreModal').classList.add('active');
             closeSidebar();
@@ -4136,11 +4036,6 @@
                             saveLocalData();
                         }
                     }
-                    
-                    // حذف البيانات المحلية للمتجر
-                    const localProductsKey = `clashy_products_${store.id}`;
-                    localStorage.removeItem(localProductsKey);
-                    
                     if (!deleted) {
                         showNotification('✅ تم حذف المتجر محلياً!');
                     }
@@ -4154,10 +4049,6 @@
                     product.store_id !== storeId && product.source_table !== store.products_table
                 );
                 filteredProducts = [...allProducts];
-
-                // حذف من آخر تحديث للمتجر
-                delete lastStoreUpdate[store.id];
-                saveLocalData();
 
                 closeModal('deleteConfirmModal');
                 storeToDelete = null;
@@ -4179,7 +4070,7 @@
             }
         }
 
-        // FIXED: إرسال نموذج إنشاء المتجر مع التحسينات الجديدة
+        // NEW: إرسال نموذج إنشاء المتجر مع دعم قاعدة البيانات
         async function submitStoreForm(event) {
             event.preventDefault();
             
@@ -4246,15 +4137,17 @@
                 }
 
                 // إضافة للمصفوفة الرئيسية
-                const newStore = {
+                allStores.push({
                     ...formData, 
                     type: saved ? 'database' : 'local'
-                };
-                allStores.push(newStore);
+                });
 
-                // FIXED: إنشاء منتجات تجريبية فوراً للمتجر الجديد
+                // إنشاء منتجات تجريبية فوراً للمتجر الجديد
                 console.log(`🎯 إنشاء منتجات تجريبية للمتجر الجديد ${storeName}...`);
-                const sampleProducts = await createSampleProductsForStoreAdvanced(newStore);
+                const sampleProducts = await createSampleProductsForStore({
+                    ...formData,
+                    type: saved ? 'database' : 'local'
+                });
                 
                 if (sampleProducts.length > 0) {
                     allProducts.push(...sampleProducts);
@@ -4262,9 +4155,6 @@
                     console.log(`✅ تم إنشاء ${sampleProducts.length} منتج تجريبي للمتجر ${storeName}`);
                 }
 
-                // تحديث طابع آخر تحديث للمتجر
-                lastStoreUpdate[formData.id] = new Date().toISOString();
-                
                 // إعادة تعيين النموذج
                 document.getElementById('createStoreForm').reset();
                 closeModal('createStoreModal');
@@ -4277,13 +4167,12 @@
 
                 updateAllDisplays();
                 updateStats();
-                saveLocalData();
 
                 // توجيه المستخدم لصفحة المتاجر لرؤية المتجر الجديد
                 setTimeout(() => {
                     showStoresSection();
                     const productCount = sampleProducts.length;
-                    showNotification(`🎉 مبروك! تم إنشاء متجر "${storeName}" مع ${productCount} منتج تجريبي.`);
+                    showNotification(`🎉 مبروك! تم إنشاء متجر "${storeName}" مع ${productCount} منتج تجريبي. تحقق من الصفحة الرئيسية!`);
                     
                     // انتقال تلقائي للصفحة الرئيسية بعد 3 ثوان
                     setTimeout(() => {
@@ -4342,11 +4231,11 @@
         }
 
         function showAbout() {
-            showNotification('ℹ️ كلاشي v5.1 PWA - السوق الإلكتروني الشامل مع عرض تلقائي للمنتجات الجديدة!');
+            showNotification('ℹ️ كلاشي v5.0 PWA - السوق الإلكتروني الشامل مع منتجات تجريبية تلقائية!');
         }
 
         function openWhatsApp() {
-            const message = encodeURIComponent('السلام عليكم، أريد الاستفسار عن كلاشي - السوق الإلكتروني الشامل مع عرض المنتجات التلقائي 🛍️');
+            const message = encodeURIComponent('السلام عليكم، أريد الاستفسار عن كلاشي - السوق الإلكتروني الشامل مع إنشاء المتاجر 🛍️');
             window.open(`https://wa.me/9647813798636?text=${message}`, '_blank');
             showNotification('📱 تم فتح واتساب...');
         }
@@ -4440,6 +4329,21 @@
             }, 4000);
         }
 
+        // إعادة تحميل البيانات
+        async function refreshData() {
+            showLoadingOverlay();
+            try {
+                allProducts = [];
+                await loadAllData();
+                showNotification('🔄 تم تحديث البيانات بنجاح - جميع المتاجر والمنتجات محدثة!');
+            } catch (error) {
+                console.error('❌ خطأ في تحديث البيانات:', error);
+                showNotification('❌ فشل في تحديث البيانات', 'error');
+            } finally {
+                hideLoadingOverlay();
+            }
+        }
+
         // التعامل مع النقر والمفاتيح
         document.addEventListener('click', function(e) {
             const sidebar = document.getElementById('sidebar');
@@ -4490,15 +4394,15 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي PWA v5.1 المُصحح جاهز للعمل!');
-            console.log('📱 السوق الإلكتروني الشامل - الإصدار المُحسن');
-            console.log('🏪 إنشاء وإدارة المتاجر مع عرض فوري للمنتجات');
+            console.log('🚀 كلاشي PWA الجديد v5.0 جاهز للعمل!');
+            console.log('📱 السوق الإلكتروني الشامل - الإصدار المطور');
+            console.log('🏪 إنشاء وإدارة المتاجر مع منتجات تجريبية تلقائية');
             console.log('📦 عرض منتجات جميع المتاجر فوراً في الصفحة الرئيسية');
-            console.log('🔄 تحديث ذكي مع منتجات تجريبية للمتاجر الجديدة');
+            console.log('🔄 تحميل ديناميكي مع منتجات تجريبية للمتاجر الجديدة');
             console.log('✨ نظام قواعد بيانات متقدم مع دعم التخزين المحلي');
             console.log('📝 إضافة منتجات جديدة للمتاجر بسهولة');
             console.log('💾 حفظ محلي وسحابي مع مزامنة ذكية');
-            console.log('🛍️ منتجات فورية من جميع المتاجر الجديدة');
+            console.log('🛍️ منتجات فورية من جميع المتاجر');
             console.log('🏪 إدارة متقدمة للمتاجر والمنتجات');
             console.log('✏️ تعديل وحذف المتاجر والمنتجات');
             console.log('❤️ نظام المفضلة والسلة المحدث');
@@ -4511,44 +4415,21 @@
             console.log('🔔 إشعارات التحديثات');
             console.log('🖼️ معالجة محسنة للصور');
             console.log('📊 إحصائيات شاملة');
-            console.log('🔧 عرض تلقائي للمنتجات الجديدة');
-            console.log('⚡ تحديث فوري للمنتجات عند إنشاء المتاجر');
-            console.log('🔄 نظام تحديث ذكي كل 5 دقائق');
+            console.log('🔧 إدارة شاملة مع منتجات تجريبية');
             console.log('📞 للدعم والتواصل: 07813798636');
-            console.log('🎯 إصدار مُصحح: جميع منتجات المتاجر الجديدة تظهر فوراً!');
         });
 
-        // FIXED: تحديث البيانات بشكل دوري مع التحسينات
-        if (globalProductRefreshInterval) {
-            clearInterval(globalProductRefreshInterval);
-        }
-        
+        // تحديث البيانات بشكل دوري
         setInterval(async () => {
             if (navigator.onLine) {
                 try {
-                    console.log('🔄 تحديث تلقائي للبيانات...');
-                    await loadProductsFromAllStoresOptimized();
-                    updateAllDisplays();
-                    updateStats();
-                    console.log('✅ تم التحديث التلقائي - جميع المنتجات الجديدة محدثة');
+                    await refreshData();
+                    console.log('🔄 تم تحديث البيانات تلقائياً - جميع المتاجر والمنتجات محدثة');
                 } catch (error) {
                     console.error('❌ خطأ في التحديث التلقائي:', error);
                 }
             }
         }, 300000); // كل 5 دقائق
-
-        // FIXED: إضافة مستمع لإعادة التحميل عند التركيز على النافذة
-        window.addEventListener('focus', async () => {
-            try {
-                console.log('👁️ تم التركيز على النافذة - تحديث البيانات...');
-                await loadProductsFromAllStoresOptimized();
-                updateAllDisplays();
-                updateStats();
-                console.log('✅ تم تحديث البيانات عند التركيز');
-            } catch (error) {
-                console.error('❌ خطأ في التحديث عند التركيز:', error);
-            }
-        });
 
     </script>
 </body>
