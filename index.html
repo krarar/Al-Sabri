@@ -945,6 +945,25 @@
             overflow: hidden;
         }
 
+        /* Store Products Section */
+        .store-products-section {
+            margin-top: var(--space-4);
+            padding: var(--space-3);
+            background: var(--glass);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--glass-border);
+        }
+
+        .store-products-header {
+            font-size: var(--font-base);
+            font-weight: 600;
+            color: var(--primary-solid);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
         /* Favorites & Cart */
         .favorites-section, .cart-section {
             padding: 0 var(--space-2);
@@ -1139,38 +1158,6 @@
 
         .store-action-btn.delete:hover {
             background: var(--error-solid);
-        }
-
-        /* Add Product Button */
-        .add-product-btn {
-            position: absolute;
-            bottom: var(--space-2);
-            left: var(--space-2);
-            background: rgba(16, 185, 129, 0.9);
-            color: white;
-            border: none;
-            border-radius: var(--radius-full);
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: var(--font-xs);
-            transition: all var(--transition-base);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            opacity: 0;
-            z-index: 3;
-        }
-
-        .store-card:hover .add-product-btn {
-            opacity: 1;
-        }
-
-        .add-product-btn:hover {
-            background: var(--success-solid);
-            transform: scale(1.1);
         }
 
         /* Confirmation Modal */
@@ -2003,7 +1990,7 @@
             <div class="section-header">
                 <div>
                     <h2 class="section-title">🌟 المنتجات المميزة</h2>
-                    <p class="section-subtitle">اكتشف أحدث وأفضل المنتجات من متاجرنا المختارة</p>
+                    <p class="section-subtitle">اكتشف أحدث وأفضل المنتجات من جميع متاجرنا</p>
                 </div>
                 <button class="view-all-btn" onclick="showAllProducts()">عرض الكل</button>
             </div>
@@ -2018,7 +2005,7 @@
             <div class="section-header">
                 <div>
                     <h2 class="section-title">🏪 متاجرنا المميزة</h2>
-                    <p class="section-subtitle">تصفح مجموعة متنوعة من المتاجر المحلية والعالمية</p>
+                    <p class="section-subtitle">تصفح مجموعة متنوعة من المتاجر مع منتجاتها</p>
                 </div>
                 <button class="view-all-btn" onclick="showProducts()">المنتجات</button>
             </div>
@@ -2092,13 +2079,13 @@
         </div>
     </nav>
 
-    <!-- Create Store Modal -->
+    <!-- Create/Edit Store Modal -->
     <div class="modal" id="createStoreModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">
                     <i class="fas fa-plus-circle"></i>
-                    إضافة متجر جديد
+                    إضافة متجر جديد مع منتجاته
                 </h3>
                 <button class="close-btn" onclick="closeModal('createStoreModal')">
                     <i class="fas fa-times"></i>
@@ -2119,6 +2106,15 @@
                 <div class="form-group">
                     <label class="form-label" for="storeUrl">رابط/اسم الملف *</label>
                     <input type="text" id="storeUrl" class="form-input" placeholder="مثل: mystore.html/" required>
+                </div>
+
+                <!-- NEW: Store Table Name -->
+                <div class="form-group">
+                    <label class="form-label" for="storeTableName">اسم جدول المنتجات (اختياري)</label>
+                    <input type="text" id="storeTableName" class="form-input" placeholder="مثل: my_store_products (سيتم إنشاؤه تلقائياً إذا تُرك فارغاً)">
+                    <small style="color: var(--text-muted); font-size: var(--font-xs); margin-top: var(--space-1); display: block;">
+                        💡 اتركه فارغاً ليتم إنشاء اسم تلقائي من اسم المتجر
+                    </small>
                 </div>
 
                 <div class="form-group">
@@ -2176,103 +2172,9 @@
 
                 <button type="submit" class="submit-btn" id="submitBtn">
                     <i class="fas fa-save"></i>
-                    حفظ في قاعدة البيانات
+                    حفظ المتجر مع إعداد قاعدة البيانات
                 </button>
             </form>
-        </div>
-    </div>
-
-    <!-- Add Product Modal -->
-    <div class="modal" id="addProductModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-plus-circle"></i>
-                    إضافة منتج لمتجر <span id="selectedStoreName"></span>
-                </h3>
-                <button class="close-btn" onclick="closeModal('addProductModal')">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <form id="addProductForm" onsubmit="submitProductForm(event)">
-                <input type="hidden" id="productStoreId">
-                
-                <div class="form-group">
-                    <label class="form-label" for="productName">اسم المنتج *</label>
-                    <input type="text" id="productName" class="form-input" placeholder="أدخل اسم المنتج" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="productDescription">وصف المنتج *</label>
-                    <textarea id="productDescription" class="form-textarea" placeholder="وصف تفصيلي للمنتج" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="productPrice">السعر (دينار عراقي) *</label>
-                    <input type="number" id="productPrice" class="form-input" placeholder="0" min="0" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="productCategory">الفئة *</label>
-                    <select id="productCategory" class="form-select" required>
-                        <option value="">اختر الفئة</option>
-                        <option value="textiles">منسوجات</option>
-                        <option value="electronics">إلكترونيات</option>
-                        <option value="phones">هواتف</option>
-                        <option value="accessories">إكسسوارات</option>
-                        <option value="fashion">أزياء</option>
-                        <option value="home">منزل وحديقة</option>
-                        <option value="food">أطعمة</option>
-                        <option value="books">كتب</option>
-                        <option value="cars">سيارات</option>
-                        <option value="gaming">ألعاب</option>
-                        <option value="general">عام</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="productImageUrl">رابط صورة المنتج</label>
-                    <input type="url" id="productImageUrl" class="form-input" placeholder="https://example.com/image.jpg">
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitProductBtn">
-                    <i class="fas fa-save"></i>
-                    حفظ المنتج
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Contact Modal -->
-    <div class="modal" id="contactModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-phone"></i>
-                    تواصل معنا
-                </h3>
-                <button class="close-btn" onclick="closeModal('contactModal')">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div style="text-align: center; padding: var(--space-4);">
-                <div style="margin-bottom: var(--space-5);">
-                    <h4 style="color: var(--primary-solid); margin-bottom: var(--space-4); font-size: var(--font-lg);">معلومات التواصل</h4>
-                    <p style="color: var(--text-secondary); margin-bottom: var(--space-3); font-size: var(--font-base);">🏠 العراق - بغداد</p>
-                    <p style="color: var(--text-secondary); margin-bottom: var(--space-3); font-size: var(--font-base);">
-                        <span style="font-weight:bold; color: var(--accent-solid);">📞 07813798636</span>
-                    </p>
-                    <p style="color: var(--text-secondary); margin-bottom: var(--space-3); font-size: var(--font-base);">📧 info@clashy.iq</p>
-                    <p style="color: var(--text-secondary); font-size: var(--font-base);">🕒 متاح 24/7</p>
-                </div>
-                
-                <button class="submit-btn" onclick="openWhatsApp()">
-                    <i class="fab fa-whatsapp"></i>
-                    تواصل عبر واتساب
-                </button>
-            </div>
         </div>
     </div>
 
@@ -2305,6 +2207,14 @@
                 <div class="form-group">
                     <label class="form-label" for="editStoreUrl">رابط/اسم الملف *</label>
                     <input type="text" id="editStoreUrl" class="form-input" placeholder="مثل: mystore.html/" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="editStoreTableName">اسم جدول المنتجات</label>
+                    <input type="text" id="editStoreTableName" class="form-input" placeholder="اسم جدول المنتجات" readonly style="background: var(--bg-secondary); cursor: not-allowed;">
+                    <small style="color: var(--text-muted); font-size: var(--font-xs); margin-top: var(--space-1); display: block;">
+                        ℹ️ لا يمكن تعديل اسم الجدول بعد الإنشاء
+                    </small>
                 </div>
 
                 <div class="form-group">
@@ -2376,16 +2286,48 @@
             <p class="confirm-message">
                 هل أنت متأكد من حذف هذا المتجر؟<br>
                 <strong id="storeToDeleteName"></strong><br>
-                <span style="color: var(--error-solid); font-size: var(--font-xs);">هذا الإجراء لا يمكن التراجع عنه</span>
+                <span style="color: var(--error-solid); font-size: var(--font-xs);">⚠️ سيتم حذف المتجر وجميع منتجاته نهائياً</span>
             </p>
             <div class="confirm-actions">
                 <button class="confirm-btn danger" id="confirmDeleteBtn">
                     <i class="fas fa-trash"></i>
-                    حذف المتجر
+                    حذف المتجر والمنتجات
                 </button>
                 <button class="confirm-btn secondary" onclick="closeModal('deleteConfirmModal')">
                     <i class="fas fa-times"></i>
                     إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-phone"></i>
+                    تواصل معنا
+                </h3>
+                <button class="close-btn" onclick="closeModal('contactModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div style="text-align: center; padding: var(--space-4);">
+                <div style="margin-bottom: var(--space-5);">
+                    <h4 style="color: var(--primary-solid); margin-bottom: var(--space-4); font-size: var(--font-lg);">معلومات التواصل</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-3); font-size: var(--font-base);">🏠 العراق - بغداد</p>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-3); font-size: var(--font-base);">
+                        <span style="font-weight:bold; color: var(--accent-solid);">📞 07813798636</span>
+                    </p>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-3); font-size: var(--font-base);">📧 info@clashy.iq</p>
+                    <p style="color: var(--text-secondary); font-size: var(--font-base);">🕒 متاح 24/7</p>
+                </div>
+                
+                <button class="submit-btn" onclick="openWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل عبر واتساب
                 </button>
             </div>
         </div>
@@ -2413,12 +2355,14 @@
         let allProducts = [];
         let allStores = [];
         let userStores = [];
-        let userProducts = []; // NEW: Array for user's custom products
         let filteredProducts = [];
         let favorites = [];
         let cart = [];
         let selectedIcon = 'fas fa-store';
         let selectedColor = 'primary';
+        let editSelectedIcon = 'fas fa-store';
+        let editSelectedColor = 'primary';
+        let storeToDelete = null;
         let currentFilters = {
             category: 'all'
         };
@@ -2454,7 +2398,7 @@
                 setupScrollEffects();
                 
                 hideLoadingOverlay();
-                showNotification('🎉 مرحباً بك في كلاشي - تطبيق PWA محدث مع دعم المنتجات للمتاجر الجديدة!');
+                showNotification('🎉 مرحباً بك في كلاشي - الآن يدعم عرض منتجات جميع المتاجر!');
                 
             } catch (error) {
                 console.error('❌ خطأ في تهيئة التطبيق:', error);
@@ -2605,7 +2549,6 @@
             favorites = JSON.parse(localStorage.getItem('clashy_favorites') || '[]');
             cart = JSON.parse(localStorage.getItem('clashy_cart') || '[]');
             userStores = JSON.parse(localStorage.getItem('clashy_user_stores') || '[]');
-            userProducts = JSON.parse(localStorage.getItem('clashy_user_products') || '[]'); // NEW: Load user products
             
             // تحميل إعداد الوضع
             const savedTheme = localStorage.getItem('clashy_theme') || 'dark';
@@ -2613,24 +2556,24 @@
             updateThemeUI();
         }
 
-        // FIXED: حفظ البيانات محلياً مع معالجة الصور
+        // حفظ البيانات محلياً
         function saveLocalData() {
             localStorage.setItem('clashy_favorites', JSON.stringify(favorites));
             localStorage.setItem('clashy_cart', JSON.stringify(cart));
             localStorage.setItem('clashy_user_stores', JSON.stringify(userStores));
-            localStorage.setItem('clashy_user_products', JSON.stringify(userProducts)); // NEW: Save user products
         }
 
-        // تحميل جميع البيانات
+        // FIXED: تحميل جميع البيانات مع دعم المتاجر الجديدة
         async function loadAllData() {
             try {
                 await Promise.allSettled([
                     loadStoresData(),
-                    loadProductsFromStores()
+                    loadProductsFromAllStores() // NEW: تحميل من جميع المتاجر
                 ]);
                 
                 updateAllDisplays();
                 updateStats();
+                console.log(`✅ تم تحميل ${allProducts.length} منتج من ${allStores.length} متجر`);
                 
             } catch (error) {
                 console.error('❌ خطأ في تحميل البيانات:', error);
@@ -2654,7 +2597,8 @@
                         color: 'textiles',
                         category: 'textiles',
                         available: true,
-                        type: 'default'
+                        type: 'default',
+                        products_table: 'products' // الجدول الافتراضي للحجامي
                     },
                     {
                         id: 'ghadeer',
@@ -2665,13 +2609,14 @@
                         color: 'electronics',
                         category: 'electronics',
                         available: true,
-                        type: 'default'
+                        type: 'default',
+                        products_table: 'ghadeer_products' // الجدول المخصص للغدير
                     }
                 ];
 
                 allStores.push(...defaultStores);
 
-                // إضافة المتاجر المُنشأة من قبل المستخدم
+                // تحميل المتاجر من قاعدة البيانات
                 if (supabase) {
                     const { data, error } = await supabase
                         .from('stores')
@@ -2679,18 +2624,22 @@
                         .order('created_at', { ascending: false });
                     
                     if (!error && data) {
-                        allStores.push(...data.map(store => ({
+                        const dbStores = data.map(store => ({
                             ...store,
-                            type: 'database'
-                        })));
+                            type: 'database',
+                            products_table: store.products_table || generateTableName(store.name)
+                        }));
+                        allStores.push(...dbStores);
                     }
                 }
 
                 // إضافة المتاجر المحلية
-                allStores.push(...userStores.map(store => ({
+                const localStores = userStores.map(store => ({
                     ...store,
-                    type: 'local'
-                })));
+                    type: 'local',
+                    products_table: store.products_table || generateTableName(store.name)
+                }));
+                allStores.push(...localStores);
 
                 console.log(`✅ تم تحميل ${allStores.length} متجر`);
                 
@@ -2699,23 +2648,27 @@
             }
         }
 
-        // NEW: تحميل المنتجات من المتاجر المختلفة مع دعم المتاجر الجديدة
-        async function loadProductsFromStores() {
+        // NEW: تحميل المنتجات من جميع المتاجر
+        async function loadProductsFromAllStores() {
             try {
                 allProducts = [];
                 
-                await Promise.allSettled([
-                    loadAlhajamiProducts(),
-                    loadGhadeerProducts(),
-                    loadDatabaseProducts(),
-                    loadUserStoreProducts() // NEW: Load products from user stores
-                ]);
-
-                // إضافة المنتجات المحفوظة محلياً
-                allProducts.push(...userProducts);
+                // تحميل منتجات كل متجر بشكل منفصل
+                for (const store of allStores) {
+                    try {
+                        console.log(`🔄 تحميل منتجات ${store.name}...`);
+                        const storeProducts = await loadStoreProducts(store);
+                        if (storeProducts.length > 0) {
+                            allProducts.push(...storeProducts);
+                            console.log(`✅ تم تحميل ${storeProducts.length} منتج من ${store.name}`);
+                        }
+                    } catch (error) {
+                        console.warn(`⚠️ فشل تحميل منتجات ${store.name}:`, error);
+                    }
+                }
 
                 filteredProducts = [...allProducts];
-                console.log(`✅ تم تحميل ${allProducts.length} منتج من جميع المتاجر`);
+                console.log(`✅ إجمالي المنتجات المحملة: ${allProducts.length}`);
                 
             } catch (error) {
                 console.error('❌ خطأ في تحميل المنتجات:', error);
@@ -2723,128 +2676,69 @@
             }
         }
 
-        // تحميل منتجات الحجامي
-        async function loadAlhajamiProducts() {
-            if (!supabase) return;
-            
+        // NEW: تحميل منتجات متجر واحد
+        async function loadStoreProducts(store) {
+            if (!supabase || !store.products_table) {
+                return [];
+            }
+
             try {
                 const { data, error } = await supabase
-                    .from('products')
+                    .from(store.products_table)
                     .select('*')
                     .order('created_at', { ascending: false })
-                    .limit(20);
+                    .limit(50); // حد أقصى 50 منتج لكل متجر
                 
-                if (!error && data) {
-                    const alhajamiProducts = data.map(product => ({
-                        ...product,
-                        store_id: 'alhajami',
-                        store_name: 'محلات الحجامي',
-                        store_url: './alhajami.html',
-                        category: product.category || 'textiles',
-                        images: processProductImages(product),
-                        price: product.price || product.cost || 0
-                    }));
-                    allProducts.push(...alhajamiProducts);
-                    console.log(`📦 تم تحميل ${alhajamiProducts.length} منتج من الحجامي`);
-                }
-            } catch (error) {
-                console.error('❌ خطأ في تحميل منتجات الحجامي:', error);
-            }
-        }
-
-        // تحميل منتجات الغدير
-        async function loadGhadeerProducts() {
-            if (!supabase) return;
-            
-            try {
-                const { data, error } = await supabase
-                    .from('ghadeer_products')
-                    .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(20);
-                
-                if (!error && data) {
-                    const ghadeerProducts = data.map(product => ({
-                        ...product,
-                        store_id: 'ghadeer',
-                        store_name: 'مكتب الغدير',
-                        store_url: './Al Ghadeer Office.html',
-                        category: product.category || 'electronics',
-                        images: processProductImages(product),
-                        price: product.price || product.cost || 0
-                    }));
-                    allProducts.push(...ghadeerProducts);
-                    console.log(`📦 تم تحميل ${ghadeerProducts.length} منتج من الغدير`);
-                }
-            } catch (error) {
-                console.error('❌ خطأ في تحميل منتجات الغدير:', error);
-            }
-        }
-
-        // تحميل منتجات من قاعدة البيانات العامة
-        async function loadDatabaseProducts() {
-            if (!supabase) return;
-            
-            try {
-                const { data, error } = await supabase
-                    .from('clashy_products')
-                    .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(50);
-                
-                if (!error && data) {
-                    const dbProducts = data.map(product => ({
-                        ...product,
-                        store_name: product.store_name || 'متجر كلاشي',
-                        category: product.category || 'general',
-                        images: processProductImages(product),
-                        price: product.price || product.cost || 0,
-                        store_url: product.store_url || '#'
-                    }));
-                    allProducts.push(...dbProducts);
-                    console.log(`📦 تم تحميل ${dbProducts.length} منتج من قاعدة البيانات العامة`);
-                }
-            } catch (error) {
-                console.error('❌ خطأ في تحميل المنتجات العامة:', error);
-            }
-        }
-
-        // NEW: تحميل منتجات من المتاجر التي أنشأها المستخدم
-        async function loadUserStoreProducts() {
-            if (!supabase) return;
-            
-            try {
-                // تحميل منتجات كل متجر أنشأه المستخدم
-                for (const store of allStores) {
-                    if (store.type === 'database' || store.type === 'local') {
-                        // البحث عن منتجات هذا المتجر في قاعدة البيانات
-                        const { data, error } = await supabase
-                            .from('store_products')
-                            .select('*')
-                            .eq('store_id', store.id)
-                            .order('created_at', { ascending: false });
-                        
-                        if (!error && data && data.length > 0) {
-                            const storeProducts = data.map(product => ({
-                                ...product,
-                                store_id: store.id,
-                                store_name: store.name,
-                                store_url: store.url,
-                                category: product.category || store.category || 'general',
-                                images: processProductImages(product),
-                                price: product.price || product.cost || 0
-                            }));
-                            allProducts.push(...storeProducts);
-                            console.log(`📦 تم تحميل ${storeProducts.length} منتج من متجر ${store.name}`);
-                        }
+                if (error) {
+                    // إذا كان الجدول غير موجود، سنتجاهل الخطأ
+                    if (error.code === 'PGRST116' || error.message.includes('does not exist')) {
+                        console.log(`ℹ️ جدول ${store.products_table} غير موجود - سيتم إنشاؤه عند إضافة منتجات`);
+                        return [];
                     }
+                    throw error;
                 }
+
+                if (!data || data.length === 0) {
+                    return [];
+                }
+
+                // تنسيق المنتجات مع معلومات المتجر
+                return data.map(product => ({
+                    ...product,
+                    store_id: store.id,
+                    store_name: store.name,
+                    store_url: store.url,
+                    category: product.category || store.category || 'general',
+                    images: processProductImages(product),
+                    price: product.price || product.cost || 0,
+                    source_table: store.products_table
+                }));
+                
             } catch (error) {
-                console.error('❌ خطأ في تحميل منتجات المتاجر المُنشأة:', error);
+                console.error(`❌ خطأ في تحميل منتجات ${store.name}:`, error);
+                return [];
             }
         }
 
-        // FIXED: معالجة صور المنتجات بشكل صحيح
+        // NEW: إنشاء اسم جدول من اسم المتجر
+        function generateTableName(storeName) {
+            return storeName
+                .toLowerCase()
+                .replace(/[^\u0600-\u06FF\w\s]/g, '') // إزالة الرموز الخاصة
+                .replace(/\s+/g, '_') // استبدال المسافات بـ _
+                .replace(/[ء-ي]/g, (char) => { // تحويل الأحرف العربية إلى إنجليزية
+                    const arabicToEnglish = {
+                        'ا': 'a', 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'h', 'خ': 'kh',
+                        'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 's',
+                        'ض': 'd', 'ط': 't', 'ظ': 'z', 'ع': 'a', 'غ': 'gh', 'ف': 'f', 'ق': 'q',
+                        'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h', 'و': 'w', 'ي': 'y'
+                    };
+                    return arabicToEnglish[char] || char;
+                })
+                + '_products';
+        }
+
+        // معالجة صور المنتجات
         function processProductImages(product) {
             let images = [];
             
@@ -2929,28 +2823,6 @@
                     store_name: 'مكتب الغدير',
                     store_url: './Al Ghadeer Office.html',
                     category: 'accessories'
-                },
-                {
-                    id: 'sample5',
-                    name: 'كوفية أصلية',
-                    description: 'كوفية عراقية أصلية بجودة عالية',
-                    price: 25000,
-                    images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'alhajami',
-                    store_name: 'محلات الحجامي',
-                    store_url: './alhajami.html',
-                    category: 'textiles'
-                },
-                {
-                    id: 'sample6',
-                    name: 'ساعة ذكية',
-                    description: 'ساعة ذكية بمميزات متطورة',
-                    price: 200000,
-                    images: ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'],
-                    store_id: 'ghadeer',
-                    store_name: 'مكتب الغدير',
-                    store_url: './Al Ghadeer Office.html',
-                    category: 'accessories'
                 }
             ];
             filteredProducts = [...allProducts];
@@ -2974,6 +2846,10 @@
                         <i class="fas fa-box-open" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
                         <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد منتجات</h3>
                         <p style="color: var(--text-muted); font-size: var(--font-sm);">لم يتم العثور على منتجات تطابق المعايير المحددة</p>
+                        <button class="view-all-btn" onclick="refreshData()" style="margin-top: var(--space-3);">
+                            <i class="fas fa-sync-alt"></i>
+                            تحديث البيانات
+                        </button>
                     </div>
                 `;
                 return;
@@ -2982,7 +2858,7 @@
             productsGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
         }
 
-        // FIXED: إنشاء بطاقة منتج مع معالجة صحيحة للصور
+        // إنشاء بطاقة منتج
         function createProductCard(product) {
             const images = product.images || ['https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'];
             const firstImage = Array.isArray(images) ? images[0] : images;
@@ -3020,7 +2896,7 @@
             `;
         }
 
-        // عرض المتاجر
+        // عرض المتاجر مع معلومات عن المنتجات
         function displayStores() {
             const storesGrid = document.getElementById('storesGrid');
             
@@ -3030,6 +2906,10 @@
                         <i class="fas fa-store" style="font-size: var(--font-3xl); color: var(--text-muted); margin-bottom: var(--space-3);"></i>
                         <h3 style="color: var(--text-secondary); margin-bottom: var(--space-2); font-size: var(--font-base);">لا توجد متاجر</h3>
                         <p style="color: var(--text-muted); font-size: var(--font-sm);">لم يتم العثور على متاجر</p>
+                        <button class="view-all-btn" onclick="createNewStore()" style="margin-top: var(--space-3);">
+                            <i class="fas fa-plus"></i>
+                            إضافة متجر جديد
+                        </button>
                     </div>
                 `;
                 return;
@@ -3038,16 +2918,20 @@
             storesGrid.innerHTML = allStores.map(store => createStoreCard(store)).join('');
         }
 
-        // إنشاء بطاقة متجر مع أزرار التحكم
+        // إنشاء بطاقة متجر مع عدد المنتجات
         function createStoreCard(store) {
             const colorClass = store.color || store.category || 'primary';
             const canEdit = store.type === 'local' || store.type === 'database';
             const canDelete = store.type === 'local' || store.type === 'database';
-            const canAddProducts = store.type === 'local' || store.type === 'database'; // NEW: Allow adding products to user stores
+            
+            // حساب عدد منتجات المتجر
+            const storeProductsCount = allProducts.filter(product => 
+                product.store_id === store.id || product.source_table === store.products_table
+            ).length;
             
             return `
                 <div class="store-card fade-in-up" onclick="openStore('${store.id}')">
-                    ${canEdit || canDelete || canAddProducts ? `
+                    ${canEdit || canDelete ? `
                         <div class="store-actions">
                             ${canEdit ? `
                                 <button class="store-action-btn edit" onclick="event.stopPropagation(); editStore('${store.id}')" title="تعديل المتجر">
@@ -3061,13 +2945,13 @@
                             ` : ''}
                         </div>
                     ` : ''}
-                    ${canAddProducts ? `
-                        <button class="add-product-btn" onclick="event.stopPropagation(); addProductToStore('${store.id}', '${store.name}')" title="إضافة منتج">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    ` : ''}
                     <div class="store-header ${colorClass}">
                         <i class="${store.icon} store-icon"></i>
+                        ${storeProductsCount > 0 ? `
+                            <div style="position: absolute; top: var(--space-2); left: var(--space-2); background: rgba(255,255,255,0.9); color: var(--text-primary); padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: var(--font-xs); font-weight: 600;">
+                                ${storeProductsCount} منتج
+                            </div>
+                        ` : ''}
                     </div>
                     <div class="store-content">
                         <h3 class="store-name">${store.name}</h3>
@@ -3075,97 +2959,6 @@
                     </div>
                 </div>
             `;
-        }
-
-        // NEW: فتح نافذة إضافة منتج لمتجر معين
-        function addProductToStore(storeId, storeName) {
-            document.getElementById('productStoreId').value = storeId;
-            document.getElementById('selectedStoreName').textContent = storeName;
-            document.getElementById('addProductModal').classList.add('active');
-        }
-
-        // NEW: إرسال نموذج المنتج الجديد
-        async function submitProductForm(event) {
-            event.preventDefault();
-            
-            const submitBtn = document.getElementById('submitProductBtn');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
-            
-            try {
-                const storeId = document.getElementById('productStoreId').value;
-                const store = allStores.find(s => s.id === storeId);
-                
-                if (!store) {
-                    throw new Error('المتجر غير موجود');
-                }
-
-                const productData = {
-                    id: `product_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                    name: document.getElementById('productName').value.trim(),
-                    description: document.getElementById('productDescription').value.trim(),
-                    price: parseFloat(document.getElementById('productPrice').value) || 0,
-                    category: document.getElementById('productCategory').value,
-                    image_url: document.getElementById('productImageUrl').value.trim() || 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png',
-                    store_id: storeId,
-                    store_name: store.name,
-                    store_url: store.url,
-                    created_at: new Date().toISOString()
-                };
-
-                if (!productData.name || !productData.description || !productData.category) {
-                    throw new Error('جميع الحقول المطلوبة يجب ملؤها');
-                }
-
-                // معالجة الصور
-                productData.images = [productData.image_url];
-
-                let saved = false;
-
-                // محاولة الحفظ في قاعدة البيانات
-                if (supabase && store.type === 'database') {
-                    try {
-                        const { data, error } = await supabase
-                            .from('store_products')
-                            .insert([productData]);
-
-                        if (!error) {
-                            saved = true;
-                            showNotification('✅ تم حفظ المنتج في قاعدة البيانات بنجاح!');
-                        }
-                    } catch (dbError) {
-                        console.log('Database save failed, saving locally');
-                    }
-                }
-
-                // الحفظ محلياً إذا فشل حفظ قاعدة البيانات أو كان المتجر محلي
-                if (!saved || store.type === 'local') {
-                    userProducts.push(productData);
-                    saveLocalData();
-                    if (!saved) {
-                        showNotification('✅ تم حفظ المنتج محلياً!');
-                    }
-                }
-
-                // إضافة المنتج للمصفوفة الرئيسية
-                allProducts.push(productData);
-                filteredProducts = [...allProducts];
-
-                document.getElementById('addProductForm').reset();
-                closeModal('addProductModal');
-
-                updateAllDisplays();
-                updateStats();
-
-            } catch (error) {
-                console.error('❌ خطأ في حفظ المنتج:', error);
-                showNotification(`❌ خطأ في الحفظ: ${error.message}`, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-            }
         }
 
         // عرض المفضلة
@@ -3191,7 +2984,7 @@
             favoritesGrid.innerHTML = favoriteProducts.map(product => createProductCard(product)).join('');
         }
 
-        // FIXED: عرض السلة مع معالجة صحيحة للصور
+        // عرض السلة
         function displayCart() {
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
@@ -3219,7 +3012,7 @@
             cartTotal.style.display = 'block';
         }
 
-        // FIXED: إنشاء عنصر السلة مع معالجة صحيحة للصور
+        // إنشاء عنصر السلة
         function createCartItem(item) {
             let firstImage = 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png';
             
@@ -3242,6 +3035,7 @@
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${parseInt(item.price).toLocaleString()} د.ع</div>
+                        <div style="font-size: var(--font-xs); color: var(--text-muted); margin-top: var(--space-1);">من ${item.store_name}</div>
                         <div class="cart-item-quantity">
                             <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
                             <span class="quantity-display">${item.quantity}</span>
@@ -3253,6 +3047,32 @@
                     </div>
                 </div>
             `;
+        }
+
+        // NEW: إنشاء جدول منتجات جديد للمتجر
+        async function createStoreProductsTable(tableName) {
+            if (!supabase) {
+                throw new Error('Supabase غير متاح');
+            }
+
+            try {
+                // إنشاء الجدول باستخدام SQL
+                const { error } = await supabase.rpc('create_store_products_table', {
+                    table_name: tableName
+                });
+
+                if (error) {
+                    console.warn(`ℹ️ قد يكون الجدول ${tableName} موجود بالفعل أو تم إنشاؤه تلقائياً`);
+                }
+
+                console.log(`✅ تم التأكد من وجود جدول ${tableName}`);
+                return true;
+                
+            } catch (error) {
+                console.warn(`⚠️ لا يمكن إنشاء جدول ${tableName} تلقائياً:`, error);
+                // سنتجاهل الخطأ ونتركه لـ Supabase ليتعامل معه
+                return false;
+            }
         }
 
         // تبديل المفضلة
@@ -3271,7 +3091,7 @@
             updateStats();
         }
 
-        // FIXED: إضافة للسلة مع معالجة صحيحة للصور
+        // إضافة للسلة
         function addToCart(productId) {
             const product = allProducts.find(p => p.id === productId);
             if (!product) return;
@@ -3281,7 +3101,6 @@
                 existingItem.quantity += 1;
                 showNotification('📦 تم زيادة الكمية في السلة');
             } else {
-                // تأكد من تنظيف الصور قبل الإضافة للسلة
                 const itemToAdd = {
                     ...product,
                     quantity: 1,
@@ -3361,7 +3180,7 @@
             }
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const message = encodeURIComponent(`السلام عليكم، أريد شراء المنتجات التالية من كلاشي:\n\n${cart.map(item => `• ${item.name} - الكمية: ${item.quantity} - السعر: ${parseInt(item.price).toLocaleString()} د.ع`).join('\n')}\n\nالمجموع الكلي: ${total.toLocaleString()} د.ع`);
+            const message = encodeURIComponent(`السلام عليكم، أريد شراء المنتجات التالية من كلاشي:\n\n${cart.map(item => `• ${item.name} - الكمية: ${item.quantity} - السعر: ${parseInt(item.price).toLocaleString()} د.ع\n  من متجر: ${item.store_name}`).join('\n\n')}\n\nالمجموع الكلي: ${total.toLocaleString()} د.ع`);
             
             window.open(`https://wa.me/9647813798636?text=${message}`, '_blank');
             showNotification('📱 تم فتح واتساب لإتمام الشراء');
@@ -3436,7 +3255,11 @@
 
         // عرض معلومات المتجر
         function showStoreInfo(store) {
-            showNotification(`🏪 ${store.name || 'متجر'} - ${store.description || 'لا يوجد وصف'}`);
+            const storeProductsCount = allProducts.filter(product => 
+                product.store_id === store.id || product.source_table === store.products_table
+            ).length;
+            
+            showNotification(`🏪 ${store.name || 'متجر'} - ${storeProductsCount} منتج متاح`);
         }
 
         // الفلترة
@@ -3597,11 +3420,6 @@
             }
         }
 
-        // متغيرات للتعديل
-        let editSelectedIcon = 'fas fa-store';
-        let editSelectedColor = 'primary';
-        let storeToDelete = null;
-
         // إنشاء متجر جديد
         function createNewStore() {
             document.getElementById('createStoreModal').classList.add('active');
@@ -3646,6 +3464,7 @@
             document.getElementById('editStoreName').value = store.name;
             document.getElementById('editStoreDescription').value = store.description;
             document.getElementById('editStoreUrl').value = store.url;
+            document.getElementById('editStoreTableName').value = store.products_table || '';
 
             // تحديد الأيقونة واللون المحددين
             editSelectedIcon = store.icon;
@@ -3725,7 +3544,7 @@
                     if (originalStore.type === 'local') {
                         const userStoreIndex = userStores.findIndex(s => s.id === storeId);
                         if (userStoreIndex > -1) {
-                            userStores[userStoreIndex] = { ...updatedStore, type: 'local' };
+                            userStores[userStoreIndex] = { ...updatedStore, type: 'local', products_table: originalStore.products_table };
                             saveLocalData();
                         }
                     }
@@ -3735,15 +3554,11 @@
                 }
 
                 // تحديث في المصفوفة الرئيسية
-                allStores[storeIndex] = { ...updatedStore, type: originalStore.type };
-
-                // تحديث منتجات هذا المتجر
-                allProducts.forEach(product => {
-                    if (product.store_id === storeId) {
-                        product.store_name = updatedStore.name;
-                        product.store_url = updatedStore.url;
-                    }
-                });
+                allStores[storeIndex] = { 
+                    ...updatedStore, 
+                    type: originalStore.type,
+                    products_table: originalStore.products_table
+                };
 
                 document.getElementById('editStoreForm').reset();
                 closeModal('editStoreModal');
@@ -3808,21 +3623,26 @@
                 // حذف من قاعدة البيانات إذا كان من النوع database
                 if (store.type === 'database' && supabase) {
                     try {
-                        // حذف منتجات المتجر أولاً
-                        await supabase
-                            .from('store_products')
-                            .delete()
-                            .eq('store_id', storeId);
-
-                        // ثم حذف المتجر نفسه
-                        const { error } = await supabase
+                        // حذف المتجر
+                        const { error: storeError } = await supabase
                             .from('stores')
                             .delete()
                             .eq('id', storeId);
 
-                        if (!error) {
+                        // محاولة حذف جدول المنتجات (قد يفشل إذا لم يكن موجوداً)
+                        if (store.products_table) {
+                            try {
+                                await supabase.rpc('drop_table_if_exists', {
+                                    table_name: store.products_table
+                                });
+                            } catch (tableError) {
+                                console.log('تم تجاهل حذف الجدول - قد يكون غير موجود أصلاً');
+                            }
+                        }
+
+                        if (!storeError) {
                             deleted = true;
-                            showNotification('✅ تم حذف المتجر ومنتجاته من قاعدة البيانات بنجاح!');
+                            showNotification('✅ تم حذف المتجر وجميع منتجاته من قاعدة البيانات!');
                         }
                     } catch (dbError) {
                         console.log('Database delete failed, deleting locally');
@@ -3835,11 +3655,8 @@
                         const userStoreIndex = userStores.findIndex(s => s.id === storeId);
                         if (userStoreIndex > -1) {
                             userStores.splice(userStoreIndex, 1);
+                            saveLocalData();
                         }
-
-                        // حذف منتجات هذا المتجر من userProducts
-                        userProducts = userProducts.filter(product => product.store_id !== storeId);
-                        saveLocalData();
                     }
                     if (!deleted) {
                         showNotification('✅ تم حذف المتجر محلياً!');
@@ -3849,8 +3666,10 @@
                 // حذف من المصفوفة الرئيسية
                 allStores.splice(storeIndex, 1);
 
-                // حذف منتجات هذا المتجر من allProducts
-                allProducts = allProducts.filter(product => product.store_id !== storeId);
+                // حذف منتجات المتجر من المصفوفة الرئيسية
+                allProducts = allProducts.filter(product => 
+                    product.store_id !== storeId && product.source_table !== store.products_table
+                );
                 filteredProducts = [...allProducts];
 
                 closeModal('deleteConfirmModal');
@@ -3873,6 +3692,7 @@
             }
         }
 
+        // NEW: إرسال نموذج إنشاء المتجر مع دعم قاعدة البيانات
         async function submitStoreForm(event) {
             event.preventDefault();
             
@@ -3880,53 +3700,75 @@
             const originalText = submitBtn.innerHTML;
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...';
             
             try {
+                const storeName = document.getElementById('storeName').value.trim();
+                const storeDescription = document.getElementById('storeDescription').value.trim();
+                const storeUrl = document.getElementById('storeUrl').value.trim();
+                const customTableName = document.getElementById('storeTableName').value.trim();
+
+                if (!storeName || !storeDescription || !storeUrl) {
+                    throw new Error('جميع الحقول المطلوبة يجب ملؤها');
+                }
+
+                // إنشاء اسم جدول المنتجات
+                const productsTable = customTableName || generateTableName(storeName);
+
                 const formData = {
                     id: Date.now().toString(),
-                    name: document.getElementById('storeName').value.trim(),
-                    description: document.getElementById('storeDescription').value.trim(),
-                    url: document.getElementById('storeUrl').value.trim(),
+                    name: storeName,
+                    description: storeDescription,
+                    url: storeUrl,
                     icon: selectedIcon,
                     color: selectedColor,
                     category: selectedColor,
                     available: true,
+                    products_table: productsTable,
                     created_at: new Date().toISOString()
                 };
 
-                if (!formData.name || !formData.description || !formData.url) {
-                    throw new Error('جميع الحقول مطلوبة');
-                }
-
                 let saved = false;
 
+                // محاولة الحفظ في قاعدة البيانات
                 if (supabase) {
                     try {
+                        // إنشاء جدول المنتجات للمتجر
+                        await createStoreProductsTable(productsTable);
+
+                        // حفظ المتجر في قاعدة البيانات
                         const { data, error } = await supabase
                             .from('stores')
                             .insert([formData]);
 
                         if (!error) {
                             saved = true;
-                            showNotification('✅ تم حفظ المتجر في قاعدة البيانات بنجاح!');
+                            showNotification('✅ تم إنشاء المتجر مع قاعدة البيانات بنجاح!');
+                            console.log(`✅ تم إنشاء المتجر ${storeName} مع جدول ${productsTable}`);
                         }
                     } catch (dbError) {
-                        console.log('Database save failed, saving locally');
+                        console.log('Database save failed, saving locally:', dbError);
                     }
                 }
 
+                // الحفظ المحلي في حالة فشل قاعدة البيانات
                 if (!saved) {
                     userStores.push(formData);
                     saveLocalData();
-                    showNotification('✅ تم حفظ المتجر محلياً!');
+                    showNotification('✅ تم حفظ المتجر محلياً - يمكن رفعه لاحقاً!');
                 }
 
-                allStores.push({...formData, type: saved ? 'database' : 'local'});
+                // إضافة للمصفوفة الرئيسية
+                allStores.push({
+                    ...formData, 
+                    type: saved ? 'database' : 'local'
+                });
 
+                // إعادة تعيين النموذج
                 document.getElementById('createStoreForm').reset();
                 closeModal('createStoreModal');
                 
+                // إعادة تعيين القيم الافتراضية
                 selectedIcon = 'fas fa-store';
                 selectedColor = 'primary';
                 document.querySelector('.icon-option[data-icon="fas fa-store"]').classList.add('selected');
@@ -3935,9 +3777,15 @@
                 updateAllDisplays();
                 updateStats();
 
+                // توجيه المستخدم لصفحة المتاجر لرؤية المتجر الجديد
+                setTimeout(() => {
+                    showStoresSection();
+                    showNotification(`🎉 مبروك! تم إنشاء متجر "${storeName}" بنجاح. يمكنك الآن إضافة منتجات إليه.`);
+                }, 1000);
+
             } catch (error) {
                 console.error('❌ خطأ في حفظ المتجر:', error);
-                showNotification(`❌ خطأ في الحفظ: ${error.message}`, 'error');
+                showNotification(`❌ خطأ في الإنشاء: ${error.message}`, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
@@ -3963,10 +3811,11 @@
             const myStores = allStores.filter(store => store.type === 'local' || store.type === 'database');
             if (myStores.length === 0) {
                 showNotification('📝 لم تقم بإنشاء أي متاجر بعد', 'warning');
+                createNewStore();
                 return;
             }
             
-            showNotification(`🏪 لديك ${myStores.length} متجر مُنشأ - يمكنك تعديلها أو حذفها أو إضافة منتجات إليها!`);
+            showNotification(`🏪 لديك ${myStores.length} متجر مُنشأ - يمكنك تعديلها أو حذفها`);
             showStoresSection();
         }
 
@@ -3980,15 +3829,15 @@
         }
 
         function showHelp() {
-            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك الآن إضافة منتجات للمتاجر!');
+            showNotification('❓ للمساعدة: تواصل معنا عبر واتساب - يمكنك إنشاء متاجر وإضافة منتجات!');
         }
 
         function showAbout() {
-            showNotification('ℹ️ كلاشي v4.0 PWA - السوق الإلكتروني الشامل مع إدارة المتاجر والمنتجات');
+            showNotification('ℹ️ كلاشي v4.0 PWA - السوق الإلكتروني الشامل مع دعم المتاجر الديناميكية');
         }
 
         function openWhatsApp() {
-            const message = encodeURIComponent('السلام عليكم، أريد الاستفسار عن كلاشي - السوق الإلكتروني الشامل 🛍️');
+            const message = encodeURIComponent('السلام عليكم، أريد الاستفسار عن كلاشي - السوق الإلكتروني الشامل مع إنشاء المتاجر 🛍️');
             window.open(`https://wa.me/9647813798636?text=${message}`, '_blank');
             showNotification('📱 تم فتح واتساب...');
         }
@@ -4079,7 +3928,7 @@
             
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 3000);
+            }, 4000);
         }
 
         // إعادة تحميل البيانات
@@ -4088,7 +3937,7 @@
             try {
                 allProducts = [];
                 await loadAllData();
-                showNotification('🔄 تم تحديث البيانات بنجاح');
+                showNotification('🔄 تم تحديث البيانات بنجاح - جميع المتاجر والمنتجات محدثة!');
             } catch (error) {
                 console.error('❌ خطأ في تحديث البيانات:', error);
                 showNotification('❌ فشل في تحديث البيانات', 'error');
@@ -4147,24 +3996,27 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي PWA محدث v4.0 جاهز للعمل!');
+            console.log('🚀 كلاشي PWA الجديد v4.0 جاهز للعمل!');
             console.log('📱 السوق الإلكتروني الشامل - الإصدار المحدث');
+            console.log('🏪 إنشاء وإدارة المتاجر بسهولة');
+            console.log('📦 عرض منتجات جميع المتاجر في مكان واحد');
+            console.log('🔄 تحميل ديناميكي للمنتجات من جداول منفصلة');
+            console.log('✨ نظام قواعد بيانات متقدم لكل متجر');
+            console.log('💾 حفظ محلي مع مزامنة سحابية');
             console.log('🛍️ منتجات من متاجر متنوعة');
             console.log('🏪 إدارة متقدمة للمتاجر مع التعديل والحذف');
-            console.log('🆕 إضافة المنتجات للمتاجر الجديدة');
             console.log('✏️ تعديل المتاجر المُنشأة من قبل المستخدم');
             console.log('🗑️ حذف المتاجر مع تأكيد الأمان');
-            console.log('📦 عرض منتجات جميع المتاجر في الواجهة الرئيسية');
             console.log('❤️ نظام المفضلة والسلة المحدث');
             console.log('🌓 تبديل الوضع المظلم/الفاتح');
             console.log('🔍 بحث وفلترة ذكية');
             console.log('📱 تطبيق PWA قابل للتثبيت');
-            console.log('☁️ قاعدة بيانات سحابية');
+            console.log('☁️ قاعدة بيانات سحابية ديناميكية');
             console.log('🎨 تصميم عصري ومتجاوب');
             console.log('⚡ دعم كامل للعمل دون اتصال');
             console.log('🔔 إشعارات التحديثات');
-            console.log('🖼️ إصلاح مشاكل عرض الصور');
-            console.log('📦 تحسين مربعات الإحصائيات');
+            console.log('🖼️ معالجة محسنة للصور');
+            console.log('📊 إحصائيات شاملة');
             console.log('🔧 إدارة شاملة للمتاجر والمنتجات');
             console.log('📞 للدعم والتواصل: 07813798636');
         });
@@ -4174,12 +4026,13 @@
             if (navigator.onLine) {
                 try {
                     await refreshData();
-                    console.log('🔄 تم تحديث البيانات تلقائياً');
+                    console.log('🔄 تم تحديث البيانات تلقائياً - جميع المتاجر محدثة');
                 } catch (error) {
                     console.error('❌ خطأ في التحديث التلقائي:', error);
                 }
             }
         }, 300000); // كل 5 دقائق
+
     </script>
 </body>
 </html>
