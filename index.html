@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>كلاشي | دليل المتاجر الشامل - نسخة المستخدم v7.0</title>
-    <meta name="description" content="كلاشي - دليل المتاجر الشامل مع تجربة مستخدم محسنة">
+    <title>كلاشي | دليل المتاجر الشامل - نسخة المستخدم المحدثة v7.0</title>
+    <meta name="description" content="كلاشي - دليل المتاجر الشامل مع تجربة مستخدم متطورة">
     <meta name="keywords" content="كلاشي، متاجر، دليل متاجر، العراق، PWA، تسوق">
     <meta name="author" content="كلاشي">
     
     <!-- SEO والشبكات الاجتماعية -->
     <meta property="og:title" content="كلاشي - دليل المتاجر الشامل v7.0">
-    <meta property="og:description" content="دليل المتاجر الشامل مع تجربة مستخدم محسنة">
+    <meta property="og:description" content="دليل المتاجر الشامل مع تجربة مستخدم متطورة">
     <meta property="og:image" content="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png">
     <meta property="og:url" content="https://krarar.github.io/Al-Sabri/">
     <meta property="og:type" content="website">
@@ -105,7 +105,7 @@
             --shadow: rgba(0, 0, 0, 0.1);
         }
 
-        /* Compact Typography & Spacing */
+        /* Typography & Spacing */
         :root {
             --font-xs: 0.6rem;
             --font-sm: 0.7rem;
@@ -181,7 +181,7 @@
             50% { opacity: 0.8; transform: scale(1.1) rotate(2deg); }
         }
 
-        /* Compact Header */
+        /* Header */
         .header {
             position: fixed;
             top: 0;
@@ -213,7 +213,7 @@
             height: 100%;
         }
 
-        /* App Logo */
+        /* Logo */
         .logo {
             display: flex;
             align-items: center;
@@ -433,8 +433,8 @@
 
         @media (min-width: 480px) {
             .sidebar {
-                width: 320px;
-                right: -320px;
+                width: 350px;
+                right: -350px;
                 border-left: 1px solid var(--glass-border);
             }
         }
@@ -577,7 +577,7 @@
             border-color: var(--accent-solid);
         }
 
-        /* Theme Toggle Enhanced */
+        /* Theme Toggle */
         .theme-toggle {
             display: flex;
             align-items: center;
@@ -632,7 +632,7 @@
             padding: var(--space-3) var(--space-2) 70px;
         }
 
-        /* Enhanced Search Section */
+        /* Search Section */
         .search-section {
             margin-bottom: var(--space-4);
         }
@@ -715,60 +715,62 @@
             border-color: var(--primary-solid);
         }
 
-        /* Enhanced Stats Section */
+        /* Stats Section - تحديث مضغوط */
         .stats-section {
-            margin-bottom: var(--space-5);
+            margin-bottom: var(--space-3);
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--space-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-2);
+            background: var(--glass);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            overflow-x: auto;
         }
 
         .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: var(--space-3);
-            text-align: center;
-            transition: all var(--transition-smooth);
-            box-shadow: 0 2px 10px var(--shadow);
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            padding: var(--space-1) var(--space-2);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
             cursor: pointer;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary);
+            position: relative;
+            flex-shrink: 0;
         }
 
         .stat-card:hover {
             background: var(--glass-strong);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--shadow);
+            transform: scale(1.05);
         }
 
         .stat-number {
-            font-size: var(--font-xl);
+            font-size: var(--font-base);
             font-weight: 800;
-            background: var(--secondary);
+            background: var(--primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: var(--space-1);
+            line-height: 1;
         }
 
         .stat-label {
-            font-size: var(--font-xs);
+            font-size: 10px;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1;
+            white-space: nowrap;
         }
 
         /* Section Headers */
@@ -817,7 +819,7 @@
             box-shadow: 0 2px 8px var(--shadow);
         }
 
-        /* Modern Store Cards - متجرين في كل صف */
+        /* Enhanced Store Cards */
         .stores-section {
             margin-bottom: var(--space-6);
         }
@@ -904,30 +906,14 @@
             justify-content: center;
         }
 
-        .store-header.textiles { 
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        }
-        .store-header.electronics { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .store-header.fashion { 
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-        }
-        .store-header.home { 
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
-        .store-header.food { 
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-        .store-header.books { 
-            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-        }
-        .store-header.cars { 
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-        }
-        .store-header.gaming { 
-            background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
-        }
+        .store-header.textiles { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .store-header.electronics { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .store-header.fashion { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .store-header.home { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .store-header.food { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .store-header.books { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+        .store-header.cars { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .store-header.gaming { background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%); }
 
         .store-icon {
             font-size: 2.5rem;
@@ -1045,7 +1031,7 @@
             50% { opacity: 0.5; }
         }
 
-        /* Enhanced Favorite Heart */
+        /* Favorite Heart */
         .favorite-heart {
             position: absolute; 
             top: var(--space-1); 
@@ -1087,6 +1073,31 @@
             50% { transform: scale(1.2); }
         }
 
+        /* Store Badges */
+        .store-badges {
+            position: absolute;
+            bottom: var(--space-1);
+            left: var(--space-1);
+            display: flex;
+            gap: var(--space-1);
+            z-index: 3;
+        }
+
+        .store-badge {
+            padding: var(--space-1);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-xs);
+            font-weight: 600;
+            color: white;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+
+        .badge-new { background: rgba(67, 227, 123, 0.9); }
+        .badge-popular { background: rgba(255, 106, 0, 0.9); }
+        .badge-offer { background: rgba(250, 112, 154, 0.9); }
+        .badge-nearby { background: rgba(79, 172, 254, 0.9); }
+
         /* Share Button */
         .share-button {
             position: absolute;
@@ -1118,6 +1129,42 @@
         .share-button:hover {
             transform: scale(1.15);
             background: var(--accent-solid);
+        }
+
+        /* Store Details */
+        .store-details {
+            position: absolute;
+            bottom: 45px;
+            left: var(--space-2);
+            right: var(--space-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all var(--transition-smooth);
+        }
+
+        .store-card:hover .store-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .store-popularity {
+            font-size: var(--font-xs);
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .store-views {
+            font-size: var(--font-xs);
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
         }
 
         /* Favorites Section */
@@ -1170,7 +1217,7 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Enhanced Bottom Navigation */
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -1241,7 +1288,7 @@
             font-weight: 600;
         }
 
-        /* Enhanced Modal */
+        /* Modal */
         .modal {
             position: fixed;
             top: 0;
@@ -1448,87 +1495,6 @@
         .w-full { width: 100% !important; }
         .text-center { text-align: center !important; }
 
-        /* Sound Settings */
-        .sound-toggle {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            padding: var(--space-2);
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-2);
-            transition: all var(--transition-base);
-            cursor: pointer;
-        }
-
-        .sound-toggle:hover {
-            background: var(--glass-strong);
-            transform: translateX(-2px);
-        }
-
-        .sound-switch {
-            position: relative;
-            width: 40px;
-            height: 20px;
-            background: var(--text-muted);
-            border-radius: var(--radius-full);
-            transition: all var(--transition-base);
-        }
-
-        .sound-switch.active {
-            background: var(--success-solid);
-        }
-
-        .sound-switch::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 16px;
-            height: 16px;
-            background: white;
-            border-radius: 50%;
-            transition: all var(--transition-base);
-        }
-
-        .sound-switch.active::before {
-            transform: translateX(20px);
-        }
-
-        /* View Options */
-        .view-options {
-            display: flex;
-            gap: var(--space-1);
-            margin-bottom: var(--space-3);
-            padding: var(--space-1);
-            background: var(--glass);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--glass-border);
-        }
-
-        .view-option {
-            flex: 1;
-            padding: var(--space-1);
-            border-radius: var(--radius-md);
-            text-align: center;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            font-size: var(--font-xs);
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .view-option.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .view-option:hover:not(.active) {
-            background: var(--glass-strong);
-            color: var(--text-primary);
-        }
-
         /* Responsive Design */
         @media (max-width: 640px) {
             .stores-grid {
@@ -1578,26 +1544,27 @@
                 border-radius: var(--radius-xl);
             }
 
+            /* تحديث الإحصائيات للشاشات الصغيرة */
             .stats-grid {
                 gap: var(--space-1);
-                grid-template-columns: repeat(2, 1fr);
+                padding: var(--space-1) var(--space-2);
             }
 
             .stat-card {
-                padding: var(--space-2);
+                min-width: 50px;
+                padding: var(--space-1);
+            }
+
+            .stat-number {
+                font-size: var(--font-sm);
+            }
+
+            .stat-label {
+                font-size: 9px;
             }
 
             .section-title {
                 font-size: var(--font-lg);
-            }
-
-            .search-filters {
-                gap: var(--space-1);
-            }
-
-            .quick-filter {
-                padding: var(--space-1);
-                font-size: 10px;
             }
         }
 
@@ -1636,6 +1603,25 @@
             .share-button {
                 width: 22px;
                 height: 22px;
+            }
+
+            /* تحديث الإحصائيات للشاشات الصغيرة جداً */
+            .stats-grid {
+                padding: var(--space-1);
+                gap: 2px;
+            }
+
+            .stat-card {
+                min-width: 45px;
+                padding: 2px;
+            }
+
+            .stat-number {
+                font-size: 12px;
+            }
+
+            .stat-label {
+                font-size: 8px;
             }
         }
 
@@ -1688,6 +1674,16 @@
                 right: var(--space-1);
                 width: 20px;
                 height: 20px;
+            }
+
+            /* تحديث الإحصائيات للشاشات الصغيرة جداً */
+            .stats-grid {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stat-card {
+                min-width: 40px;
             }
         }
 
@@ -1771,7 +1767,7 @@
         <div class="loading-text">جاري التحميل...</div>
     </div>
 
-    <!-- Enhanced Header -->
+    <!-- Header -->
     <header class="header" id="header">
         <div class="header-content">
             <div class="logo" onclick="goToHome()">
@@ -1807,14 +1803,14 @@
     <!-- Enhanced Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2 class="sidebar-title">🏪 كلاشي - نسخة المستخدم</h2>
+            <h2 class="sidebar-title">🏪 كلاشي - نسخة المستخدم المحدثة</h2>
             <button class="close-btn" onclick="closeSidebar()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         
         <div class="sidebar-content">
-            <!-- Theme & Display Settings -->
+            <!-- Display Settings -->
             <div class="sidebar-section">
                 <h3 class="sidebar-section-title">
                     <i class="fas fa-palette"></i>
@@ -1829,28 +1825,6 @@
                         <div style="font-size: var(--font-xs); color: var(--text-muted);" id="themeStatus">وضع مظلم</div>
                     </div>
                     <div class="theme-switch active" id="themeSwitch"></div>
-                </div>
-
-                <!-- Sound Toggle -->
-                <div class="sound-toggle" onclick="toggleSound()">
-                    <i class="fas fa-volume-up" id="soundIcon"></i>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 600; font-size: var(--font-xs);">الأصوات</div>
-                        <div style="font-size: var(--font-xs); color: var(--text-muted);" id="soundStatus">مفعل</div>
-                    </div>
-                    <div class="sound-switch active" id="soundSwitch"></div>
-                </div>
-
-                <!-- View Options -->
-                <div class="view-options">
-                    <div class="view-option active" onclick="setViewMode('grid')" data-mode="grid">
-                        <i class="fas fa-th"></i>
-                        شبكة
-                    </div>
-                    <div class="view-option" onclick="setViewMode('list')" data-mode="list">
-                        <i class="fas fa-list"></i>
-                        قائمة
-                    </div>
                 </div>
             </div>
 
@@ -1935,6 +1909,35 @@
                 </div>
             </div>
 
+            <!-- Store Status Filters -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">
+                    <i class="fas fa-tags"></i>
+                    فلاتر الحالة
+                </h3>
+                
+                <div class="filter-option" onclick="filterByStatus('new')">
+                    <i class="fas fa-star"></i>
+                    <span>متاجر جديدة</span>
+                    <span style="margin-right: auto; font-size: var(--font-xs); color: var(--text-muted);" id="newCount">0</span>
+                </div>
+                <div class="filter-option" onclick="filterByStatus('popular')">
+                    <i class="fas fa-fire"></i>
+                    <span>متاجر شائعة</span>
+                    <span style="margin-right: auto; font-size: var(--font-xs); color: var(--text-muted);" id="popularCount">0</span>
+                </div>
+                <div class="filter-option" onclick="filterByStatus('offers')">
+                    <i class="fas fa-tag"></i>
+                    <span>متاجر العروض</span>
+                    <span style="margin-right: auto; font-size: var(--font-xs); color: var(--text-muted);" id="offersCount">0</span>
+                </div>
+                <div class="filter-option" onclick="filterByStatus('nearby')">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>متاجر قريبة</span>
+                    <span style="margin-right: auto; font-size: var(--font-xs); color: var(--text-muted);" id="nearbyCount">0</span>
+                </div>
+            </div>
+
             <!-- Sorting Options -->
             <div class="sidebar-section">
                 <h3 class="sidebar-section-title">
@@ -1962,6 +1965,10 @@
                     <i class="fas fa-clock"></i>
                     <span>المضاف حديثاً</span>
                 </div>
+                <div class="sort-option" onclick="sortStores('views')">
+                    <i class="fas fa-eye"></i>
+                    <span>الأكثر مشاهدة</span>
+                </div>
             </div>
 
             <!-- Quick Actions -->
@@ -1975,13 +1982,13 @@
                     <i class="fas fa-share-alt"></i>
                     <span>مشاركة التطبيق</span>
                 </div>
-                <div class="nav-option" onclick="clearAllData(); closeSidebar();">
-                    <i class="fas fa-broom"></i>
-                    <span>مسح البيانات</span>
-                </div>
                 <div class="nav-option" onclick="exportFavorites(); closeSidebar();">
                     <i class="fas fa-download"></i>
                     <span>تصدير المفضلة</span>
+                </div>
+                <div class="nav-option" onclick="clearAllData(); closeSidebar();">
+                    <i class="fas fa-broom"></i>
+                    <span>مسح البيانات</span>
                 </div>
                 <div class="nav-option" onclick="refreshData(); closeSidebar();">
                     <i class="fas fa-sync-alt"></i>
@@ -2025,17 +2032,13 @@
                     <i class="fas fa-info-circle"></i>
                     <span>حول التطبيق</span>
                 </div>
-                <div class="nav-option" onclick="showPrivacy(); closeSidebar();">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>سياسة الخصوصية</span>
-                </div>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Enhanced Search Section -->
+        <!-- Search Section -->
         <section class="search-section">
             <div class="search-container">
                 <div class="search-box">
@@ -2067,7 +2070,7 @@
             </div>
         </section>
 
-        <!-- Enhanced Stats Section -->
+        <!-- Stats Section -->
         <section class="stats-section" id="statsSection">
             <div class="stats-grid">
                 <div class="stat-card" onclick="showAllStores()">
@@ -2086,6 +2089,14 @@
                     <div class="stat-number" id="totalViewed">0</div>
                     <div class="stat-label">مُشاهد</div>
                 </div>
+                <div class="stat-card" onclick="showNewStores()">
+                    <div class="stat-number" id="totalNew">0</div>
+                    <div class="stat-label">جديد</div>
+                </div>
+                <div class="stat-card" onclick="showPopularStores()">
+                    <div class="stat-number" id="totalPopular">0</div>
+                    <div class="stat-label">شائع</div>
+                </div>
             </div>
         </section>
 
@@ -2093,8 +2104,8 @@
         <section class="stores-section" id="storesSection">
             <div class="section-header">
                 <div>
-                    <h2 class="section-title">🏪 دليل المتاجر الشامل</h2>
-                    <p class="section-subtitle">اكتشف أفضل المتاجر مع تجربة تصفح محسنة</p>
+                    <h2 class="section-title">🏪 دليل المتاجر الشامل المحدث</h2>
+                    <p class="section-subtitle">اكتشف أفضل المتاجر مع ميزات متطورة وتجربة محسنة</p>
                 </div>
                 <button class="view-all-btn" onclick="showAllStores()">عرض الكل</button>
             </div>
@@ -2135,7 +2146,7 @@
         </section>
     </main>
 
-    <!-- Enhanced Bottom Navigation -->
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="nav-container">
             <div class="nav-item active" onclick="showStores()">
@@ -2214,19 +2225,17 @@
         let recentlyViewed = [];
         let currentFilters = {
             category: 'all',
+            status: 'all',
             sort: 'default',
             search: '',
             quickFilter: 'all'
         };
         let currentView = 'stores';
-        let viewMode = 'grid';
-        let soundEnabled = true;
 
-        // Settings
+        // User Settings
         let userSettings = {
             theme: 'dark',
             sound: true,
-            viewMode: 'grid',
             autoRefresh: true,
             notifications: true
         };
@@ -2261,8 +2270,7 @@
                 setupScrollEffects();
                 
                 hideLoadingOverlay();
-                playNotificationSound();
-                showNotification('🎉 مرحباً بك في كلاشي - نسخة المستخدم المحسنة!', 'info');
+                showNotification('🎉 مرحباً بك في كلاشي المحدث - نسخة المستخدم v7.0!', 'info');
                 
             } catch (error) {
                 console.error('❌ خطأ في تهيئة التطبيق:', error);
@@ -2320,7 +2328,6 @@
             });
         }
 
-        // التحقق من حالة التثبيت
         function checkInstallStatus() {
             if (window.matchMedia('(display-mode: standalone)').matches || 
                 window.navigator.standalone === true) {
@@ -2330,7 +2337,6 @@
             }
         }
 
-        // عرض نافذة التثبيت
         function showInstallBanner() {
             const banner = document.getElementById('installBanner');
             banner.classList.add('show');
@@ -2365,8 +2371,8 @@
 
         // تحميل البيانات المحفوظة محلياً
         function loadLocalData() {
-            favorites = JSON.parse(localStorage.getItem('clashy_favorites') || '[]');
-            recentlyViewed = JSON.parse(localStorage.getItem('clashy_recently_viewed') || '[]');
+            favorites = JSON.parse(localStorage.getItem('clashy_user_favorites') || '[]');
+            recentlyViewed = JSON.parse(localStorage.getItem('clashy_user_recently_viewed') || '[]');
             userSettings = {
                 ...userSettings,
                 ...JSON.parse(localStorage.getItem('clashy_user_settings') || '{}')
@@ -2374,17 +2380,13 @@
             
             // تطبيق الإعدادات
             document.body.setAttribute('data-theme', userSettings.theme);
-            soundEnabled = userSettings.sound;
-            viewMode = userSettings.viewMode;
-            
             updateThemeUI();
-            updateSoundUI();
         }
 
         // حفظ البيانات محلياً
         function saveLocalData() {
-            localStorage.setItem('clashy_favorites', JSON.stringify(favorites));
-            localStorage.setItem('clashy_recently_viewed', JSON.stringify(recentlyViewed));
+            localStorage.setItem('clashy_user_favorites', JSON.stringify(favorites));
+            localStorage.setItem('clashy_user_recently_viewed', JSON.stringify(recentlyViewed));
             localStorage.setItem('clashy_user_settings', JSON.stringify(userSettings));
         }
 
@@ -2402,12 +2404,12 @@
             }
         }
 
-        // تحميل بيانات المتاجر
+        // تحميل بيانات المتاجر مع جميع الخصائص المحدثة
         async function loadStoresData() {
             try {
                 allStores = [];
 
-                // إضافة المتاجر الافتراضية
+                // إضافة المتاجر الافتراضية مع الخصائص الجديدة
                 const defaultStores = [
                     {
                         id: 'alhajami',
@@ -2420,6 +2422,13 @@
                         available: true,
                         type: 'default',
                         popularity: 95,
+                        location: 'بغداد',
+                        isNew: false,
+                        isPopular: true,
+                        hasOffers: true,
+                        isNearby: true,
+                        isFeatured: true,
+                        views: 1250,
                         created_at: '2024-01-01',
                         image_url: 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'
                     },
@@ -2434,6 +2443,13 @@
                         available: true,
                         type: 'default',
                         popularity: 90,
+                        location: 'بغداد',
+                        isNew: false,
+                        isPopular: true,
+                        hasOffers: false,
+                        isNearby: true,
+                        isFeatured: true,
+                        views: 980,
                         created_at: '2024-01-01',
                         image_url: 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'
                     }
@@ -2441,7 +2457,7 @@
 
                 allStores.push(...defaultStores);
 
-                // إضافة المتاجر من قاعدة البيانات
+                // إضافة المتاجر من قاعدة البيانات مع جميع الخصائص
                 if (supabase) {
                     try {
                         const { data, error } = await supabase
@@ -2454,7 +2470,15 @@
                             allStores.push(...data.map(store => ({
                                 ...store,
                                 type: 'database',
-                                popularity: store.popularity || Math.floor(Math.random() * 50) + 50
+                                // التأكد من وجود جميع الخصائص الجديدة
+                                popularity: store.popularity || Math.floor(Math.random() * 50) + 50,
+                                location: store.location || 'غير محدد',
+                                isNew: store.isNew || false,
+                                isPopular: store.isPopular || false,
+                                hasOffers: store.hasOffers || false,
+                                isNearby: store.isNearby || false,
+                                isFeatured: store.isFeatured || false,
+                                views: store.views || Math.floor(Math.random() * 500) + 100
                             })));
                             console.log(`✅ تم تحميل ${data.length} متجر من قاعدة البيانات`);
                         }
@@ -2471,7 +2495,7 @@
             }
         }
 
-        // بيانات احتياطية
+        // بيانات احتياطية مع الخصائص الجديدة
         function loadFallbackData() {
             const fallbackStores = [
                 {
@@ -2485,6 +2509,13 @@
                     available: true,
                     type: 'sample',
                     popularity: 75,
+                    location: 'بغداد',
+                    isNew: true,
+                    isPopular: false,
+                    hasOffers: true,
+                    isNearby: true,
+                    isFeatured: false,
+                    views: 320,
                     created_at: '2024-01-01',
                     image_url: 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'
                 },
@@ -2499,6 +2530,13 @@
                     available: true,
                     type: 'sample',
                     popularity: 80,
+                    location: 'بغداد',
+                    isNew: false,
+                    isPopular: true,
+                    hasOffers: false,
+                    isNearby: true,
+                    isFeatured: true,
+                    views: 450,
                     created_at: '2024-01-02',
                     image_url: 'https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/ghadeer-images/products/1749766675654_4xi0wj.png'
                 }
@@ -2511,7 +2549,7 @@
             updateCategoryCounts();
         }
 
-        // تطبيق الفلاتر والترتيب
+        // تطبيق الفلاتر والترتيب المحسن
         function applyFiltersAndSort() {
             let filtered = [...allStores];
 
@@ -2520,13 +2558,35 @@
                 filtered = filtered.filter(store => store.category === currentFilters.category);
             }
 
+            // تطبيق فلتر الحالة
+            if (currentFilters.status !== 'all') {
+                switch (currentFilters.status) {
+                    case 'new':
+                        filtered = filtered.filter(store => store.isNew);
+                        break;
+                    case 'popular':
+                        filtered = filtered.filter(store => store.isPopular);
+                        break;
+                    case 'offers':
+                        filtered = filtered.filter(store => store.hasOffers);
+                        break;
+                    case 'nearby':
+                        filtered = filtered.filter(store => store.isNearby);
+                        break;
+                    case 'featured':
+                        filtered = filtered.filter(store => store.isFeatured);
+                        break;
+                }
+            }
+
             // تطبيق فلتر البحث
             if (currentFilters.search) {
                 const searchQuery = currentFilters.search.toLowerCase();
                 filtered = filtered.filter(store => 
                     store.name.toLowerCase().includes(searchQuery) ||
                     store.description.toLowerCase().includes(searchQuery) ||
-                    getCategoryName(store.category).toLowerCase().includes(searchQuery)
+                    getCategoryName(store.category).toLowerCase().includes(searchQuery) ||
+                    (store.location && store.location.toLowerCase().includes(searchQuery))
                 );
             }
 
@@ -2534,18 +2594,16 @@
             if (currentFilters.quickFilter !== 'all') {
                 switch (currentFilters.quickFilter) {
                     case 'new':
-                        const oneWeekAgo = new Date();
-                        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-                        filtered = filtered.filter(store => new Date(store.created_at) > oneWeekAgo);
+                        filtered = filtered.filter(store => store.isNew);
                         break;
                     case 'popular':
-                        filtered = filtered.filter(store => store.popularity >= 80);
+                        filtered = filtered.filter(store => store.isPopular || store.popularity >= 80);
                         break;
                     case 'nearby':
-                        // يمكن إضافة منطق الموقع هنا
+                        filtered = filtered.filter(store => store.isNearby);
                         break;
                     case 'offers':
-                        // يمكن إضافة منطق العروض هنا
+                        filtered = filtered.filter(store => store.hasOffers);
                         break;
                 }
             }
@@ -2564,11 +2622,16 @@
                 case 'recent':
                     filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                     break;
+                case 'views':
+                    filtered.sort((a, b) => (b.views || 0) - (a.views || 0));
+                    break;
                 default:
-                    // الترتيب الافتراضي - المتاجر الافتراضية أولاً
+                    // الترتيب الافتراضي - المتاجر الافتراضية أولاً ثم المميزة ثم حسب الشهرة
                     filtered.sort((a, b) => {
                         if (a.type === 'default' && b.type !== 'default') return -1;
                         if (a.type !== 'default' && b.type === 'default') return 1;
+                        if (a.isFeatured && !b.isFeatured) return -1;
+                        if (!a.isFeatured && b.isFeatured) return 1;
                         return (b.popularity || 0) - (a.popularity || 0);
                     });
                     break;
@@ -2584,7 +2647,7 @@
             displayRecentlyViewed();
         }
 
-        // عرض المتاجر
+        // عرض المتاجر مع التحسينات الجديدة
         function displayStores() {
             const storesGrid = document.getElementById('storesGrid');
             
@@ -2603,15 +2666,22 @@
                 return;
             }
             
-            storesGrid.innerHTML = filteredStores.map(store => createStoreCard(store)).join('');
+            storesGrid.innerHTML = filteredStores.map(store => createEnhancedStoreCard(store)).join('');
         }
 
-        // إنشاء بطاقة متجر
-        function createStoreCard(store) {
+        // إنشاء بطاقة متجر محسنة مع جميع الخصائص الجديدة
+        function createEnhancedStoreCard(store) {
             const colorClass = store.color || store.category || 'primary';
             const isFavorited = favorites.includes(store.id);
             const heartIcon = isFavorited ? 'fas fa-heart' : 'far fa-heart';
             const favoriteClass = isFavorited ? 'favorited' : '';
+            
+            // إنشاء badges للحالة
+            let badges = '';
+            if (store.isNew) badges += '<div class="store-badge badge-new">جديد</div>';
+            if (store.isPopular) badges += '<div class="store-badge badge-popular">شائع</div>';
+            if (store.hasOffers) badges += '<div class="store-badge badge-offer">عروض</div>';
+            if (store.isNearby) badges += '<div class="store-badge badge-nearby">قريب</div>';
             
             return `
                 <div class="store-card fade-in-up" onclick="openStore('${store.id}')">
@@ -2624,6 +2694,11 @@
                     <button class="share-button" onclick="event.stopPropagation(); shareStore('${store.id}')" title="مشاركة المتجر">
                         <i class="fas fa-share-alt"></i>
                     </button>
+                    
+                    <!-- Store Badges -->
+                    <div class="store-badges">
+                        ${badges}
+                    </div>
                     
                     ${store.image_url ? `
                         <!-- Full Image Background -->
@@ -2638,14 +2713,37 @@
                         </div>
                     `}
                     
-                    <!-- Content Overlay -->
+                    <!-- Enhanced Content Overlay -->
                     <div class="store-content">
                         <h3 class="store-name">${store.name}</h3>
                         <p class="store-description">${store.description}</p>
                         <div class="store-meta">
                             <span class="store-category">${getCategoryName(store.category)}</span>
-                            <span class="store-status">متاح</span>
+                            <span class="store-status">
+                                ${store.views ? store.views + ' مشاهدة' : 'متاح'}
+                            </span>
                         </div>
+                        ${store.location ? `
+                            <div style="margin-top: var(--space-1); font-size: var(--font-xs); color: rgba(255,255,255,0.8);">
+                                <i class="fas fa-map-marker-alt"></i> ${store.location}
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <!-- Store Details (appears on hover) -->
+                    <div class="store-details">
+                        ${store.popularity ? `
+                            <div class="store-popularity">
+                                <i class="fas fa-star"></i>
+                                ${store.popularity}%
+                            </div>
+                        ` : ''}
+                        ${store.views ? `
+                            <div class="store-views">
+                                <i class="fas fa-eye"></i>
+                                ${store.views}
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -2672,11 +2770,9 @@
             const index = favorites.indexOf(storeId);
             if (index > -1) {
                 favorites.splice(index, 1);
-                playNotificationSound();
                 showNotification('💔 تم إزالة المتجر من المفضلة');
             } else {
                 favorites.push(storeId);
-                playNotificationSound();
                 showNotification('❤️ تم إضافة المتجر للمفضلة');
             }
             
@@ -2696,6 +2792,12 @@
             // الاحتفاظ بآخر 20 متجر فقط
             if (recentlyViewed.length > 20) {
                 recentlyViewed = recentlyViewed.slice(0, 20);
+            }
+            
+            // تحديث عدد المشاهدات
+            const store = allStores.find(s => s.id === storeId);
+            if (store) {
+                store.views = (store.views || 0) + 1;
             }
             
             saveLocalData();
@@ -2722,7 +2824,7 @@
                 return;
             }
             
-            favoritesGrid.innerHTML = favoriteStores.map(store => createStoreCard(store)).join('');
+            favoritesGrid.innerHTML = favoriteStores.map(store => createEnhancedStoreCard(store)).join('');
         }
 
         // عرض المشاهدة مؤخراً
@@ -2746,7 +2848,7 @@
                 return;
             }
             
-            recentGrid.innerHTML = recentStores.map(store => createStoreCard(store)).join('');
+            recentGrid.innerHTML = recentStores.map(store => createEnhancedStoreCard(store)).join('');
         }
 
         // فتح متجر
@@ -2763,7 +2865,6 @@
 
             if (store.url && store.url !== 'undefined' && store.url !== '#' && store.url !== '') {
                 showLoadingOverlay();
-                playNotificationSound();
                 
                 if (store.url.startsWith('./') || store.url.startsWith('/') || !store.url.includes('://')) {
                     setTimeout(() => {
@@ -2786,7 +2887,11 @@
 
         // عرض معلومات المتجر
         function showStoreInfo(store) {
-            showNotification(`🏪 ${store.name || 'متجر'} - ${store.description || 'لا يوجد وصف'}`);
+            let info = `🏪 ${store.name || 'متجر'} - ${store.description || 'لا يوجد وصف'}`;
+            if (store.location) info += `\n📍 الموقع: ${store.location}`;
+            if (store.popularity) info += `\n⭐ الشهرة: ${store.popularity}%`;
+            if (store.views) info += `\n👁️ المشاهدات: ${store.views}`;
+            showNotification(info);
         }
 
         // مشاركة متجر
@@ -2794,14 +2899,14 @@
             const store = allStores.find(s => s.id === storeId);
             if (!store) return;
 
-            playNotificationSound();
-            
+            const shareData = {
+                title: store.name,
+                text: store.description,
+                url: window.location.href
+            };
+
             if (navigator.share) {
-                navigator.share({
-                    title: store.name,
-                    text: store.description,
-                    url: window.location.href
-                }).catch(console.error);
+                navigator.share(shareData).catch(console.error);
             } else {
                 // نسخ الرابط للحافظة
                 const text = `${store.name}\n${store.description}\n${window.location.href}`;
@@ -2813,27 +2918,7 @@
             }
         }
 
-        // مشاركة التطبيق
-        function shareApp() {
-            playNotificationSound();
-            
-            const shareData = {
-                title: 'كلاشي - دليل المتاجر الشامل',
-                text: 'اكتشف أفضل المتاجر مع كلاشي - التطبيق الشامل للتسوق والخدمات',
-                url: window.location.href
-            };
-
-            if (navigator.share) {
-                navigator.share(shareData).catch(console.error);
-            } else {
-                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareData.title + '\n' + shareData.text + '\n' + shareData.url)}`;
-                window.open(whatsappUrl, '_blank');
-            }
-            
-            showNotification('📱 تم فتح نافذة المشاركة');
-        }
-
-        // الفلترة والبحث
+        // الفلترة والبحث المحسن
         function filterByCategory(category) {
             currentFilters.category = category;
             applyFiltersAndSort();
@@ -2841,7 +2926,15 @@
             updateFilterUI('category', category);
             updateStats();
             closeSidebar();
-            playNotificationSound();
+        }
+
+        function filterByStatus(status) {
+            currentFilters.status = status;
+            applyFiltersAndSort();
+            displayStores();
+            updateFilterUI('status', status);
+            updateStats();
+            closeSidebar();
         }
 
         function sortStores(sortType) {
@@ -2849,7 +2942,6 @@
             applyFiltersAndSort();
             displayStores();
             updateSortUI(sortType);
-            playNotificationSound();
             showNotification(`🔄 تم ترتيب المتاجر: ${getSortName(sortType)}`);
         }
 
@@ -2859,12 +2951,12 @@
             displayStores();
             updateQuickFilterUI(filter);
             updateStats();
-            playNotificationSound();
         }
 
         function clearFilters() {
             currentFilters = {
                 category: 'all',
+                status: 'all',
                 sort: 'default',
                 search: '',
                 quickFilter: 'all'
@@ -2875,9 +2967,9 @@
             updateStats();
             updateCategoryCounts();
             updateFilterUI('category', 'all');
+            updateFilterUI('status', 'all');
             updateSortUI('default');
             updateQuickFilterUI('all');
-            playNotificationSound();
             showNotification('🧹 تم مسح جميع الفلاتر');
         }
 
@@ -2887,14 +2979,20 @@
                 'name': 'حسب الاسم (أ-ي)',
                 'name-desc': 'حسب الاسم (ي-أ)',
                 'popular': 'الأكثر شهرة',
-                'recent': 'المضاف حديثاً'
+                'recent': 'المضاف حديثاً',
+                'views': 'الأكثر مشاهدة'
             };
             return sortNames[sortType] || 'غير محدد';
         }
 
         function updateFilterUI(filterType, value) {
-            document.querySelectorAll(`.filter-option`).forEach(el => el.classList.remove('active'));
-            document.querySelector(`[onclick*="filterByCategory('${value}')"]`)?.classList.add('active');
+            if (filterType === 'category') {
+                document.querySelectorAll(`[onclick*="filterByCategory"]`).forEach(el => el.classList.remove('active'));
+                document.querySelector(`[onclick*="filterByCategory('${value}')"]`)?.classList.add('active');
+            } else if (filterType === 'status') {
+                document.querySelectorAll(`[onclick*="filterByStatus"]`).forEach(el => el.classList.remove('active'));
+                document.querySelector(`[onclick*="filterByStatus('${value}')"]`)?.classList.add('active');
+            }
         }
 
         function updateSortUI(sortType) {
@@ -2925,7 +3023,6 @@
 
         function focusSearch() {
             document.getElementById('searchInput').focus();
-            playNotificationSound();
         }
 
         // التنقل والعرض
@@ -2935,7 +3032,6 @@
             document.getElementById('storesSection').style.display = 'block';
             updateActiveNavItem(0);
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            playNotificationSound();
         }
 
         function showFavorites() {
@@ -2944,7 +3040,6 @@
             document.getElementById('favoritesSection').style.display = 'block';
             updateActiveNavItem(1);
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            playNotificationSound();
         }
 
         function showRecentlyViewed() {
@@ -2953,7 +3048,6 @@
             document.getElementById('recentSection').style.display = 'block';
             updateActiveNavItem(2);
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            playNotificationSound();
         }
 
         function hideAllSections() {
@@ -2969,7 +3063,24 @@
 
         function showCategories() {
             toggleSidebar();
-            playNotificationSound();
+        }
+
+        function showNewStores() {
+            currentFilters.status = 'new';
+            applyFiltersAndSort();
+            displayStores();
+            updateFilterUI('status', 'new');
+            updateStats();
+            showStores();
+        }
+
+        function showPopularStores() {
+            currentFilters.status = 'popular';
+            applyFiltersAndSort();
+            displayStores();
+            updateFilterUI('status', 'popular');
+            updateStats();
+            showStores();
         }
 
         function showRandomStore() {
@@ -3004,7 +3115,6 @@
             saveLocalData();
             updateAllDisplays();
             updateStats();
-            playNotificationSound();
             showNotification('🗑️ تم مسح جميع المتاجر من المفضلة');
         }
 
@@ -3018,7 +3128,6 @@
             saveLocalData();
             updateAllDisplays();
             updateStats();
-            playNotificationSound();
             showNotification('🗑️ تم مسح قائمة المتاجر المُشاهدة');
         }
 
@@ -3029,18 +3138,16 @@
                 userSettings = {
                     theme: 'dark',
                     sound: true,
-                    viewMode: 'grid',
                     autoRefresh: true,
                     notifications: true
                 };
                 
-                localStorage.removeItem('clashy_favorites');
-                localStorage.removeItem('clashy_recently_viewed');
+                localStorage.removeItem('clashy_user_favorites');
+                localStorage.removeItem('clashy_user_recently_viewed');
                 localStorage.removeItem('clashy_user_settings');
                 
                 updateAllDisplays();
                 updateStats();
-                playNotificationSound();
                 showNotification('🧹 تم مسح جميع البيانات المحفوظة');
             }
         }
@@ -3059,7 +3166,9 @@
                     name: store.name,
                     description: store.description,
                     category: getCategoryName(store.category),
-                    url: store.url
+                    url: store.url,
+                    popularity: store.popularity,
+                    views: store.views
                 }))
             };
             
@@ -3073,11 +3182,20 @@
             link.click();
             
             URL.revokeObjectURL(url);
-            playNotificationSound();
             showNotification('📥 تم تصدير قائمة المفضلة بنجاح');
         }
 
-        // الإعدادات
+        // الشريط الجانبي
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+
+        // تبديل الوضع
         function toggleTheme() {
             const currentTheme = document.body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -3087,7 +3205,6 @@
             saveLocalData();
             
             updateThemeUI();
-            playNotificationSound();
             showNotification(`🎨 تم التبديل إلى الوضع ${newTheme === 'dark' ? 'المظلم' : 'الفاتح'}`);
         }
 
@@ -3108,62 +3225,9 @@
             }
         }
 
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            userSettings.sound = soundEnabled;
-            saveLocalData();
-            updateSoundUI();
-            
-            if (soundEnabled) {
-                playNotificationSound();
-            }
-            showNotification(`🔊 الأصوات ${soundEnabled ? 'مفعلة' : 'معطلة'}`);
-        }
-
-        function updateSoundUI() {
-            const soundIcon = document.getElementById('soundIcon');
-            const soundSwitch = document.getElementById('soundSwitch');
-            const soundStatus = document.getElementById('soundStatus');
-            
-            if (soundEnabled) {
-                soundIcon.className = 'fas fa-volume-up';
-                soundSwitch.classList.add('active');
-                soundStatus.textContent = 'مفعل';
-            } else {
-                soundIcon.className = 'fas fa-volume-mute';
-                soundSwitch.classList.remove('active');
-                soundStatus.textContent = 'معطل';
-            }
-        }
-
-        function setViewMode(mode) {
-            viewMode = mode;
-            userSettings.viewMode = mode;
-            saveLocalData();
-            
-            document.querySelectorAll('.view-option').forEach(el => el.classList.remove('active'));
-            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
-            
-            // يمكن إضافة منطق تغيير العرض هنا
-            playNotificationSound();
-            showNotification(`👁️ تم تغيير وضع العرض إلى ${mode === 'grid' ? 'الشبكة' : 'القائمة'}`);
-        }
-
-        // الشريط الجانبي
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
-            playNotificationSound();
-        }
-
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('open');
-        }
-
         // إجراءات سريعة
         function redirectToAlhajami() {
             showLoadingOverlay();
-            playNotificationSound();
             setTimeout(() => {
                 window.location.href = './alhajami.html';
             }, 800);
@@ -3171,48 +3235,59 @@
 
         function redirectToGhadeer() {
             showLoadingOverlay();
-            playNotificationSound();
             setTimeout(() => {
                 window.location.href = './Al Ghadeer Office.html';
             }, 800);
         }
 
+        function shareApp() {
+            const shareData = {
+                title: 'كلاشي - دليل المتاجر الشامل',
+                text: 'اكتشف أفضل المتاجر مع كلاشي - التطبيق الشامل للتسوق والخدمات',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(console.error);
+            } else {
+                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareData.title + '\n' + shareData.text + '\n' + shareData.url)}`;
+                window.open(whatsappUrl, '_blank');
+            }
+            
+            showNotification('📱 تم فتح نافذة المشاركة');
+        }
+
         // الدعم والمساعدة
         function showContact() {
             document.getElementById('contactModal').classList.add('active');
-            playNotificationSound();
         }
 
         function showHelp() {
-            playNotificationSound();
-            showNotification('❓ للمساعدة: استخدم القائمة الجانبية للتنقل والبحث', 'info');
+            showNotification('❓ للمساعدة: استخدم القائمة الجانبية للتنقل والبحث والفلترة', 'info');
         }
 
         function showAbout() {
-            playNotificationSound();
-            showNotification('ℹ️ كلاشي v7.0 - نسخة المستخدم النهائي مع تجربة محسنة! 🚀', 'info');
-        }
-
-        function showPrivacy() {
-            playNotificationSound();
-            showNotification('🔒 نحن نحترم خصوصيتك - جميع البيانات محفوظة محلياً على جهازك', 'info');
+            showNotification('ℹ️ كلاشي v7.0 المحدث - نسخة المستخدم مع جميع الميزات الجديدة! 🚀', 'info');
         }
 
         function openWhatsApp() {
             const message = encodeURIComponent('السلام عليكم، أريد الاستفسار عن كلاشي - دليل المتاجر الشامل 🏪');
             window.open(`https://wa.me/9647813798636?text=${message}`, '_blank');
-            playNotificationSound();
             showNotification('📱 تم فتح واتساب...');
         }
 
-        // تحديث الإحصائيات
+        // تحديث الإحصائيات المحسن
         function updateStats() {
             const uniqueCategories = [...new Set(allStores.map(store => store.category))].length;
+            const newStores = allStores.filter(store => store.isNew).length;
+            const popularStores = allStores.filter(store => store.isPopular).length;
             
             document.getElementById('totalStores').textContent = filteredStores.length;
             document.getElementById('totalFavorites').textContent = favorites.length;
             document.getElementById('totalCategories').textContent = uniqueCategories;
             document.getElementById('totalViewed').textContent = recentlyViewed.length;
+            document.getElementById('totalNew').textContent = newStores;
+            document.getElementById('totalPopular').textContent = popularStores;
             
             document.getElementById('favoritesCount').textContent = favorites.length;
             document.getElementById('favoritesNavCount').textContent = favorites.length;
@@ -3238,19 +3313,22 @@
                     countElement.style.display = count > 0 ? 'inline' : 'none';
                 }
             });
-        }
 
-        // الأصوات
-        function playNotificationSound() {
-            if (!soundEnabled) return;
-            
-            try {
-                const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmcdBSuGz/LZeSsFIXqzu99vbBgITaSl1dvZk2MiCUySsqOPcm8YACJ8srKNb3AgPSB6s7Kfc3AeAA==');
-                audio.volume = 0.3;
-                audio.play().catch(() => {});
-            } catch (error) {
-                // الصوت غير متاح
-            }
+            // تحديث عدادات الحالة
+            const statusCounts = {
+                new: allStores.filter(store => store.isNew).length,
+                popular: allStores.filter(store => store.isPopular).length,
+                offers: allStores.filter(store => store.hasOffers).length,
+                nearby: allStores.filter(store => store.isNearby).length
+            };
+
+            Object.entries(statusCounts).forEach(([status, count]) => {
+                const countElement = document.getElementById(`${status}Count`);
+                if (countElement) {
+                    countElement.textContent = count;
+                    countElement.style.display = count > 0 ? 'inline' : 'none';
+                }
+            });
         }
 
         // التأثيرات والرسوم المتحركة
@@ -3326,7 +3404,6 @@
         // إعادة تحميل البيانات
         async function refreshData() {
             showLoadingOverlay();
-            playNotificationSound();
             try {
                 allStores = [];
                 await loadAllData();
@@ -3389,16 +3466,18 @@
 
         // تهيئة إضافية عند تحميل الصفحة
         window.addEventListener('load', () => {
-            console.log('🚀 كلاشي نسخة المستخدم النهائي v7.0 جاهزة للعمل!');
-            console.log('👤 تجربة مستخدم محسنة مع إزالة إعدادات الأدمن');
-            console.log('🎨 تصميم تفاعلي مع أصوات وتأثيرات');
-            console.log('💾 حفظ المفضلة والإعدادات محلياً');
-            console.log('🔍 بحث وفلترة متقدمة');
-            console.log('📱 متوافق مع الأجهزة المحمولة');
+            console.log('🚀 كلاشي نسخة المستخدم المحدثة v7.0 جاهزة للعمل!');
+            console.log('👤 تجربة مستخدم محسنة مع جميع الميزات الجديدة');
+            console.log('🏪 عرض المتاجر مع خصائص: جديد، شائع، عروض، قريب، مميز');
+            console.log('📊 إحصائيات وشهرة ومشاهدات محسنة');
+            console.log('💾 حفظ المفضلة والإعدادات محلياً ومزامنة مع قاعدة البيانات');
+            console.log('🔍 بحث وفلترة متقدمة حسب الحالة والخصائص');
+            console.log('📱 متوافق مع الأجهزة المحمولة مع تصميم متجاوب');
+            console.log('🎨 تصميم تفاعلي مع تأثيرات ورسوم متحركة');
             console.log('📞 للدعم والتواصل: 07813798636');
         });
 
-        // تحديث البيانات بشكل دوري (إذا كان مفعل في الإعدادات)
+        // تحديث البيانات بشكل دوري
         setInterval(async () => {
             if (navigator.onLine && userSettings.autoRefresh) {
                 try {
